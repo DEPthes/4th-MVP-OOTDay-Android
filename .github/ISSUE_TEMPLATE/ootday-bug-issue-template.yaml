@@ -1,6 +1,6 @@
 name: "🐞 Bug Report"
 description: "버그나 오류를 제보합니다."
-title: "[AN/BE/ALL] 버그"
+title: "버그 타이틀"
 labels:
   - 🐞 BugFix
 body:
