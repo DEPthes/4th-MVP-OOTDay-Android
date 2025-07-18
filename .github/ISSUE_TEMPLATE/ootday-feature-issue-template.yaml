@@ -1,6 +1,6 @@
 name: "✨ Feature Template"
 description: "Feature 작업 사항을 입력해주세요"
-title: "[AN/BE/ALL] 이슈"
+title: "이슈 타이틀"
 labels:
   - ✨ Feature
 body:
