@@ -11,7 +11,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./android/OOTDAY
+        working-directory: ./OOTDAY
 
     permissions:
       contents: read
