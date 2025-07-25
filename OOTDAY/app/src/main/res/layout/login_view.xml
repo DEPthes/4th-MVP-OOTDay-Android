@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray_medium_light"
+    tools:context=".presentation.view.MainActivity">
+
+    <!-- 제목 FrameLayout -->
+    <FrameLayout
+        android:id="@+id/title_id1"
+        android:layout_width="match_parent"
+        android:layout_height="160sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="344sp"
+            android:layout_height="60sp"
+            android:layout_gravity="center"
+            android:background="@color/title_light_pink"
+            android:fontFamily="@font/noto_sans_kr_bold"
+            android:gravity="center"
+            android:text="OOTDay"
+            android:textSize="@dimen/title_large_size" />
+
+    </FrameLayout>
+
+    <!-- 로그인 텍스트 -->
+    <TextView
+        android:id="@+id/login_text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_kr_bold"
+        android:gravity="center"
+        android:text="로그인"
+        android:textSize="@dimen/title_large_size"
+        app:layout_constraintTop_toBottomOf="@+id/title_id1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 설명 텍스트 -->
+    <TextView
+        android:id="@+id/login_text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-20sp"
+        android:fontFamily="@font/noto_sans_kr_regular"
+        android:gravity="center"
+        android:text="스타일링 추천은 로그인 후 이용할 수 있어요."
+        android:textSize="@dimen/title_small_size"
+        app:layout_constraintTop_toBottomOf="@+id/login_text1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/login_area"
+        android:layout_width="344sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="42sp"
+        android:hint="아이디를 입력해주세요."
+        android:paddingLeft="20sp"
+        android:textColorHighlight="@color/brown_medium"
+        android:backgroundTint="@color/gray_dark"
+        android:textColorHint="@color/gray_dark"
+        android:textSize="@dimen/title_small_size"
+        android:fontFamily="@font/noto_sans_kr_regular"
+        android:inputType="text"
+        android:maxLines="1"
+        app:layout_constraintTop_toBottomOf="@id/login_text2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/password_area"
+        android:layout_width="344sp"
+        android:layout_height="50sp"
+        android:hint="비밀번호를 입력해주세요."
+        android:paddingLeft="20sp"
+        android:textColorHighlight="@color/brown_medium"
+        android:backgroundTint="@color/gray_dark"
+        android:textColorHint="@color/gray_dark"
+        android:textSize="@dimen/title_small_size"
+        android:fontFamily="@font/noto_sans_kr_regular"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        app:layout_constraintTop_toBottomOf="@id/login_area"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <CheckBox
+        android:id="@+id/remember_me_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그인 유지"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/title_small_size"
+        android:fontFamily="@font/noto_sans_kr_regular"
+        android:button="@drawable/login_checkbox_selector"
+        android:paddingStart="4sp"
+        app:layout_constraintTop_toBottomOf="@+id/password_area"
+        app:layout_constraintStart_toStartOf="@+id/password_area" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

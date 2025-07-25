@@ -13,6 +13,9 @@
     <color name="brown_dark">#B59573</color>
     <color name="brown_darkest">#92735B</color>
 
+    <!-- 컬러 login - title -->
+    <color name="title_light_pink">#F0ECEC</color>
+
     <!-- 컬러 시스템 - Supporting Color (Warm Gray) -->
     <color name="warm_gray">#8B8680</color>
 

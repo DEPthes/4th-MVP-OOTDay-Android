@@ -8,8 +8,9 @@
     <dimen name="headline_small_size">20sp</dimen>
 
     <!-- Titles -->
-    <dimen name="title_large_size">16sp</dimen>
-    <dimen name="title_medium_size">14sp</dimen>
+    <dimen name="title_large_size">18sp</dimen>
+    <dimen name="title_medium_size">16sp</dimen>
+    <dimen name="title_small_size">14sp</dimen>
 
     <!-- Body Text -->
     <dimen name="body_large_size">16sp</dimen>
