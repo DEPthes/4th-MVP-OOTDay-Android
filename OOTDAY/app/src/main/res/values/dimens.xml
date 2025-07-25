@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Typography - Font Sizes -->
+
+    <!-- Headlines -->
+    <dimen name="headline_large_size">32sp</dimen>
+    <dimen name="headline_medium_size">24sp</dimen>
+    <dimen name="headline_small_size">20sp</dimen>
+
+    <!-- Titles -->
+    <dimen name="title_large_size">18sp</dimen>
+    <dimen name="title_medium_size">14sp</dimen>
+    <dimen name="title_small_size">12sp</dimen>
+
+    <!-- Body Text -->
+    <dimen name="body_large_size">16sp</dimen>
+    <dimen name="body_medium_size">14sp</dimen>
+    <dimen name="body_small_size">12sp</dimen>
+    <dimen name="body_small_korean_size">12sp</dimen>
+
+    <!-- Button Text -->
+    <dimen name="button_large_size">16sp</dimen>
+    <dimen name="button_medium_size">14sp</dimen>
+
+    <!-- Caption Text -->
+    <dimen name="caption_large_size">11sp</dimen>
+    <dimen name="caption_medium_size">10sp</dimen>
+
+    <!-- Common Spacing -->
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_extra_large">32dp</dimen>
+
+    <!-- Padding -->
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+</resources>

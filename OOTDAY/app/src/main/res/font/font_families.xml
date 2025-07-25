@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!-- Font Family Definition for Noto Sans KR -->
+    <font-family xmlns:android="http://schemas.android.com/apk/res/android">
+        <font
+            android:fontStyle="normal"
+            android:fontWeight="400"
+            android:font="@font/noto_sans_kr_regular" />
+        <font
+            android:fontStyle="normal"
+            android:fontWeight="500"
+            android:font="@font/noto_sans_kr_medium" />
+        <font
+            android:fontStyle="normal"
+            android:fontWeight="700"
+            android:font="@font/noto_sans_kr_bold" />
+    </font-family>
+
+    <!--
+    참고: 실제 사용을 위해서는 res/font/ 디렉터리에 다음 폰트 파일들이 필요합니다:
+    - noto_sans_kr_regular.ttf
+    - noto_sans_kr_medium.ttf
+    - noto_sans_kr_bold.ttf
+
+    Google Fonts에서 Noto Sans KR을 다운로드하실 수 있습니다.
+    -->
