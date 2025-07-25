@@ -25,7 +25,7 @@
             android:background="@color/title_light_pink"
             android:fontFamily="@font/noto_sans_kr_bold"
             android:gravity="center"
-            android:text="OOTDay"
+            android:text="@string/app_name"
             android:textSize="@dimen/title_large_size" />
 
     </FrameLayout>
@@ -52,7 +52,7 @@
         android:fontFamily="@font/noto_sans_kr_regular"
         android:gravity="center"
         android:text="스타일링 추천은 로그인 후 이용할 수 있어요."
-        android:textSize="@dimen/title_small_size"
+        android:textSize="@dimen/title_medium_size"
         app:layout_constraintTop_toBottomOf="@+id/login_text1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -92,18 +92,130 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <CheckBox
-        android:id="@+id/remember_me_checkbox"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그인 유지"
+        app:layout_constraintTop_toBottomOf="@+id/password_area"
+        app:layout_constraintStart_toStartOf="@+id/password_area"
+        >
+
+        <CheckBox
+            android:id="@+id/remember_me_checkbox"
+            android:layout_width="24sp"
+            android:layout_height="24sp"
+            android:background="@drawable/login_checkbox_selector"
+            android:button="@null"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인 유지"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:textSize="@dimen/title_small_size"
+            android:paddingLeft="4sp"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100sp"
+        android:layout_marginHorizontal="20sp"
+        app:layout_constraintTop_toBottomOf="@id/password_area"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+
+        android:background="@drawable/login_button_selector"
+
+        app:backgroundTint="@null"
+        app:elevation="0dp"
+        android:stateListAnimator="@null"
+
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/auth_links_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/login_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+        android:id="@+id/text_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원가입"
         android:textColor="@color/gray_dark"
         android:textSize="@dimen/title_small_size"
-        android:fontFamily="@font/noto_sans_kr_regular"
-        android:button="@drawable/login_checkbox_selector"
-        android:paddingStart="4sp"
-        app:layout_constraintTop_toBottomOf="@+id/password_area"
-        app:layout_constraintStart_toStartOf="@+id/password_area" />
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginStart="50sp"
+        app:layout_constraintHorizontalChainStyle="packed" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/divider1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/divider1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="|"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/title_large_size"
+            app:layout_constraintStart_toEndOf="@+id/text_signup"
+            app:layout_constraintEnd_toStartOf="@+id/text_find_id"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/text_find_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디 찾기"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/title_small_size"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toEndOf="@+id/divider1"
+            app:layout_constraintEnd_toStartOf="@+id/divider2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/divider2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="|"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/title_large_size"
+            app:layout_constraintStart_toEndOf="@+id/text_find_id"
+            app:layout_constraintEnd_toStartOf="@+id/text_find_password"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/text_find_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 찾기"
+            android:layout_marginEnd="50sp"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/title_small_size"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toEndOf="@+id/divider2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
