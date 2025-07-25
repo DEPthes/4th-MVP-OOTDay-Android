@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "OOTDAY"
+rootProject.name = "4th-MVP-OOTDay-Android"
 include(":app")

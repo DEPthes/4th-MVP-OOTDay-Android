@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Typography Styles -->
+
+    <!-- Headline Styles -->
+    <style name="TextAppearance.Headline.Large">
+        <item name="android:textSize">@dimen/headline_large_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/font_gray</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <style name="TextAppearance.Headline.Medium">
+        <item name="android:textSize">@dimen/headline_medium_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/font_gray</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <style name="TextAppearance.Headline.Small">
+        <item name="android:textSize">@dimen/headline_small_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/font_gray</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <!-- Title Styles -->
+    <style name="TextAppearance.Title.Large">
+        <item name="android:textSize">@dimen/title_large_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/font_gray</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <style name="TextAppearance.Title.Medium">
+        <item name="android:textSize">@dimen/title_medium_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/font_gray</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <!-- Body Styles -->
+    <style name="TextAppearance.Body.Large">
+        <item name="android:textSize">@dimen/body_large_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/font_gray</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <style name="TextAppearance.Body.Medium">
+        <item name="android:textSize">@dimen/body_medium_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/font_gray</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <style name="TextAppearance.Body.Small">
+        <item name="android:textSize">@dimen/body_small_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/font_gray</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <style name="TextAppearance.Body.Small.Korean">
+        <item name="android:textSize">@dimen/body_small_korean_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/font_red</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <!-- Button Styles -->
+    <style name="TextAppearance.Button.Large">
+        <item name="android:textSize">@dimen/button_large_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <style name="TextAppearance.Button.Medium">
+        <item name="android:textSize">@dimen/button_medium_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <!-- Caption Styles -->
+    <style name="TextAppearance.Caption.Large">
+        <item name="android:textSize">@dimen/caption_large_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/font_gray</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <style name="TextAppearance.Caption.Medium">
+        <item name="android:textSize">@dimen/caption_medium_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/font_gray</item>
+        <item name="android:fontFamily">@font/noto_sans_kr</item>
+    </style>
+
+    <!-- Button Component Styles -->
+    <style name="Widget.Button.Primary">
+        <item name="android:background">@color/primary_brown</item>
+        <item name="android:textAppearance">@style/TextAppearance.Button.Large</item>
+        <item name="android:padding">@dimen/padding_medium</item>
+        <item name="android:layout_margin">@dimen/margin_small</item>
+    </style>
+
+    <style name="Widget.Button.Secondary">
+        <item name="android:background">@color/brown_medium</item>
+        <item name="android:textAppearance">@style/TextAppearance.Button.Medium</item>
+        <item name="android:padding">@dimen/padding_medium</item>
+        <item name="android:layout_margin">@dimen/margin_small</item>
+    </style>
+</resources>
