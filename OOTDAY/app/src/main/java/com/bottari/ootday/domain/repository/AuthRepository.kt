@@ -1,23 +1,16 @@
 package com.bottari.ootday.domain.repository
 
-import com.bottari.ootday.data.model.LoginRequest
-
 class AuthRepository {
 
-    suspend fun login(loginRequest: LoginRequest): Boolean {
+    suspend fun login(username: String, password: String): Result<Boolean> {
         // TODO: 실제 API 호출 로직 구현
         // 예시: ApiService를 통한 서버 통신
 
         // 임시 구현 (실제로는 서버 응답에 따라 처리)
-        return try {
-            // 여기에 실제 네트워크 호출 로직을 구현하세요
-            // val response = apiService.login(loginRequest)
-            // response.isSuccessful
-
-            // 임시로 true 반환 (실제 구현시 제거)
-            true
-        } catch (e: Exception) {
-            false
+        return if(username == "test" && password == "1234") {
+            Result.success(true)
+        } else {
+            Result.failure(Exception("아이디 혹은 비밀번호가 올바르지 않습니다."))
         }
     }
 
