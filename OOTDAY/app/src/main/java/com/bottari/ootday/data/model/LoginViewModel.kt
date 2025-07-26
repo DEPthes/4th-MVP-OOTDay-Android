@@ -1,11 +1,10 @@
-package com.bottari.ootday.presentation.view.LoginView
+package com.bottari.ootday.data.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bottari.ootday.data.model.LoginRequest // Model 계층에서 정의될 데이터 클래스
-import com.bottari.ootday.data.repository.AuthRepository // Model 계층에서 정의될 Repository
+import com.bottari.ootday.domain.repository.AuthRepository
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
@@ -13,9 +12,9 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
     // 사용자 입력 LiveData
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
-    val rememberMe = MutableLiveData<Boolean>(false) // 기본값 false
+    val rememberMe = MutableLiveData<Boolean>(false)
 
-    // UI 상태 LiveData (View에서 관찰)
+    // UI 상태 LiveData
     private val _loginResult = MutableLiveData<Boolean>()
     val loginResult: LiveData<Boolean> = _loginResult
 
@@ -25,11 +24,20 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
-    // 로그인 버튼 활성화 상태 (아이디/비밀번호 입력 시 활성화)
     private val _isLoginButtonEnabled = MutableLiveData<Boolean>(false)
     val isLoginButtonEnabled: LiveData<Boolean> = _isLoginButtonEnabled
 
-    // 아이디/비밀번호 입력 시 버튼 상태 업데이트 로직
+    // 네비게이션 이벤트를 위한 LiveData
+    private val _navigateToSignup = MutableLiveData<Boolean>()
+    val navigateToSignup: LiveData<Boolean> = _navigateToSignup
+
+    private val _navigateToFindId = MutableLiveData<Boolean>()
+    val navigateToFindId: LiveData<Boolean> = _navigateToFindId
+
+    private val _navigateToFindPassword = MutableLiveData<Boolean>()
+    val navigateToFindPassword: LiveData<Boolean> = _navigateToFindPassword
+
+    // 아이디/비밀번호 입력 시 버튼 상태 업데이트
     fun updateLoginButtonState() {
         _isLoginButtonEnabled.value = !username.value.isNullOrBlank() && !password.value.isNullOrBlank()
     }
@@ -45,14 +53,19 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
         }
 
         _isLoading.value = true
+        _errorMessage.value = "" // 이전 에러 메시지 초기화
+
         viewModelScope.launch {
             try {
-                // 로그인 API 호출 (AuthRepository를 통해 Model 계층과 통신)
                 val request = LoginRequest(id, pw)
-                val success = authRepository.login(request) // 가상의 로그인 함수
+                val success = authRepository.login(request)
 
                 if (success) {
-                    _loginResult.value = true // 로그인 성공
+                    // 로그인 유지 옵션이 체크되어 있으면 상태 저장
+                    if (remember) {
+                        authRepository.saveLoginState(true)
+                    }
+                    _loginResult.value = true
                 } else {
                     _errorMessage.value = "로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다."
                     _loginResult.value = false
@@ -66,19 +79,34 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
         }
     }
 
-    // 다른 클릭 리스너 (회원가입, 아이디 찾기, 비밀번호 찾기)
+    // 네비게이션 이벤트 처리
     fun onSignupClick() {
-        // 회원가입 화면으로 이동하는 이벤트를 View에 알립니다.
-        _errorMessage.value = "회원가입 버튼 클릭됨" // 예시
+        _navigateToSignup.value = true
     }
 
     fun onFindIdClick() {
-        // 아이디 찾기 화면으로 이동하는 이벤트를 View에 알립니다.
-        _errorMessage.value = "아이디 찾기 버튼 클릭됨" // 예시
+        _navigateToFindId.value = true
     }
 
     fun onFindPasswordClick() {
-        // 비밀번호 찾기 화면으로 이동하는 이벤트를 View에 알립니다.
-        _errorMessage.value = "비밀번호 찾기 버튼 클릭됨" // 예시
+        _navigateToFindPassword.value = true
+    }
+
+    // 네비게이션 이벤트 완료 처리
+    fun onSignupNavigated() {
+        _navigateToSignup.value = false
+    }
+
+    fun onFindIdNavigated() {
+        _navigateToFindId.value = false
+    }
+
+    fun onFindPasswordNavigated() {
+        _navigateToFindPassword.value = false
+    }
+
+    // 에러 메시지 표시 완료 처리
+    fun onErrorMessageShown() {
+        _errorMessage.value = ""
     }
 }
