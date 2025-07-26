@@ -92,6 +92,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/password_toggle_button"
+        android:layout_width="48sp" android:layout_height="48sp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ps_visibility_selector"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="@+id/login_area"
+        app:layout_constraintTop_toTopOf="@+id/password_area"
+        app:layout_constraintBottom_toBottomOf="@+id/password_area"
+        android:layout_marginBottom="5sp"/>
+
     <TextView
         android:id="@+id/login_error"
         android:layout_width="wrap_content"
