@@ -65,8 +65,8 @@
         android:hint="아이디를 입력해주세요."
         android:paddingLeft="20sp"
         android:textColorHighlight="@color/brown_medium"
-        android:backgroundTint="@color/gray_dark"
-        android:textColorHint="@color/gray_dark"
+        android:backgroundTint="@color/gray_medium"
+        android:textColorHint="@color/gray_medium"
         android:textSize="@dimen/title_small_size"
         android:fontFamily="@font/noto_sans_kr_regular"
         android:inputType="text"
@@ -82,8 +82,8 @@
         android:hint="비밀번호를 입력해주세요."
         android:paddingLeft="20sp"
         android:textColorHighlight="@color/brown_medium"
-        android:backgroundTint="@color/gray_dark"
-        android:textColorHint="@color/gray_dark"
+        android:backgroundTint="@color/gray_medium"
+        android:textColorHint="@color/gray_medium"
         android:textSize="@dimen/title_small_size"
         android:fontFamily="@font/noto_sans_kr_regular"
         android:inputType="textPassword"
@@ -129,7 +129,7 @@
             android:id="@+id/remember_me_checkbox"
             android:layout_width="24sp"
             android:layout_height="24sp"
-            android:background="@drawable/login_checkbox_selector"
+            android:background="@drawable/sl_login_checkbox_selector"
             android:button="@null"
             />
 
@@ -139,6 +139,8 @@
             android:text="로그인 유지"
             android:fontFamily="@font/noto_sans_kr_regular"
             android:textSize="@dimen/title_small_size"
+            android:textColor="@color/signup_text_color"
+            android:alpha="0.8"
             android:paddingLeft="4sp"
             />
 
@@ -146,16 +148,16 @@
 
     <Button
         android:id="@+id/login_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100sp"
         android:layout_marginHorizontal="20sp"
         app:layout_constraintTop_toBottomOf="@id/password_area"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.9"
 
-        android:background="@drawable/login_button_selector"
+
+        android:background="@drawable/sl_login_button_selector"
 
         app:backgroundTint="@null"
         app:elevation="0dp"

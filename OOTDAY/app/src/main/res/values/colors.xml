@@ -29,4 +29,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
+
+    <!-- 회원가입 텍스트 컬러-->
+    <color name="signup_text_color">#333333</color>
 </resources>

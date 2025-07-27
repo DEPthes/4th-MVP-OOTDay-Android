@@ -123,11 +123,11 @@ class LoginActivity : AppCompatActivity() {
         if (isPasswordVisible) {
             // 비밀번호 보이게: text visible password
             binding.passwordArea.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            binding.passwordToggleButton.setImageResource(R.drawable.ps_visible_on) // 눈 뜨인 아이콘
+            binding.passwordToggleButton.setImageResource(R.drawable.btn_ps_visible_on) // 눈 뜨인 아이콘
         } else {
             // 비밀번호 숨김: text password
             binding.passwordArea.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            binding.passwordToggleButton.setImageResource(R.drawable.ps_visible_off) // 눈 감긴 아이콘
+            binding.passwordToggleButton.setImageResource(R.drawable.btn_ps_visible_off) // 눈 감긴 아이콘
         }
         // visible on/off 시 font가 default로 설정되기에 다시 원래 font로 설정
         binding.passwordArea.typeface = notoSansKrRegular

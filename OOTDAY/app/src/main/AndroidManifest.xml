@@ -12,7 +12,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/pressed_login_button"
+        android:roundIcon="@drawable/btn_pressed_login_button"
         android:supportsRtl="true"
         android:theme="@style/Theme.OOTDAY"
         tools:targetApi="31">
