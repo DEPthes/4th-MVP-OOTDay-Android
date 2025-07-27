@@ -17,7 +17,7 @@
         android:theme="@style/Theme.OOTDAY"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.view.SplashActivity.SplashActivity"
+            android:name=".presentation.view.splashActivity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.view.LoginView.LoginActivity"
+            android:name=".presentation.view.loginView.LoginActivity"
             android:exported="false"/>
     </application>
 

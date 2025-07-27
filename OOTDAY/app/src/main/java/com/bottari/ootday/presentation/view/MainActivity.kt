@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bottari.ootday.domain.repository.AuthRepository
-import com.bottari.ootday.presentation.view.LoginView.LoginActivity
+import com.bottari.ootday.presentation.view.loginView.LoginActivity
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var authRepository: AuthRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {

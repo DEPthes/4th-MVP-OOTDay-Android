@@ -1,17 +1,15 @@
-package com.bottari.ootday.presentation.view.SplashActivity
+package com.bottari.ootday.presentation.view.splashActivity
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.bottari.ootday.R
-import com.bottari.ootday.presentation.view.LoginView.LoginActivity
+import com.bottari.ootday.presentation.view.loginView.LoginActivity
 import com.bottari.ootday.presentation.view.MainActivity
 
 class SplashActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -39,8 +37,5 @@ class SplashActivity : AppCompatActivity() {
     }
 
     // 사용자의 로그인 상태를 확인하는 가상의 함수
-    private fun checkIfUserIsLoggedIn(): Boolean {
-
-        return false
-    }
+    private fun checkIfUserIsLoggedIn(): Boolean = false
 }

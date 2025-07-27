@@ -1,16 +1,18 @@
 package com.bottari.ootday.domain.repository
 
 class AuthRepository {
-
-    suspend fun login(username: String, password: String): Result<Boolean> {
+    suspend fun login(
+        username: String,
+        password: String,
+    ): Result<Boolean> {
         // TODO: 실제 API 호출 로직 구현
         // 예시: ApiService를 통한 서버 통신
 
         // 임시 구현 (실제로는 서버 응답에 따라 처리)
-        return if(username == "test" && password == "1234") {
+        return if (username == "test" && password == "1234") {
             Result.success(true)
         } else {
-            Result.failure(Exception("아이디 혹은 비밀번호가 올바르지 않습니다."))
+            Result.failure(Exception("아이디 혹은 비밀번호가 잘못되었습니다. 다시 시도해주세요."))
         }
     }
 

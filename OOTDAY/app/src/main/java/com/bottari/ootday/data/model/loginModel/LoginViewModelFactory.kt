@@ -1,12 +1,13 @@
-package com.bottari.ootday.data.model.LoginModel
+package com.bottari.ootday.data.model.loginModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bottari.ootday.domain.repository.AuthRepository
 
 // ViewModel을 생성할 때 필요한 의존성(여기서는 AuthRepository)을 제공하는 팩토리 클래스입니다.
-class LoginViewModelFactory(private val authRepository: AuthRepository) : ViewModelProvider.Factory {
-
+class LoginViewModelFactory(
+    private val authRepository: AuthRepository,
+) : ViewModelProvider.Factory {
     // ViewModel 인스턴스를 생성하는 메서드입니다.
     @Suppress("UNCHECKED_CAST") // 타입 캐스팅 경고를 무시합니다. 안전한 코드입니다.
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
