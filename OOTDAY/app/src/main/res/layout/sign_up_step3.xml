@@ -6,13 +6,12 @@
     android:background="@color/gray_light">
 
     <TextView
-        android:id="@+id/step1_title"
+        android:id="@+id/step3_title"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="30sp"
         android:paddingVertical="2sp"
-        android:text="OOTDay에서 사용하실 이름을
-        입력해주세요."
+        android:text="로그인에 사용할 아이디를 만들어주세요."
         android:textSize="@dimen/body_large_size"
         android:fontFamily="@font/noto_sans_kr_bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,12 +19,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/step1_login_area"
+        android:id="@+id/step3_id_input"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="16sp"
         android:paddingVertical="4sp"
-        android:hint="한글 또는 영문 2~5자로 입력해주세요. (한글+영문 조합 가능)"
+        android:hint="영문과 숫자를 조합해 5-10자만 입력할 수 있어요."
         android:textColorHint="@color/gray_medium"
         android:textColorHighlight="@color/brown_300"
         android:fontFamily="@font/noto_sans_kr_medium"
@@ -36,28 +35,29 @@
         android:layout_marginHorizontal="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/step1_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/step3_title"/>
 
     <TextView
-        android:id="@+id/step1_name_error"
+        android:id="@+id/step3_id_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-15sp"
+        android:layout_marginStart="40sp"
         android:fontFamily="@font/noto_sans_kr_regular"
         android:text="안녕하세요"
         android:textColor="@color/font_red"
         android:textSize="@dimen/title_small_size"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/step1_login_area"
-        app:layout_constraintStart_toStartOf="@id/step1_login_area"
+        app:layout_constraintTop_toBottomOf="@+id/step3_id_input"
+        app:layout_constraintStart_toStartOf="@id/step3_id_input"
         />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/step2_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100sp"
-        app:layout_constraintTop_toBottomOf="@id/step1_login_area"
+        app:layout_constraintTop_toBottomOf="@id/step3_id_input"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 

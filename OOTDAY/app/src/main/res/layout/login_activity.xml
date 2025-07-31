@@ -18,15 +18,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="344sp"
-            android:layout_height="60sp"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/title_light_pink"
-            android:fontFamily="@font/noto_sans_kr_bold"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textSize="@dimen/title_large_size" />
+            android:src="@drawable/ic_ootday_logo"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside" />
 
     </FrameLayout>
 
@@ -64,7 +62,7 @@
         android:layout_marginTop="42sp"
         android:hint="아이디를 입력해주세요."
         android:paddingLeft="20sp"
-        android:textColorHighlight="@color/brown_medium"
+        android:textColorHighlight="@color/brown_300"
         android:backgroundTint="@color/gray_medium"
         android:textColorHint="@color/gray_medium"
         android:textSize="@dimen/title_small_size"
@@ -81,7 +79,7 @@
         android:layout_height="50sp"
         android:hint="비밀번호를 입력해주세요."
         android:paddingLeft="20sp"
-        android:textColorHighlight="@color/brown_medium"
+        android:textColorHighlight="@color/brown_300"
         android:backgroundTint="@color/gray_medium"
         android:textColorHint="@color/gray_medium"
         android:textSize="@dimen/title_small_size"

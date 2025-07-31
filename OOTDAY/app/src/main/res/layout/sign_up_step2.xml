@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_light">
+
+    <TextView
+        android:id="@+id/step2_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="30sp"
+        android:paddingVertical="2sp"
+        android:text="본인 확인을 위해 휴대폰 인증을
+        진행해주세요."
+        android:textSize="@dimen/body_large_size"
+        android:fontFamily="@font/noto_sans_kr_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/step2_phone_number_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16sp"
+        android:paddingVertical="4sp"
+        android:hint="휴대폰 번호를 입력해주세요."
+        android:textColorHint="@color/gray_medium"
+        android:textColorHighlight="@color/brown_300"
+        android:fontFamily="@font/noto_sans_kr_medium"
+        android:textSize="@dimen/body_medium_size"
+        android:backgroundTint="@color/gray_medium"
+        android:maxLines="1"
+        android:layout_marginStart="24sp"
+        android:layout_marginTop="54sp"
+        android:layout_marginEnd="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/step2_check_auth_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/step2_title"
+        />
+
+    <Button
+        android:id="@+id/step2_check_auth_button"
+        android:layout_width="63sp"
+        android:layout_height="28sp"
+        android:background="@drawable/sl_signup_check_selecter"
+        app:backgroundTint="@null"
+        app:elevation="0dp"
+        android:stateListAnimator="@null"
+        app:layout_constraintEnd_toEndOf="@id/step2_get_auth_button"
+        app:layout_constraintStart_toStartOf="@+id/step2_get_auth_button"
+        app:layout_constraintTop_toTopOf="@+id/step2_phone_number_confirm"
+        app:layout_constraintBottom_toBottomOf="@+id/step2_phone_number_confirm"
+         />
+
+
+
+    <EditText
+        android:id="@+id/step2_phone_number_confirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16sp"
+        android:paddingVertical="4sp"
+        android:hint="인증 번호를 입력해주세요."
+        android:textColorHint="@color/gray_medium"
+        android:textColorHighlight="@color/brown_300"
+        android:fontFamily="@font/noto_sans_kr_medium"
+        android:textSize="@dimen/body_medium_size"
+        android:backgroundTint="@color/gray_medium"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="@id/step2_phone_number_input"
+        app:layout_constraintStart_toStartOf="@id/step2_phone_number_input"
+        app:layout_constraintTop_toBottomOf="@+id/step2_phone_number_input"
+        />
+
+    <TextView
+        android:id="@+id/step2_number_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-15sp"
+        android:fontFamily="@font/noto_sans_kr_regular"
+        android:text="안녕하세요"
+        android:textColor="@color/font_red"
+        android:textSize="@dimen/title_small_size"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/step2_phone_number_confirm"
+        app:layout_constraintStart_toStartOf="@id/step2_phone_number_confirm"
+        />
+
+
+    <Button
+        android:id="@+id/step2_get_auth_button"
+        android:layout_width="63sp"
+        android:layout_height="28sp"
+        android:background="@drawable/sl_signup_get_selector"
+        app:backgroundTint="@null"
+        app:elevation="0dp"
+
+
+        android:stateListAnimator="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/step2_phone_number_input"
+        app:layout_constraintTop_toTopOf="@+id/step2_phone_number_input"
+        app:layout_constraintBottom_toBottomOf="@+id/step2_phone_number_input"
+        />
+
+    <Button
+        android:id="@+id/step2_next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100sp"
+        app:layout_constraintTop_toBottomOf="@id/step2_phone_number_confirm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+
+        android:background="@drawable/sl_next_button_selector"
+
+        app:backgroundTint="@null"
+        app:elevation="0dp"
+        android:stateListAnimator="@null"
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,7 +59,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <fragment
-        android:id="@+id/signiup_main_fragment"
+        android:id="@+id/signup_main_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
 
         android:layout_width="0sp"
