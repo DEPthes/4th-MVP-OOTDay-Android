@@ -40,12 +40,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="모두 동의 (선택 사항 포함)"
-            android:fontFamily="@font/noto_sans_kr_bold"
+            android:fontFamily="@font/noto_sans_kr_medium"
             android:textSize="@dimen/body_medium_size"
             android:textColor="@color/signup_text_color"
             android:alpha="0.8"
             android:paddingLeft="4sp"
             />
+
+
+
 
     </LinearLayout>
 
@@ -59,108 +62,231 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <CheckBox
-        android:id="@+id/step5_term1_checkbox"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/step5_term1_item_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24sp"
-        android:layout_marginTop="16sp"
-        android:text="[필수] 이용 약관 동의"
-        android:fontFamily="@font/noto_sans_kr_medium"
-        android:textSize="@dimen/body_small_size"
-        android:textColor="@color/gray_dark"
-        app:layout_constraintEnd_toStartOf="@+id/step5_term1_view_button"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="24sp"
+        android:layout_marginTop="20sp"
+        android:paddingEnd="24sp" android:clickable="true"
+        android:focusable="true"
         app:layout_constraintTop_toBottomOf="@+id/step5_divider"
-        app:layout_constraintHorizontal_weight="1" />
-
-    <TextView
-        android:id="@+id/step5_term1_view_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24sp"
-        android:text="보기"
-        android:textColor="@color/gray_medium"
-        android:textSize="@dimen/body_small_size"
-        android:fontFamily="@font/noto_sans_kr_regular"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/step5_term1_checkbox"
-        app:layout_constraintBottom_toBottomOf="@+id/step5_term1_checkbox"
-        />
-
-    <CheckBox
-        android:id="@+id/step5_term2_checkbox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24sp"
-        android:layout_marginTop="12sp"
-        android:text="[필수] 개인정보 수집 및 이용 동의"
-        android:fontFamily="@font/noto_sans_kr_medium"
-        android:textSize="@dimen/body_small_size"
-        android:textColor="@color/gray_dark"
-        app:layout_constraintEnd_toStartOf="@+id/step5_term2_view_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/step5_term1_checkbox"
-        app:layout_constraintHorizontal_weight="1" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/step5_term2_view_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24sp"
-        android:text="보기"
-        android:textColor="@color/gray_medium"
-        android:textSize="@dimen/body_small_size"
-        android:fontFamily="@font/noto_sans_kr_regular"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/step5_term2_checkbox"
-        app:layout_constraintBottom_toBottomOf="@+id/step5_term2_checkbox"
-        />
+        <CheckBox
+            android:id="@+id/step5_term1_checkbox"
+            android:layout_width="12sp"
+            android:layout_height="8sp"
+            android:background="@drawable/sl_check_selector"
+            android:button="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
-    <CheckBox
-        android:id="@+id/step5_term3_checkbox"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/step5_term1_text"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="(필수) 만 14세 이상입니다."
+            android:fontFamily="@font/noto_sans_kr_medium"
+            android:textSize="@dimen/body_medium_size"
+            android:textColor="@color/signup_text_color"
+            android:paddingStart="10sp"
+            android:alpha="0.2"
+            app:layout_constraintStart_toEndOf="@+id/step5_term1_checkbox"
+            app:layout_constraintEnd_toStartOf="@+id/step5_term1_view_button"
+            app:layout_constraintTop_toTopOf="@+id/step5_term1_checkbox"
+            app:layout_constraintBottom_toBottomOf="@+id/step5_term1_checkbox"
+            app:layout_constraintHorizontal_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/step5_term1_view_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back"
+            android:contentDescription="보기"
+            android:scaleX="-1"
+            android:alpha="0.2"
+            android:padding="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/step5_term1_checkbox"
+            app:layout_constraintBottom_toBottomOf="@+id/step5_term1_checkbox"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/step5_term2_item_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24sp"
-        android:layout_marginTop="12sp"
-        android:text="[선택] 마케팅 정보 수신 동의"
-        android:fontFamily="@font/noto_sans_kr_medium"
-        android:textSize="@dimen/body_small_size"
-        android:textColor="@color/gray_dark"
-        app:layout_constraintEnd_toStartOf="@+id/step5_term3_view_button"
+        android:layout_marginStart="24sp"
+        android:paddingEnd="24sp" android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@+id/step5_term1_item_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/step5_term2_checkbox"
-        app:layout_constraintHorizontal_weight="1" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/step5_term3_view_button"
-        android:layout_width="wrap_content"
+        <CheckBox
+            android:id="@+id/step5_term2_checkbox"
+            android:layout_width="12sp"
+            android:layout_height="8sp"
+            android:background="@drawable/sl_check_selector"
+            android:button="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/step5_term2_text"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="(필수) 서비스 이용약관에 동의"
+            android:fontFamily="@font/noto_sans_kr_medium"
+            android:textSize="@dimen/body_medium_size"
+            android:textColor="@color/signup_text_color"
+            android:paddingStart="10sp"
+            android:alpha="0.2"
+            app:layout_constraintStart_toEndOf="@+id/step5_term2_checkbox"
+            app:layout_constraintEnd_toStartOf="@+id/step5_term2_view_button"
+            app:layout_constraintTop_toTopOf="@+id/step5_term2_checkbox"
+            app:layout_constraintBottom_toBottomOf="@+id/step5_term2_checkbox"
+            app:layout_constraintHorizontal_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/step5_term2_view_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back"
+            android:contentDescription="보기"
+            android:scaleX="-1"
+            android:alpha="0.2"
+            android:padding="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/step5_term2_checkbox"
+            app:layout_constraintBottom_toBottomOf="@+id/step5_term2_checkbox"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/step5_term3_item_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24sp"
-        android:text="보기"
-        android:textColor="@color/gray_medium"
-        android:textSize="@dimen/body_small_size"
-        android:fontFamily="@font/noto_sans_kr_regular"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/step5_term3_checkbox"
-        app:layout_constraintBottom_toBottomOf="@+id/step5_term3_checkbox"
-        />
+        android:layout_marginStart="24sp"
+        android:paddingEnd="24sp" android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@+id/step5_term2_item_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <CheckBox
+            android:id="@+id/step5_term3_checkbox"
+            android:layout_width="12sp"
+            android:layout_height="8sp"
+            android:background="@drawable/sl_check_selector"
+            android:button="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/step5_term3_text"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="(필수) 개인 정보 수집 및 이용에 동의"
+            android:fontFamily="@font/noto_sans_kr_medium"
+            android:textSize="@dimen/body_medium_size"
+            android:textColor="@color/signup_text_color"
+            android:paddingStart="10sp"
+            android:alpha="0.2"
+            app:layout_constraintStart_toEndOf="@+id/step5_term3_checkbox"
+            app:layout_constraintEnd_toStartOf="@+id/step5_term3_view_button"
+            app:layout_constraintTop_toTopOf="@+id/step5_term3_checkbox"
+            app:layout_constraintBottom_toBottomOf="@+id/step5_term3_checkbox"
+            app:layout_constraintHorizontal_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/step5_term3_view_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back"
+            android:contentDescription="보기"
+            android:scaleX="-1"
+            android:alpha="0.2"
+            android:padding="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/step5_term3_checkbox"
+            app:layout_constraintBottom_toBottomOf="@+id/step5_term3_checkbox"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/step5_term4_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24sp"
+        android:paddingEnd="24sp" android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@+id/step5_term3_item_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <CheckBox
+            android:id="@+id/step5_term4_checkbox"
+            android:layout_width="12sp"
+            android:layout_height="8sp"
+            android:background="@drawable/sl_check_selector"
+            android:button="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/step5_term4_text"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="(선택) 광고 및 마케팅 수신에 동의 "
+            android:fontFamily="@font/noto_sans_kr_medium"
+            android:textSize="@dimen/body_medium_size"
+            android:textColor="@color/signup_text_color"
+            android:paddingStart="10sp"
+            android:alpha="0.2"
+            app:layout_constraintStart_toEndOf="@+id/step5_term4_checkbox"
+            app:layout_constraintEnd_toStartOf="@+id/step5_term4_view_button"
+            app:layout_constraintTop_toTopOf="@+id/step5_term4_checkbox"
+            app:layout_constraintBottom_toBottomOf="@+id/step5_term4_checkbox"
+            app:layout_constraintHorizontal_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/step5_term4_view_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back"
+            android:contentDescription="보기"
+            android:scaleX="-1"
+            android:alpha="0.2"
+            android:padding="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/step5_term4_checkbox"
+            app:layout_constraintBottom_toBottomOf="@+id/step5_term4_checkbox"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/step5_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100sp"
-        android:text="다음"
-        android:fontFamily="@font/noto_sans_kr_bold"
-        android:textSize="@dimen/body_large_size"
+        app:layout_constraintTop_toBottomOf="@id/step5_term4_item_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+
         android:background="@drawable/sl_next_button_selector"
+
         app:backgroundTint="@null"
         app:elevation="0dp"
         android:stateListAnimator="@null"
-        app:layout_constraintTop_toBottomOf="@id/step5_term3_checkbox"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

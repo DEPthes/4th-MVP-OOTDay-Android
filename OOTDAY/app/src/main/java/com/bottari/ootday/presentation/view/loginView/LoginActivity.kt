@@ -19,11 +19,11 @@ import com.bottari.ootday.R
 import com.bottari.ootday.data.model.loginModel.LoginRequest
 import com.bottari.ootday.data.model.loginModel.LoginViewModel
 import com.bottari.ootday.data.model.loginModel.LoginViewModelFactory
-import com.bottari.ootday.databinding.LoginViewBinding
+import com.bottari.ootday.databinding.LoginActivityBinding
 import com.bottari.ootday.domain.repository.AuthRepository
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: LoginViewBinding
+    private lateinit var binding: LoginActivityBinding
     private val loginViewModel: LoginViewModel by viewModels {
         LoginViewModelFactory(AuthRepository())
     }
@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = LoginViewBinding.inflate(layoutInflater)
+        binding = LoginActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         notoSansKrRegular = ResourcesCompat.getFont(this, R.font.noto_sans_kr_regular)!!
