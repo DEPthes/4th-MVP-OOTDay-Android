@@ -25,13 +25,14 @@
         android:layout_height="0dp"
         android:paddingHorizontal="16sp"
         android:paddingVertical="4sp"
-        android:hint="한글 또는 영문 2~5자로 입력해주세요. (한글+영문 조합 가능)"
+        android:hint="이름을 2~5자로 입력해주세요. (한글 + 영문, 조합 가능)"
         android:textColorHint="@color/gray_medium"
         android:textColorHighlight="@color/brown_300"
         android:fontFamily="@font/noto_sans_kr_medium"
         android:textSize="@dimen/body_medium_size"
         android:backgroundTint="@color/gray_medium"
         android:maxLines="1"
+        android:maxLength="5"
         android:layout_marginVertical="54sp"
         android:layout_marginHorizontal="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +54,7 @@
         />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/step1_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100sp"
@@ -67,6 +68,7 @@
         app:backgroundTint="@null"
         app:elevation="0dp"
         android:stateListAnimator="@null"
+        android:enabled="false"
 
         />
 

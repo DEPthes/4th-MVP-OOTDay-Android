@@ -1,5 +1,6 @@
 package com.bottari.ootday.presentation.view.loginView
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -21,6 +22,7 @@ import com.bottari.ootday.data.model.loginModel.LoginViewModel
 import com.bottari.ootday.data.model.loginModel.LoginViewModelFactory
 import com.bottari.ootday.databinding.LoginActivityBinding
 import com.bottari.ootday.domain.repository.AuthRepository
+import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: LoginActivityBinding
@@ -56,6 +58,11 @@ class LoginActivity : AppCompatActivity() {
         // 비밀번호 보이기/숨기기 버튼 클릭 리스너
         binding.passwordToggleButton.setOnClickListener {
             togglePasswordVisibility()
+        }
+
+        binding.textSignup.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
         }
 
         // ViewModel의 LiveData 관찰
