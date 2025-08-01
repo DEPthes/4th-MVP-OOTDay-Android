@@ -3,6 +3,7 @@ package com.bottari.ootday.presentation.view.signupView.activities // 실제 앱
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bottari.ootday.databinding.SignUpActivityBinding // 올바른 바인딩 클래스
@@ -10,6 +11,9 @@ import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep1Frag
 import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep2Fragment
 import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep3Fragment
 import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep4Fragment
+import com.bottari.ootday.data.model.signupModel.SignUpData
+import com.bottari.ootday.data.model.signupModel.SignUpViewModel
+import androidx.activity.viewModels
 
 // 각 Fragment들을 import 해야 합니다.
 
@@ -17,6 +21,10 @@ import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep4Frag
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: SignUpActivityBinding
+
+    // 회원가입 전체 데이터를 관리할 ViewModel
+    private val signUpViewModel: SignUpViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +50,7 @@ class SignUpActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(binding.signupMainFragment.id, SignUpStep1Fragment())
+                .replace(binding.signupMainFragment.id, SignUpStep2Fragment())
                 .commit()
         }
         updateToolbarUI() // 초기 로드 후 툴바 UI 업데이트
@@ -55,24 +63,37 @@ class SignUpActivity : AppCompatActivity() {
     fun navigateToNextStep(currentStep: Int) {
         val nextFragment: Fragment? =
             when (currentStep) {
-                1 -> SignUpStep2Fragment()
+                1 -> SignUpStep1Fragment()
                 2 -> SignUpStep3Fragment()
                 3 -> SignUpStep4Fragment()
-                else -> null // Step 5 이후에는 Fragment 전환이 아닌 Activity 전환
+                else -> null
             }
 
         if (nextFragment != null) {
-            // Fragment 전환
             supportFragmentManager
                 .beginTransaction()
                 .replace(binding.signupMainFragment.id, nextFragment)
-                .addToBackStack(null) // 뒤로가기 시 이전 Fragment로 돌아갈 수 있도록 백스택에 추가
+                .addToBackStack(null)
                 .commit()
         } else {
-            // Step 4에서 다음 버튼 클릭 시 SignUpCongActivity로 이동
+            // Step 4에서 다음 버튼 클릭 시 이 부분이 호출됩니다.
+            // 최종 데이터를 ViewModel에서 가져와 백엔드 연동 로직을 구현합니다.
+            val finalSignUpData = signUpViewModel.signUpData.value
+
+            // TODO: 백엔드 연동 로직을 이곳에 구현하세요.
+            // 예를 들어, authRepository.signUp(finalSignUpData)와 같이 호출하면 됩니다.
+            // 여기서는 임시로 Toast 메시지를 띄우겠습니다.
+            val message = "회원가입 완료! \n" +
+                    "이름: ${finalSignUpData?.name}\n" +
+                    "아이디: ${finalSignUpData?.id}\n" +
+                    "전화번호: ${finalSignUpData?.phoneNumber}\n" +
+                    "비밀번호: ${finalSignUpData?.password}"
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+
+            // SignUpCongActivity로 이동
             val intent = Intent(this, SignUpCongActivity::class.java)
             startActivity(intent)
-            finish() // 회원가입 흐름을 마쳤으므로 현재 SignupActivity 종료
+            finish()
         }
     }
 
@@ -101,8 +122,8 @@ class SignUpActivity : AppCompatActivity() {
      */
     private fun getCurrentStepNumber(fragment: Fragment?): Int =
         when (fragment) {
-            is SignUpStep1Fragment -> 1
-            is SignUpStep2Fragment -> 2
+            is SignUpStep1Fragment -> 2
+            is SignUpStep2Fragment -> 1
             is SignUpStep3Fragment -> 3
             is SignUpStep4Fragment -> 4
             else -> 1 // 기본값 또는 알 수 없는 Fragment일 경우

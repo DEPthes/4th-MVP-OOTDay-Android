@@ -32,6 +32,8 @@
         android:textSize="@dimen/body_medium_size"
         android:backgroundTint="@color/gray_medium"
         android:maxLines="1"
+        android:maxLength="11"
+        android:inputType="number"
         android:layout_marginStart="24sp"
         android:layout_marginTop="54sp"
         android:layout_marginEnd="12sp"
@@ -76,7 +78,23 @@
         />
 
     <TextView
-        android:id="@+id/step2_number_error"
+        android:id="@+id/step2_timer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="03:00"
+        android:textColor="@color/font_gray"
+        android:textSize="@dimen/title_small_size"
+        android:fontFamily="@font/noto_sans_kr_regular"
+        android:layout_marginEnd="8dp"
+        android:alpha="0.8"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/step2_phone_number_confirm"
+        app:layout_constraintTop_toTopOf="@+id/step2_phone_number_confirm"
+        app:layout_constraintBottom_toBottomOf="@+id/step2_phone_number_confirm"
+        />
+
+    <TextView
+        android:id="@+id/step2_auth_number_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-15sp"

@@ -1,6 +1,5 @@
 package com.bottari.ootday.presentation.view.signupView.fragments // 올바른 패키지명
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,12 +14,17 @@ import com.bottari.ootday.R
 import com.bottari.ootday.data.model.signupModel.SignUpStep1ViewModel
 import com.bottari.ootday.databinding.SignUpStep1Binding
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
+import androidx.fragment.app.activityViewModels // 추가
+import com.bottari.ootday.data.model.signupModel.SignUpViewModel // 추가
 
 
 class SignUpStep1Fragment : Fragment() {
 
     private var _binding: SignUpStep1Binding? = null
     val binding get() = _binding!! // ktlint 규칙 준수를 위해 'private' 제거
+
+    // SignUpActivity의 ViewModel을 공유
+    private val signUpViewModel: SignUpViewModel by activityViewModels()
 
     private val viewModel: SignUpStep1ViewModel by viewModels()
 
@@ -70,7 +74,9 @@ class SignUpStep1Fragment : Fragment() {
 
             if (canProceed) {
                 // 모든 유효성 검사 통과 시 다음 단계로 이동
-                (activity as? SignUpActivity)?.navigateToNextStep(1) // 현재 단계 번호 1 전달
+                val name = binding.step1LoginArea.text.toString()
+                signUpViewModel.setName(name)
+                (activity as? SignUpActivity)?.navigateToNextStep(2) // 현재 단계 번호 1 전달
             }
             // else: ViewModel에서 displayErrorMessage LiveData를 통해 오류 메시지가 이미 설정되었으므로 별도 처리 불필요
         }

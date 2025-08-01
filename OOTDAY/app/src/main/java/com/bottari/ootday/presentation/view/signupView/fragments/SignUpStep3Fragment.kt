@@ -1,62 +1,102 @@
 package com.bottari.ootday.presentation.view.signupView.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bottari.ootday.R
 import com.bottari.ootday.data.model.signupModel.SignUpStep3ViewModel
 import com.bottari.ootday.databinding.SignUpStep3Binding
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
+import androidx.fragment.app.activityViewModels
+import com.bottari.ootday.data.model.signupModel.SignUpViewModel
 
 class SignUpStep3Fragment : Fragment() {
+
     private var _binding: SignUpStep3Binding? = null
     val binding get() = _binding!!
 
-    // ViewModel 인스턴스 생성 (MVVM 패턴)
+    private val signUpViewModel: SignUpViewModel by activityViewModels() // 추가
+
     private val viewModel: SignUpStep3ViewModel by viewModels()
 
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            viewModel.onInputIdChanged(s.toString())
+        }
+        override fun afterTextChanged(s: Editable?) {}
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = SignUpStep3Binding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // UI 요소 초기화 및 ViewModel 관찰
         setupListeners()
         observeViewModel()
-    }
 
-    private fun setupListeners() {
-        // 예시: step1_login_button (이름 입력 후 다음 버튼) 클릭 시
-        // XML 파일에 따라 Button ID가 다를 수 있으니 확인해주세요.
-        binding.step3NextButton.setOnClickListener {
-            // `sign_up_step1.xml`의 `login_button` ID 사용
-            // ViewModel에 이벤트 전달 또는 유효성 검사 로직 호출
-            // 예: viewModel.onNextButtonClicked(binding.step1LoginArea.text.toString())
-            (activity as? SignUpActivity)?.navigateToNextStep(3) // 다음 단계로 이동 (SignUpActivity에 위임)
-        }
-    }
-
-    private fun observeViewModel() {
-        // ViewModel의 LiveData를 관찰하여 UI 업데이트 (MVVM 패턴의 핵심)
-        // 예: viewModel.isValidInput.observe(viewLifecycleOwner) { isValid ->
-        //     binding.loginButton.isEnabled = isValid
-        // }
+        viewModel.onInputIdChanged(binding.step3IdInput.text.toString())
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.step3IdInput.removeTextChangedListener(textWatcher)
         _binding = null
+    }
+
+    private fun setupListeners() {
+        binding.step3IdInput.addTextChangedListener(textWatcher)
+
+        binding.step3NextButton.setOnClickListener {
+            val canProceed = viewModel.onNextButtonClicked()
+            if (canProceed) {
+                // ViewModel에 아이디 데이터 저장
+                val id = binding.step3IdInput.text.toString()
+                signUpViewModel.setId(id)
+
+                (activity as? SignUpActivity)?.navigateToNextStep(3)
+            }
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.isNextButtonEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            binding.step3NextButton.isEnabled = isEnabled
+        }
+
+        viewModel.displayErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            if (!errorMessage.isNullOrBlank()) {
+                binding.step3IdError.text = errorMessage
+                binding.step3IdError.visibility = View.VISIBLE
+                setEditTextUnderlineColor(binding.step3IdInput, R.color.font_red)
+            } else {
+                binding.step3IdError.visibility = View.GONE
+                setEditTextUnderlineColor(binding.step3IdInput, R.color.gray_dark)
+            }
+        }
+    }
+
+    private fun setEditTextUnderlineColor(editText: android.widget.EditText, colorResId: Int) {
+        val color = ContextCompat.getColor(requireContext(), colorResId)
+        val drawable = editText.background
+        if (drawable != null) {
+            val wrappedDrawable = DrawableCompat.wrap(drawable)
+            DrawableCompat.setTint(wrappedDrawable, color)
+            editText.background = wrappedDrawable
+        }
     }
 }
