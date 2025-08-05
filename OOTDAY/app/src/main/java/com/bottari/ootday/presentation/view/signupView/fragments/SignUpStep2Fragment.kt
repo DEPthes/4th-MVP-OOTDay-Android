@@ -31,7 +31,7 @@ class SignUpStep2Fragment : Fragment() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             viewModel.onPhoneNumberChanged(s.toString())
-            setEditTextUnderlineColor(binding.step2PhoneNumberInput, R.color.gray_dark)
+            setEditTextUnderlineColor(binding.step2PhoneNumberInput, R.color.gray_100)
         }
         override fun afterTextChanged(s: Editable?) {}
     }
@@ -40,7 +40,7 @@ class SignUpStep2Fragment : Fragment() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             viewModel.onAuthCodeChanged(s.toString())
-            setEditTextUnderlineColor(binding.step2PhoneNumberConfirm, R.color.gray_dark)
+            setEditTextUnderlineColor(binding.step2PhoneNumberConfirm, R.color.gray_100)
         }
         override fun afterTextChanged(s: Editable?) {}
     }
@@ -119,7 +119,7 @@ class SignUpStep2Fragment : Fragment() {
                 setEditTextUnderlineColor(binding.step2PhoneNumberConfirm, R.color.font_red)
             } else {
                 binding.step2AuthNumberError.visibility = View.GONE
-                setEditTextUnderlineColor(binding.step2PhoneNumberConfirm, R.color.gray_dark)
+                setEditTextUnderlineColor(binding.step2PhoneNumberConfirm, R.color.gray_100)
             }
         }
 
@@ -157,8 +157,8 @@ class SignUpStep2Fragment : Fragment() {
         binding.step2TimerText.visibility = View.GONE
         binding.step2AuthNumberError.visibility = View.GONE
 
-        setEditTextUnderlineColor(binding.step2PhoneNumberInput, R.color.gray_dark)
-        setEditTextUnderlineColor(binding.step2PhoneNumberConfirm, R.color.gray_dark)
+        setEditTextUnderlineColor(binding.step2PhoneNumberInput, R.color.gray_100)
+        setEditTextUnderlineColor(binding.step2PhoneNumberConfirm, R.color.gray_100)
     }
 
     private fun setEditTextUnderlineColor(editText: EditText, colorResId: Int) {

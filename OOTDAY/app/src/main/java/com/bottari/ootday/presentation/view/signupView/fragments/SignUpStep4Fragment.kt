@@ -130,7 +130,7 @@ class SignUpStep4Fragment : Fragment() {
                 setEditTextUnderlineColor(binding.step4PasswordInput, R.color.font_red)
             } else {
                 binding.step4PsInputError.visibility = View.GONE
-                setEditTextUnderlineColor(binding.step4PasswordInput, R.color.gray_dark)
+                setEditTextUnderlineColor(binding.step4PasswordInput, R.color.gray_100)
             }
         }
 
@@ -141,7 +141,7 @@ class SignUpStep4Fragment : Fragment() {
                 setEditTextUnderlineColor(binding.step4PasswordConfirmInput, R.color.font_red)
             } else {
                 binding.step4PsConfirmError.visibility = View.GONE
-                setEditTextUnderlineColor(binding.step4PasswordConfirmInput, R.color.gray_dark)
+                setEditTextUnderlineColor(binding.step4PasswordConfirmInput, R.color.gray_100)
             }
         }
     }

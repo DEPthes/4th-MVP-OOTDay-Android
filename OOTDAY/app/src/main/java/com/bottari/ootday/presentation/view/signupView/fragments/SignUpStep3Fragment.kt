@@ -1,6 +1,5 @@
 package com.bottari.ootday.presentation.view.signupView.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -85,7 +84,7 @@ class SignUpStep3Fragment : Fragment() {
                 setEditTextUnderlineColor(binding.step3IdInput, R.color.font_red)
             } else {
                 binding.step3IdError.visibility = View.GONE
-                setEditTextUnderlineColor(binding.step3IdInput, R.color.gray_dark)
+                setEditTextUnderlineColor(binding.step3IdInput, R.color.gray_100)
             }
         }
     }

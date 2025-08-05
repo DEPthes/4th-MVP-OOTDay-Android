@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_light">
+    android:background="@color/gray_400">
 
     <TextView
         android:id="@+id/step1_title"
@@ -26,11 +26,11 @@
         android:paddingHorizontal="16sp"
         android:paddingVertical="4sp"
         android:hint="이름을 2~5자로 입력해주세요. (한글 + 영문, 조합 가능)"
-        android:textColorHint="@color/gray_medium"
+        android:textColorHint="@color/gray_200"
         android:textColorHighlight="@color/brown_300"
         android:fontFamily="@font/noto_sans_kr_medium"
         android:textSize="@dimen/body_medium_size"
-        android:backgroundTint="@color/gray_medium"
+        android:backgroundTint="@color/gray_200"
         android:maxLines="1"
         android:maxLength="5"
         android:layout_marginVertical="54sp"

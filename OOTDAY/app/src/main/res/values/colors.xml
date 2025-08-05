@@ -24,10 +24,11 @@
     <color name="warm_gray">#8B8680</color>
 
     <!-- 컬러 시스템 - Gray Palette -->
-    <color name="gray_light">#FAFAFA</color>
-    <color name="gray_medium_light">#FEFEFE</color>
-    <color name="gray_medium">#EDEDED</color>
-    <color name="gray_dark">#A5A5A5</color>
+    <color name="gray_400">#FAFAFA</color>
+    <color name="gray_300">#F1EFEF</color>
+    <color name="gray_200">#E0E0E0</color>
+    <color name="gray_100">#A5A5A5</color>
+    <color name="gray_500">#F0ECEC</color>
 
     <!-- 추가 시스템 컬러 -->
     <color name="white">#FFFFFF</color>

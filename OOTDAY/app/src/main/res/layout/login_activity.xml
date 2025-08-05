@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/gray_medium_light"
+    android:background="@color/gray_400"
     tools:context=".presentation.view.MainActivity">
 
     <!-- 제목 FrameLayout -->
@@ -63,8 +63,8 @@
         android:hint="아이디를 입력해주세요."
         android:paddingLeft="20sp"
         android:textColorHighlight="@color/brown_300"
-        android:backgroundTint="@color/gray_medium"
-        android:textColorHint="@color/gray_medium"
+        android:backgroundTint="@color/gray_200"
+        android:textColorHint="@color/gray_200"
         android:textSize="@dimen/title_small_size"
         android:fontFamily="@font/noto_sans_kr_regular"
         android:inputType="text"
@@ -80,8 +80,8 @@
         android:hint="비밀번호를 입력해주세요."
         android:paddingLeft="20sp"
         android:textColorHighlight="@color/brown_300"
-        android:backgroundTint="@color/gray_medium"
-        android:textColorHint="@color/gray_medium"
+        android:backgroundTint="@color/gray_200"
+        android:textColorHint="@color/gray_200"
         android:textSize="@dimen/title_small_size"
         android:fontFamily="@font/noto_sans_kr_regular"
         android:inputType="textPassword"
@@ -179,7 +179,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="회원가입"
-            android:textColor="@color/gray_dark"
+            android:textColor="@color/gray_100"
             android:textSize="@dimen/title_small_size"
             android:fontFamily="@font/noto_sans_kr_regular"
             android:clickable="true"
@@ -191,7 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" | "
-            android:textColor="@color/gray_dark"
+            android:textColor="@color/gray_100"
             android:textSize="@dimen/title_small_size"
             android:layout_marginRight="16sp"/>
 
@@ -200,7 +200,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="아이디 찾기"
-            android:textColor="@color/gray_dark"
+            android:textColor="@color/gray_100"
             android:textSize="@dimen/title_small_size"
             android:fontFamily="@font/noto_sans_kr_regular"
             android:clickable="true"
@@ -212,7 +212,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" | "
-            android:textColor="@color/gray_dark"
+            android:textColor="@color/gray_100"
             android:textSize="@dimen/title_small_size"
             android:layout_marginRight="16sp"/>
 
@@ -221,7 +221,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="비밀번호 찾기"
-            android:textColor="@color/gray_dark"
+            android:textColor="@color/gray_100"
             android:textSize="@dimen/title_small_size"
             android:fontFamily="@font/noto_sans_kr_regular"
             android:clickable="true"

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_light">
+    android:background="@color/gray_400">
 
     <TextView
         android:id="@+id/step2_title"
@@ -26,11 +26,11 @@
         android:paddingHorizontal="16sp"
         android:paddingVertical="4sp"
         android:hint="휴대폰 번호를 입력해주세요."
-        android:textColorHint="@color/gray_medium"
+        android:textColorHint="@color/gray_200"
         android:textColorHighlight="@color/brown_300"
         android:fontFamily="@font/noto_sans_kr_medium"
         android:textSize="@dimen/body_medium_size"
-        android:backgroundTint="@color/gray_medium"
+        android:backgroundTint="@color/gray_200"
         android:maxLines="1"
         android:maxLength="11"
         android:inputType="number"
@@ -66,11 +66,11 @@
         android:paddingHorizontal="16sp"
         android:paddingVertical="4sp"
         android:hint="인증 번호를 입력해주세요."
-        android:textColorHint="@color/gray_medium"
+        android:textColorHint="@color/gray_200"
         android:textColorHighlight="@color/brown_300"
         android:fontFamily="@font/noto_sans_kr_medium"
         android:textSize="@dimen/body_medium_size"
-        android:backgroundTint="@color/gray_medium"
+        android:backgroundTint="@color/gray_200"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="@id/step2_phone_number_input"
         app:layout_constraintStart_toStartOf="@id/step2_phone_number_input"

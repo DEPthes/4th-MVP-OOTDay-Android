@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_light">
+    android:background="@color/gray_400">
 
     <TextView
         android:id="@+id/step4_title"
@@ -26,11 +26,11 @@
         android:paddingVertical="4sp"
         android:hint="영문과 특수문자를 포함한 8-10자여야 해요."
         android:inputType="textPassword"
-        android:textColorHint="@color/gray_medium"
+        android:textColorHint="@color/gray_200"
         android:textColorHighlight="@color/brown_300"
         android:fontFamily="@font/noto_sans_kr_medium"
         android:textSize="@dimen/body_medium_size"
-        android:backgroundTint="@color/gray_medium"
+        android:backgroundTint="@color/gray_200"
         android:maxLines="1"
         android:layout_marginVertical="54sp"
         android:layout_marginHorizontal="24sp"
@@ -70,11 +70,11 @@
         android:paddingVertical="4sp"
         android:hint="비밀번호를 한 번 더 입력해주세요."
         android:inputType="textPassword"
-        android:textColorHint="@color/gray_medium"
+        android:textColorHint="@color/gray_200"
         android:textColorHighlight="@color/brown_300"
         android:fontFamily="@font/noto_sans_kr_medium"
         android:textSize="@dimen/body_medium_size"
-        android:backgroundTint="@color/gray_medium"
+        android:backgroundTint="@color/gray_200"
         android:maxLines="1"
         android:layout_marginTop="16sp"
         android:layout_marginHorizontal="24sp"

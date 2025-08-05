@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         notoSansKrRegular = ResourcesCompat.getFont(this, R.font.noto_sans_kr_regular)!!
-        defaultEditTextTint = ContextCompat.getColor(this, R.color.gray_dark)
+        defaultEditTextTint = ContextCompat.getColor(this, R.color.gray_100)
 
         updateLoginButtonState()
 
@@ -193,8 +193,8 @@ class LoginActivity : AppCompatActivity() {
 
     // 모든 오류 UI를 초기화하는 함수
     private fun clearLoginErrors() {
-        setEditTextUnderlineColor(binding.loginArea, R.color.gray_dark)
-        setEditTextUnderlineColor(binding.passwordArea, R.color.gray_dark)
+        setEditTextUnderlineColor(binding.loginArea, R.color.gray_100)
+        setEditTextUnderlineColor(binding.passwordArea, R.color.gray_100)
         setLoginErrorVisibility(false)
     }
 }

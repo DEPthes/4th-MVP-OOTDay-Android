@@ -96,7 +96,7 @@ class SignUpStep1Fragment : Fragment() {
                 setEditTextUnderlineColor(binding.step1LoginArea, R.color.font_red)
             } else {
                 binding.step1NameError.visibility = View.GONE
-                setEditTextUnderlineColor(binding.step1LoginArea, R.color.gray_dark)
+                setEditTextUnderlineColor(binding.step1LoginArea, R.color.gray_100)
             }
         }
     }

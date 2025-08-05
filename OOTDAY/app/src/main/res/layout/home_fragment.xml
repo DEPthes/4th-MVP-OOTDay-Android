@@ -1,14 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout="@layout/main_activity"
+    tools:parentTag="androidx.fragment.app.FragmentContainerView"
+    android:background="@color/white"
     >
 
+    <ImageView
+        android:id="@+id/home_weather_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:src="@drawable/img_card_weather"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <FrameLayout
+        android:id="@+id/home_card_frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/rounded_background"
+        android:layout_marginTop="20sp"
+        android:elevation="1sp"
+        android:layout_marginHorizontal="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_weather_view"
+        app:layout_constraintBottom_toTopOf="@+id/home_find_item_button"
+        app:layout_constraintDimensionRatio="1:1.2">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/add_item_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="1sp">
 
+            <ImageView
+                android:id="@+id/closet_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:elevation="2sp"
+                android:src="@drawable/img_empty_closet"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="parent"
+
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/galleryRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="100sp"
+            android:elevation="2sp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/plus_closet_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-4sp"
+        android:elevation="2sp"
+        android:src="@drawable/frm_plus_my_closet"
+        app:layout_constraintBottom_toBottomOf="@id/home_card_frame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/home_find_item_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_card_frame"
+        android:background="@drawable/sl_find_passion_button_selector"
+        app:backgroundTint="@null"
+        app:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:enabled="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
