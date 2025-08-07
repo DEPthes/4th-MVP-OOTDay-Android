@@ -22,6 +22,7 @@ import com.bottari.ootday.data.model.loginModel.LoginViewModel
 import com.bottari.ootday.data.model.loginModel.LoginViewModelFactory
 import com.bottari.ootday.databinding.LoginActivityBinding
 import com.bottari.ootday.domain.repository.AuthRepository
+import com.bottari.ootday.presentation.view.mainView.activities.MainActivity
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -71,7 +72,8 @@ class LoginActivity : AppCompatActivity() {
             Observer { event ->
                 event.getContentIfNotHandled()?.let { success ->
                     if (success) {
-                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
                         clearLoginErrors()
                     }
                 }

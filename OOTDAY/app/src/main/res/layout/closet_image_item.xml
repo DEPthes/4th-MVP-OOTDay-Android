@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100sp"
+    android:layout_height="121sp"
+    android:padding="4sp">
+
+    <ImageButton
+        android:id="@+id/clothing_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_item_background"
+        android:src="@drawable/image1"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop" />
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="14sp"
+        android:layout_height="14sp"
+        android:layout_gravity="top|end"
+        android:layout_margin="4dp"
+        android:visibility="gone"
+
+        android:background="@drawable/sl_item_check_selector"
+        android:button="@null"
+        />
+</FrameLayout>

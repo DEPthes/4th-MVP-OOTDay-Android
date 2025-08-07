@@ -36,6 +36,10 @@
             android:name=".presentation.view.signupView.activities.SignUpCongActivity"
             android:exported="false"
             />
+        <activity
+            android:name=".presentation.view.mainView.activities.MainActivity"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

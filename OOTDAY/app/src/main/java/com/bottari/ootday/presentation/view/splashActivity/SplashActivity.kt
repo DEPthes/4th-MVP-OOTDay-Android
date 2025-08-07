@@ -6,7 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.bottari.ootday.R
-import com.bottari.ootday.presentation.view.MainActivity
+import com.bottari.ootday.presentation.view.mainView.activities.MainActivity
 import com.bottari.ootday.presentation.view.loginView.LoginActivity
 
 class SplashActivity : AppCompatActivity() {

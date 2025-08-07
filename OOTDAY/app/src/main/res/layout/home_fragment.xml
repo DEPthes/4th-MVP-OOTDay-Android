@@ -20,6 +20,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
+        android:id="@+id/overlay_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/cover_home_frame_drawable"
+        android:alpha="0.1"
+        android:visibility="gone"
+        android:elevation="10sp"
+        app:layout_constraintTop_toTopOf="@id/home_card_frame"
+        app:layout_constraintBottom_toBottomOf="@id/home_card_frame"
+        app:layout_constraintStart_toStartOf="@id/home_card_frame"
+        app:layout_constraintEnd_toEndOf="@id/home_card_frame" />
+
+    <FrameLayout
         android:id="@+id/home_card_frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -30,8 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_weather_view"
-        app:layout_constraintBottom_toTopOf="@+id/home_find_item_button"
-        app:layout_constraintDimensionRatio="1:1.2">
+        app:layout_constraintBottom_toTopOf="@+id/home_find_item_button">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/add_item_container"
@@ -43,27 +55,77 @@
                 android:id="@+id/closet_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
+
                 android:elevation="2sp"
                 android:src="@drawable/img_empty_closet"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintTop_toTopOf="parent"
 
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/galleryRecyclerView"
+        <GridLayout
+            android:id="@+id/grid_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="100sp"
-            android:elevation="2sp"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2" />
+            android:layout_margin="8sp"
+            android:paddingBottom="50sp"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/item_image1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="4sp"
+                android:background="@drawable/rounded_image_background"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image1" />
+
+            <ImageView
+                android:id="@+id/item_image2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="4sp"
+                android:background="@drawable/rounded_image_background"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image2" />
+
+            <ImageView
+                android:id="@+id/item_image3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="4sp"
+                android:background="@drawable/rounded_image_background"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image3" />
+
+            <ImageView
+                android:id="@+id/item_image4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="4sp"
+                android:background="@drawable/rounded_image_background"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image4" />
+        </GridLayout>
+
 
     </FrameLayout>
 
@@ -83,14 +145,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25sp"
+        android:layout_marginBottom="20sp"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_card_frame"
         android:background="@drawable/sl_find_passion_button_selector"
+        android:enabled="false"
+        android:stateListAnimator="@null"
         app:backgroundTint="@null"
         app:elevation="0dp"
-        android:stateListAnimator="@null"
-        android:enabled="false" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_card_frame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

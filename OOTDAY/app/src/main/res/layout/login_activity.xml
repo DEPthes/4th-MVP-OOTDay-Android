@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/gray_400"
-    tools:context=".presentation.view.MainActivity">
+    tools:context=".presentation.view.mainView.activities.MainActivity">
 
     <!-- 제목 FrameLayout -->
     <FrameLayout
@@ -62,8 +62,7 @@
         android:layout_marginTop="42sp"
         android:hint="아이디를 입력해주세요."
         android:paddingLeft="20sp"
-        android:textColorHighlight="@color/brown_300"
-        android:backgroundTint="@color/gray_200"
+        android:backgroundTint="@color/sl_edittext_selector"
         android:textColorHint="@color/gray_200"
         android:textSize="@dimen/title_small_size"
         android:fontFamily="@font/noto_sans_kr_regular"
@@ -79,8 +78,7 @@
         android:layout_height="50sp"
         android:hint="비밀번호를 입력해주세요."
         android:paddingLeft="20sp"
-        android:textColorHighlight="@color/brown_300"
-        android:backgroundTint="@color/gray_200"
+        android:backgroundTint="@color/sl_edittext_selector"
         android:textColorHint="@color/gray_200"
         android:textSize="@dimen/title_small_size"
         android:fontFamily="@font/noto_sans_kr_regular"
