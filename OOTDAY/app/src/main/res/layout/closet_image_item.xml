@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100sp"
-    android:layout_height="121sp"
-    android:padding="4sp">
+    android:layout_width="115sp"
+    android:layout_height="139sp"
+    android:layout_marginBottom="5sp"
+    >
 
     <ImageButton
         android:id="@+id/clothing_image"
@@ -12,7 +13,18 @@
         android:background="@drawable/rounded_item_background"
         android:src="@drawable/image1"
         android:clipToOutline="true"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:elevation="1sp"/>
+
+    <View
+        android:id="@+id/clothing_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/sl_closet_overlay_selector"
+        android:elevation="2sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible" />
 
     <CheckBox
         android:id="@+id/checkbox"
@@ -20,7 +32,8 @@
         android:layout_height="14sp"
         android:layout_gravity="top|end"
         android:layout_margin="4dp"
-        android:visibility="gone"
+        android:visibility="visible"
+        android:elevation="3sp"
 
         android:background="@drawable/sl_item_check_selector"
         android:button="@null"

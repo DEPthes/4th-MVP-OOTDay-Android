@@ -29,10 +29,10 @@
                 android:text="상의"
                 android:fontFamily="@font/noto_sans_kr_medium"
                 android:gravity="center"
-                android:paddingHorizontal="20sp"
+                android:paddingHorizontal="15sp"
                 android:layout_marginLeft="20sp"
                 android:textSize="@dimen/body_medium_size"
-                android:textColor="@color/gray_100" />
+                android:textColor="@color/gray_200" />
 
             <TextView
                 android:id="@+id/category_bottom"
@@ -41,9 +41,9 @@
                 android:text="하의"
                 android:fontFamily="@font/noto_sans_kr_medium"
                 android:gravity="center"
-                android:paddingHorizontal="20sp"
+                android:paddingHorizontal="15sp"
                 android:textSize="@dimen/body_medium_size"
-                android:textColor="@color/gray_100" />
+                android:textColor="@color/gray_200" />
 
             <TextView
                 android:id="@+id/category_dress"
@@ -52,9 +52,9 @@
                 android:text="원피스"
                 android:fontFamily="@font/noto_sans_kr_medium"
                 android:gravity="center"
-                android:paddingHorizontal="20sp"
+                android:paddingHorizontal="15sp"
                 android:textSize="@dimen/body_medium_size"
-                android:textColor="@color/gray_100" />
+                android:textColor="@color/gray_200" />
 
             <TextView
                 android:id="@+id/category_shoes"
@@ -63,9 +63,9 @@
                 android:text="신발"
                 android:fontFamily="@font/noto_sans_kr_medium"
                 android:gravity="center"
-                android:paddingHorizontal="20sp"
+                android:paddingHorizontal="15sp"
                 android:textSize="@dimen/body_medium_size"
-                android:textColor="@color/gray_100" />
+                android:textColor="@color/gray_200" />
 
             <TextView
                 android:id="@+id/category_passion_item"
@@ -74,9 +74,9 @@
                 android:text="패션소품"
                 android:fontFamily="@font/noto_sans_kr_medium"
                 android:gravity="center"
-                android:paddingHorizontal="20sp"
+                android:paddingHorizontal="15sp"
                 android:textSize="@dimen/body_medium_size"
-                android:textColor="@color/gray_100" />
+                android:textColor="@color/gray_200" />
 
             <TextView
                 android:id="@+id/category_decorations"
@@ -85,9 +85,9 @@
                 android:text="악세사리"
                 android:fontFamily="@font/noto_sans_kr_medium"
                 android:gravity="center"
-                android:paddingHorizontal="20sp"
+                android:paddingHorizontal="15sp"
                 android:textSize="@dimen/body_medium_size"
-                android:textColor="@color/gray_100" />
+                android:textColor="@color/gray_200" />
 
         </LinearLayout>
 
@@ -103,13 +103,13 @@
         android:layout_marginRight="30sp"
         android:layout_marginVertical="5sp"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <CheckBox
             android:id="@+id/remember_me_checkbox"
             android:layout_width="16sp"
-            android:layout_height="18dp"
+            android:layout_height="10sp"
             android:background="@drawable/sl_check_selector"
             android:button="@null" />
 
@@ -117,6 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="모두 선택"
+            android:layout_marginLeft="5sp"
             android:fontFamily="@font/noto_sans_kr_regular"
             android:textSize="@dimen/title_small_size"
             android:textColor="@color/black"
@@ -132,6 +133,7 @@
         android:layout_width="370sp"
         android:layout_height="54sp"
         android:background="@drawable/ic_tooltip"
+        android:layout_marginTop="-15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/all_select_button"
@@ -140,9 +142,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/closet_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="380sp"
-        android:layout_marginTop="0sp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5sp"
         android:layout_marginBottom="20sp"
+        android:layout_marginHorizontal="25sp"
         app:layout_constraintBottom_toTopOf="@+id/styling_start_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -152,6 +155,7 @@
         android:id="@+id/styling_start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/closet_recyclerview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -159,7 +163,7 @@
 
         android:background="@drawable/sl_styling_start_selector"
 
-        android:layout_marginBottom="100sp"
+        android:layout_marginBottom="20sp"
         app:backgroundTint="@null"
         app:elevation="0dp"
         android:stateListAnimator="@null"

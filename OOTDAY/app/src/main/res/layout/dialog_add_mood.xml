@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="270sp"
+    android:layout_height="wrap_content"
+    android:paddingVertical="15sp"
+    android:paddingHorizontal="10sp"
+    android:background="@drawable/rounded_dialog_background">
+
+    <TextView
+    android:id="@+id/dialog_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Mood를 추가하시겠습니까?"
+    android:textSize="18sp"
+    android:fontFamily="@font/noto_sans_kr_bold"
+    android:textColor="@color/font_gray"
+        android:layout_marginTop="-10sp"
+    android:alpha="0.8"
+    android:textStyle="bold"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/plus_edit_text"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:hint="입력은 한글로, 최대 5글자까지 가능해요."
+        android:fontFamily="@font/noto_sans_kr_regular"
+        android:textSize="@dimen/body_small_size"
+        android:paddingVertical="2sp"
+        android:gravity="center"
+        android:maxLength="5"
+        android:textColorHint="@color/gray_200"
+        android:backgroundTint="@color/sl_edittext_selector"
+        android:layout_marginTop="5sp"
+        android:layout_marginBottom="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_title"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edittext"
+
+        android:layout_marginBottom="2sp"
+        app:layout_constraintEnd_toEndOf="@+id/plus_edit_text"
+        app:layout_constraintTop_toTopOf="@+id/plus_edit_text"
+        app:layout_constraintBottom_toBottomOf="@+id/plus_edit_text"
+        />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="0sp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/plus_edit_text">
+
+        <ImageButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_close" />
+
+        <ImageButton
+            android:id="@+id/btn_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/sl_plus_selector" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

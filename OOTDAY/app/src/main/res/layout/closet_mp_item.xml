@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardElevation="0dp">
+
+        <TextView
+        android:id="@+id/mood_button_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="12sp"
+        android:paddingVertical="0sp"
+        android:background="@drawable/sl_mp_button_background"
+        android:text="우아한"
+        android:textSize="@dimen/body_small_size"
+        android:textColor="@color/font_gray"
+        android:fontFamily="@font/noto_sans_kr_regular"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        />
+
+</androidx.cardview.widget.CardView>

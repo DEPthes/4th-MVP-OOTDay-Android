@@ -21,7 +21,41 @@
         android:id="@+id/firstClosetFragment"
         android:name="com.bottari.ootday.presentation.view.mainView.fragments.FirstClosetFragment"
         android:label="first_closet_fragment"
-        tools:layout="@layout/first_closet_fragment" />
+        tools:layout="@layout/first_closet_fragment"
+        >
+        <action
+            android:id="@+id/action_firstClosetFragment_to_firstClosetMoodFragment"
+            app:destination="@id/firstClosetMoodFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/firstClosetMoodFragment"
+        android:name="com.bottari.ootday.presentation.view.mainView.fragments.FirstClosetMoodFragment"
+        android:label="first_closet_mood_fragment"
+        tools:layout="@layout/first_closet_mood_fragment"
+        >
+        <action
+            android:id="@+id/action_firstClosetMoodFragment_to_firstClosetPlaceFragment"
+            app:destination="@id/firstClosetPlaceFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/firstClosetPlaceFragment"
+        android:name="com.bottari.ootday.presentation.view.mainView.fragments.FirstClosetPlaceFragment"
+        android:label="first_closet_place_fragment"
+        tools:layout="@layout/first_closet_place_fragment"
+        >
+    <action
+        android:id="@+id/action_firstClosetPlaceFragment_to_firstClosetResultFragment"
+        app:destination="@id/firstClosetResultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/firstClosetResultFragment"
+        android:name="com.bottari.ootday.presentation.view.mainView.fragments.FirstClosetResultFragment"
+        android:label="first_closet_result_fragment"
+        tools:layout="@layout/first_closet_result_fragment" />
+
 
     <fragment
         android:id="@+id/feedFragment"
