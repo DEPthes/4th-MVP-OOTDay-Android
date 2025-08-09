@@ -1,6 +1,9 @@
+// ClosetAdapter.kt
 package com.bottari.ootday.presentation.view.mainView.adapters
 
+
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,8 +12,26 @@ import com.bottari.ootday.databinding.ClosetImageItemBinding
 import com.bottari.ootday.databinding.ClosetPlusItemBinding
 import com.bottari.ootday.domain.model.DisplayableClosetItem
 
-class ClosetAdapter(private val onItemClick: (DisplayableClosetItem) -> Unit) :
-    ListAdapter<DisplayableClosetItem, RecyclerView.ViewHolder>(ClosetItemDiffCallback()) {
+class ClosetAdapter(
+    private val onItemClick: (DisplayableClosetItem) -> Unit
+) : ListAdapter<DisplayableClosetItem, RecyclerView.ViewHolder>(ClosetItemDiffCallback()) {
+
+    private var isSelectionMode = false
+    private var selectedItemUuids: Set<String> = emptySet()
+
+    fun setSelectionMode(enabled: Boolean) {
+        if (isSelectionMode != enabled) {
+            isSelectionMode = enabled
+            notifyDataSetChanged()
+        }
+    }
+
+    fun setSelectedItems(itemUuids: Set<String>) {
+        if (selectedItemUuids != itemUuids) {
+            selectedItemUuids = itemUuids
+            notifyDataSetChanged()
+        }
+    }
 
     companion object {
         private const val VIEW_TYPE_PLUS = 0
@@ -54,37 +75,50 @@ class ClosetAdapter(private val onItemClick: (DisplayableClosetItem) -> Unit) :
         }
     }
 
-    class PlusViewHolder(
+    inner class PlusViewHolder(
         private val binding: ClosetPlusItemBinding,
         private val onItemClick: (DisplayableClosetItem) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.root.setOnClickListener {
+            binding.plusButton.setOnClickListener {
                 onItemClick(DisplayableClosetItem.AddButton)
             }
         }
-        fun bind() { /* No data to bind for Plus button */ }
+        fun bind() { /* 바인딩할 데이터가 없음 */ }
     }
 
-    class ImageViewHolder(
+    inner class ImageViewHolder(
         private val binding: ClosetImageItemBinding,
         private val onItemClick: (DisplayableClosetItem) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DisplayableClosetItem.ClosetData) {
-            // TODO: 이미지 URL을 사용하여 이미지 로드
-            // binding.clothingImage.load(item.imageUrl)
-
-            // 선택 상태에 따른 오버레이 활성화
-            binding.clothingOverlay.isActivated = item.isSelected
-
-            binding.root.setOnClickListener {
-                onItemClick(item)
+        init {
+            binding.clothingImage.setOnClickListener {
+                val item = getItem(adapterPosition)
+                if (item is DisplayableClosetItem.ClosetData) {
+                    onItemClick(item)
+                }
             }
+        }
+
+        fun bind(item: DisplayableClosetItem.ClosetData) {
+            val isSelected = selectedItemUuids.contains(item.uuid)
+
+            // ✅ itemView와 overlay의 activated 상태를 일치시킵니다.
+            itemView.isActivated = isSelected
+            binding.clothingOverlay.isActivated = isSelected
+
+            // ✅ Checkbox의 activated 상태를 일치시키고, visible 상태를 제어합니다.
+            binding.checkbox.isActivated = isSelected
+            binding.checkbox.visibility = if (isSelectionMode) View.VISIBLE else View.GONE
         }
     }
 
     class ClosetItemDiffCallback : DiffUtil.ItemCallback<DisplayableClosetItem>() {
-        override fun areItemsTheSame(oldItem: DisplayableClosetItem, newItem: DisplayableClosetItem): Boolean {
+
+        override fun areItemsTheSame(
+            oldItem: DisplayableClosetItem,
+            newItem: DisplayableClosetItem
+        ): Boolean {
             return when {
                 oldItem is DisplayableClosetItem.AddButton && newItem is DisplayableClosetItem.AddButton -> true
                 oldItem is DisplayableClosetItem.ClosetData && newItem is DisplayableClosetItem.ClosetData -> oldItem.uuid == newItem.uuid
@@ -92,7 +126,10 @@ class ClosetAdapter(private val onItemClick: (DisplayableClosetItem) -> Unit) :
             }
         }
 
-        override fun areContentsTheSame(oldItem: DisplayableClosetItem, newItem: DisplayableClosetItem): Boolean {
+        override fun areContentsTheSame(
+            oldItem: DisplayableClosetItem,
+            newItem: DisplayableClosetItem
+        ): Boolean {
             return oldItem == newItem
         }
     }

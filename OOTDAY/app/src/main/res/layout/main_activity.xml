@@ -53,6 +53,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_nav_host_fragment"
         app:menu="@menu/bottom_navigation_menu"
         app:labelVisibilityMode="unlabeled"
         app:itemIconTint="@color/brown_300"

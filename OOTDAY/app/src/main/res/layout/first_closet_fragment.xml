@@ -103,6 +103,7 @@
         android:layout_marginRight="30sp"
         android:layout_marginVertical="5sp"
         android:gravity="center"
+        android:clickable="true"
         android:visibility="visible"
         >
 
@@ -110,10 +111,12 @@
             android:id="@+id/remember_me_checkbox"
             android:layout_width="16sp"
             android:layout_height="10sp"
+            android:clickable="false"
             android:background="@drawable/sl_check_selector"
             android:button="@null" />
 
         <TextView
+            android:id="@+id/select_all_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="모두 선택"

@@ -1,9 +1,12 @@
 package com.bottari.ootday.data.repository
 
+import kotlinx.coroutines.delay
 import com.bottari.ootday.domain.model.ClosetItem
+import okhttp3.MultipartBody
 
 class ClosetRepository {
     fun getClosetItems(category: String): List<ClosetItem> {
+
         // TODO: 실제 API 호출 로직으로 교체
         return when (category) {
             "상의" -> listOf(
@@ -20,5 +23,10 @@ class ClosetRepository {
             )
             else -> emptyList()
         }
+    }
+
+    suspend fun uploadFile(file: MultipartBody.Part): Boolean {
+        delay(1000)
+        return true
     }
 }

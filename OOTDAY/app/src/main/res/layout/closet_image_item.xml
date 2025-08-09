@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/image_item"
     android:layout_width="115sp"
     android:layout_height="139sp"
     android:layout_marginBottom="5sp"
+    android:clickable="true"
+    android:focusable="true"
     >
 
     <ImageButton
@@ -22,8 +25,8 @@
         android:layout_height="match_parent"
         android:background="@drawable/sl_closet_overlay_selector"
         android:elevation="2sp"
-        android:clickable="true"
-        android:focusable="true"
+        android:clickable="false"
+        android:focusable="false"
         android:visibility="visible" />
 
     <CheckBox
@@ -32,10 +35,8 @@
         android:layout_height="14sp"
         android:layout_gravity="top|end"
         android:layout_margin="4dp"
-        android:visibility="visible"
         android:elevation="3sp"
-
-        android:background="@drawable/sl_item_check_selector"
         android:button="@null"
+        android:background="@drawable/sl_item_check_selector"
         />
 </FrameLayout>
