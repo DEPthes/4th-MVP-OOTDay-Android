@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="270sp"
     android:layout_height="wrap_content"
-    android:paddingVertical="15sp"
+    android:paddingVertical="20sp"
     android:paddingHorizontal="10sp"
     android:background="@drawable/rounded_dialog_background">
 
@@ -68,7 +68,7 @@
 
         <ImageButton
             android:id="@+id/btn_cancel"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
@@ -76,7 +76,7 @@
 
         <ImageButton
             android:id="@+id/btn_add"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/sl_plus_selector" />

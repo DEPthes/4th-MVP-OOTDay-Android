@@ -97,21 +97,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/back_home"
         android:gravity="center_vertical"
         android:layout_marginBottom="25sp"
         android:layout_marginRight="30sp"
         >
 
         <ImageButton
+            android:id="@+id/download_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/sl_download_selector"
             android:background="@null"
+            android:clickable="false"
             android:layout_marginRight="10sp"
             />
 
         <TextView
+            android:id="@+id/download_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/body_mega_small_size"
@@ -120,5 +123,20 @@
             android:textColor="@color/gray_100"
             />
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/back_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30sp"
+        android:layout_marginHorizontal="20sp"
+        android:text="홈으로 돌아가기"
+        android:textColor="@color/font_gray"
+        android:fontFamily="@font/noto_sans_kr_bold"
+        android:textSize="@dimen/body_medium_large_size"
+        android:background="@drawable/sl_button_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

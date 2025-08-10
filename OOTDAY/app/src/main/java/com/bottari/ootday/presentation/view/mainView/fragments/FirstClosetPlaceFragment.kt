@@ -9,25 +9,28 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bottari.ootday.R
 import com.bottari.ootday.data.model.mainModel.MoodPlaceViewModel
-import com.bottari.ootday.databinding.FirstClosetMoodFragmentBinding
+import com.bottari.ootday.databinding.FirstClosetPlaceFragmentBinding
 import com.bottari.ootday.domain.model.KeywordItem
 import com.bottari.ootday.presentation.view.mainView.adapters.KeywordAdapter
-import com.bottari.ootday.presentation.view.mainView.fragments.dialog.AddMoodDialogFragment
+import com.bottari.ootday.presentation.view.mainView.fragments.dialog.AddPlaceDialogFragment
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
-class FirstClosetMoodFragment : Fragment() {
+class FirstClosetPlaceFragment : Fragment() {
 
-    private var _binding: FirstClosetMoodFragmentBinding? = null
+    private var _binding: FirstClosetPlaceFragmentBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: MoodPlaceViewModel by viewModels()
     private lateinit var keywordAdapter: KeywordAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FirstClosetMoodFragmentBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FirstClosetPlaceFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -35,14 +38,16 @@ class FirstClosetMoodFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
-        viewModel.loadMoodKeywords()
+        viewModel.loadPlaceKeywords()
 
-        binding.finishMoodButton.setOnClickListener {
-            findNavController().navigate(R.id.action_firstClosetMoodFragment_to_firstClosetPlaceFragment)
+        binding.finishPlaceButton.setOnClickListener {
+            // TODO: 'action_firstClosetPlaceFragment_to_yourFinalFragment'를 navigation graph에 정의된 실제 action ID로 변경하세요.
+            findNavController().navigate(R.id.action_firstClosetPlaceFragment_to_firstClosetResultFragment)
         }
     }
 
     private fun setupRecyclerView() {
+        // ✨ 선택 로직이 정상적으로 ViewModel에 전달되도록 어댑터 초기화
         keywordAdapter = KeywordAdapter { selectedItem ->
             when (selectedItem) {
                 is KeywordItem.AddButton -> showAddKeywordDialog()
@@ -56,7 +61,7 @@ class FirstClosetMoodFragment : Fragment() {
             justifyContent = JustifyContent.FLEX_START
         }
 
-        binding.moodRecyclerview.apply {
+        binding.placeRecyclerview.apply {
             layoutManager = flexboxLayoutManager
             adapter = keywordAdapter
         }
@@ -68,25 +73,24 @@ class FirstClosetMoodFragment : Fragment() {
         }
 
         viewModel.selectedCountText.observe(viewLifecycleOwner) { countText ->
-            binding.ootdMoodMaxCount.text = countText
+            binding.ootdPlaceMaxCount.text = countText
         }
 
         viewModel.isFinishButtonEnabled.observe(viewLifecycleOwner) { isEnabled ->
-            binding.finishMoodButton.isEnabled = isEnabled
+            binding.finishPlaceButton.isEnabled = isEnabled
         }
     }
 
     private fun showAddKeywordDialog() {
-        val dialog = AddMoodDialogFragment { newKeyword ->
-            // ✨ 이 부분이 정상적으로 ViewModel의 addNewKeyword를 호출합니다.
+        val dialog = AddPlaceDialogFragment { newKeyword ->
             viewModel.addNewKeyword(newKeyword)
         }
-        dialog.show(childFragmentManager, "AddMoodDialog")
+        dialog.show(childFragmentManager, "addPlaceDialog")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.moodRecyclerview.adapter = null
+        binding.placeRecyclerview.adapter = null
         _binding = null
     }
 }

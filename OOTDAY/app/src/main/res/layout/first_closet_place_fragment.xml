@@ -48,7 +48,7 @@
                 android:textSize="@dimen/body_medium_large_size" />
 
             <TextView
-                android:id="@+id/ootd_mood_max_count"
+                android:id="@+id/ootd_place_max_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7sp"
@@ -61,11 +61,13 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/place_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="100sp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="10sp"
-            android:layout_marginTop="60sp"
-            android:layout_marginBottom="50sp" />
+            android:layout_marginTop="45sp"
+            android:layout_marginBottom="20sp"
+           />
     </FrameLayout>
 
     <Button

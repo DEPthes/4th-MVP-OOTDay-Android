@@ -5,6 +5,22 @@ import com.bottari.ootday.domain.model.ClosetItem
 import okhttp3.MultipartBody
 
 class ClosetRepository {
+
+    // ✨ 코디 조합 결과를 반환하는 가짜 API 호출 함수 추가
+    suspend fun getCombinationResult(): List<String> {
+        // 가짜 네트워크 딜레이
+        delay(1500)
+
+        // ✨ 실제로는 서버에서 이미지 URL 리스트를 받아옵니다.
+        // 테스트를 위해 4개의 이미지 URL만 반환합니다.
+        return listOf(
+            "https://picsum.photos/id/10/400/600",
+            "https://picsum.photos/id/20/400/600",
+            "https://picsum.photos/id/30/400/600",
+            "https://picsum.photos/id/40/400/600"
+        )
+    }
+
     fun getClosetItems(category: String): List<ClosetItem> {
 
         // TODO: 실제 API 호출 로직으로 교체

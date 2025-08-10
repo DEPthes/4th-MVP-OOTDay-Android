@@ -35,6 +35,7 @@ android {
         jvmTarget = "21"
     }
     buildFeatures {
+        dataBinding = true
         viewBinding = true
     }
 }
@@ -64,4 +65,9 @@ dependencies {
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    // flexboxLayoutmanager
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
+    // ✨ 이미지 로딩을 위한 Glide 라이브러리
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
 }
