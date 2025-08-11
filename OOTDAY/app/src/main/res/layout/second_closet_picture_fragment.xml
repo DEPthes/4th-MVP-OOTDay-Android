@@ -7,7 +7,7 @@
     android:background="@color/white">
 
     <TextView
-        android:id="@+id/second_loading_title"
+        android:id="@+id/second_picture_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20sp"
@@ -22,19 +22,19 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/result_picture_card"
+        android:id="@+id/my_picture_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="20sp"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/back_home_button"
-        app:layout_constraintTop_toBottomOf="@id/second_loading_title"
+        app:layout_constraintBottom_toTopOf="@+id/find_my_item_button"
+        app:layout_constraintTop_toBottomOf="@+id/second_picture_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/result_picture"
+            android:id="@+id/my_picture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -43,7 +43,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/back_home_button"
+        android:id="@+id/find_my_item_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40sp"
@@ -57,6 +57,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result_picture_card" />
+        app:layout_constraintTop_toBottomOf="@+id/my_picture_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

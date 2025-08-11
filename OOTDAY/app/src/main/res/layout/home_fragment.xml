@@ -148,8 +148,7 @@
         android:layout_marginBottom="20sp"
 
         android:background="@drawable/sl_find_passion_button_selector"
-        android:enabled="false"
-        android:stateListAnimator="@null"
+        android:enabled="true"
         app:backgroundTint="@null"
         app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
