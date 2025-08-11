@@ -14,7 +14,7 @@
         android:columnCount="2"
         android:rowCount="3"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/download_container"
+        app:layout_constraintBottom_toTopOf="@+id/link_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -120,7 +120,8 @@
             android:textSize="@dimen/body_mega_small_size"
             android:fontFamily="@font/noto_sans_kr_regular"
             android:text="전체 이미지 다운로드"
-            android:textColor="@color/gray_100"
+            android:textColor="@color/font_gray"
+            android:alpha="0.5"
             />
     </LinearLayout>
 

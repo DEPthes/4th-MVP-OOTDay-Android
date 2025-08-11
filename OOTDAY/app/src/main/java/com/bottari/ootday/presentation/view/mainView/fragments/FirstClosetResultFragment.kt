@@ -77,6 +77,7 @@ class FirstClosetResultFragment : Fragment() {
 
                 // 텍스트 색상 변경
                 binding.downloadText.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_200))
+                binding.downloadText.alpha = 1.0f
                 downloadCount = false
             }
 

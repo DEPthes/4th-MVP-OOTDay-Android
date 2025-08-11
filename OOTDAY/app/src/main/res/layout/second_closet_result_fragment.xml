@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/second_loading_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20sp"
+        android:paddingVertical="30sp"
+        android:text="OOTDay에서 추천한 아이템을 확인해보세요."
+        android:fontFamily="@font/noto_sans_kr_bold"
+        android:textSize="@dimen/body_large_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/result_picture_card"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20sp"
+        android:layout_marginBottom="10sp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/link_container"
+        app:layout_constraintTop_toBottomOf="@id/second_loading_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/result_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image1" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/link_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/result_picture_card"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/back_home_button"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="25sp"
+        android:layout_marginRight="30sp"
+        >
+
+        <ImageButton
+            android:id="@+id/link_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_move_link"
+            android:background="@null"
+            android:clickable="false"
+            android:layout_marginRight="10sp"
+            />
+
+        <TextView
+            android:id="@+id/link_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/body_mega_small_size"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:text="아이템 상세보기"
+            android:textColor="@color/font_gray"
+            android:alpha="0.5"
+            />
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/back_home_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40sp"
+        android:layout_marginHorizontal="20sp"
+        android:layout_marginBottom="30sp"
+        android:background="@drawable/sl_button_selector"
+        android:fontFamily="@font/noto_sans_kr_bold"
+        android:text="홈으로 돌아가기"
+        android:textColor="@color/font_gray"
+        android:textSize="@dimen/body_medium_large_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_picture_card" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

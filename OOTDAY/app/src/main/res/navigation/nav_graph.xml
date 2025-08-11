@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_firstClosetFragment"
             app:destination="@id/firstClosetFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_secondClosetPictureFragment"
+            app:destination="@id/secondClosetPictureFragment" />
 
 
     </fragment>
@@ -55,6 +58,35 @@
         android:name="com.bottari.ootday.presentation.view.mainView.fragments.FirstClosetResultFragment"
         android:label="first_closet_result_fragment"
         tools:layout="@layout/first_closet_result_fragment" />
+
+    <fragment
+        android:id="@+id/secondClosetPictureFragment"
+        android:name="com.bottari.ootday.presentation.view.mainView.fragments.SecondClosetPictureFragment"
+        android:label="second_closet_picture_fragment"
+        tools:layout="@layout/second_closet_picture_fragment"
+        >
+        <action
+            android:id="@+id/action_secondClosetPictureFragment_to_secondClosetLoadingFragment"
+            app:destination="@id/secondClosetLoadingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/secondClosetLoadingFragment"
+        android:name="com.bottari.ootday.presentation.view.mainView.fragments.SecondClosetLoadingFragment"
+        android:label="second_closet_loading_fragment"
+        tools:layout="@layout/second_closet_loading_fragment"
+        >
+        <action
+            android:id="@+id/action_secondClosetLoadingFragment_to_secondClosetResultFragment"
+            app:destination="@id/secondClosetResultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/secondClosetResultFragment"
+        android:name="com.bottari.ootday.presentation.view.mainView.fragments.SecondClosetResultFragment"
+        android:label="second_closet_result_fragment"
+        tools:layout="@layout/second_closet_result_fragment" />
+
 
 
     <fragment
