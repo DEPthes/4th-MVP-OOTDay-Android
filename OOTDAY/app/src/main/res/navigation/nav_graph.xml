@@ -91,7 +91,12 @@
         android:id="@+id/secondClosetResultFragment"
         android:name="com.bottari.ootday.presentation.view.mainView.fragments.SecondClosetResultFragment"
         android:label="second_closet_result_fragment"
-        tools:layout="@layout/second_closet_result_fragment" />
+        tools:layout="@layout/second_closet_result_fragment" >
+        <argument
+            android:name="recommendedItem"
+            app:argType="com.bottari.ootday.domain.model.RecommendedItem" />
+
+    </fragment>
 
 
 

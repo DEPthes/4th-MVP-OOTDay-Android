@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bottari.ootday.data.model.mainModel.SecondClosetViewModel
+import com.bottari.ootday.data.model.mainModel.SecondClosetViewModelFactory
 import com.bottari.ootday.databinding.SecondClosetPictureFragmentBinding
 import com.bumptech.glide.Glide
 
@@ -17,6 +20,11 @@ class SecondClosetPictureFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args: SecondClosetPictureFragmentArgs by navArgs()
+
+    // ✨ activityViewModels로 ViewModel을 초기화하여 Fragment간 공유
+    private val viewModel: SecondClosetViewModel by activityViewModels {
+        SecondClosetViewModelFactory()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = SecondClosetPictureFragmentBinding.inflate(inflater, container, false)
@@ -33,6 +41,10 @@ class SecondClosetPictureFragment : Fragment() {
             .into(binding.myPicture)
 
         binding.findMyItemButton.setOnClickListener {
+            // ✨ 1. ViewModel에 가상 데이터 요청
+            viewModel.fetchRecommendation()
+
+            // ✨ 2. 로딩 화면으로 이동
             val action = SecondClosetPictureFragmentDirections.actionSecondClosetPictureFragmentToSecondClosetLoadingFragment()
             findNavController().navigate(action)
         }

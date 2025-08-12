@@ -28,24 +28,24 @@ class MainActivity : AppCompatActivity() {
 
         // 내비게이션 목적지가 바뀔 때마다 백 버튼을 보이거나 숨기는 리스너 추가
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.homeFragment ) {
-                // HomeFragment일 경우 백 버튼 숨기기
-                binding.mainBackButton.visibility = View.GONE
-            } else {
-                // HomeFragment가 아닐 경우 백 버튼 보이기
-                binding.mainBackButton.visibility = View.VISIBLE
+            // when 구문을 사용하여 특정 화면에서 백 버튼을 숨김
+            when (destination.id) {
+                R.id.homeFragment,
+                R.id.secondClosetLoadingFragment, // 로딩 화면일 때
+                R.id.secondClosetResultFragment -> { // 결과 화면일 때
+                    binding.mainBackButton.visibility = View.GONE
+                }
+                // 그 외 모든 Fragment에서는 백 버튼을 보여줌
+                else -> {
+                    binding.mainBackButton.visibility = View.VISIBLE
+                }
             }
         }
 
         // 백 버튼 클릭 시 이전 화면으로 이동
         binding.mainBackButton.setOnClickListener {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
-    override fun onBackPressed() {
-        if (!navController.navigateUp()) {
-            super.onBackPressed()
-        }
-    }
 }
