@@ -6,5 +6,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class RecommendedItem(
     val imageUrl: String,
-    val productUrl: String
+    val productUrl: String,
 ) : Parcelable

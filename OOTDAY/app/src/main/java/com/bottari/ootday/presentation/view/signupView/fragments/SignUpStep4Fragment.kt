@@ -14,16 +14,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bottari.ootday.R
 import com.bottari.ootday.data.model.signupModel.SignUpStep4ViewModel
+import com.bottari.ootday.data.model.signupModel.SignUpViewModel
 import com.bottari.ootday.databinding.SignUpStep4Binding
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
-import androidx.fragment.app.activityViewModels
-import com.bottari.ootday.data.model.signupModel.SignUpViewModel
 
 class SignUpStep4Fragment : Fragment() {
-
     private var _binding: SignUpStep4Binding? = null
     val binding get() = _binding!!
 
@@ -37,31 +36,61 @@ class SignUpStep4Fragment : Fragment() {
     // Fragment에서 Context를 사용해 폰트를 로드할 변수를 추가합니다.
     private lateinit var notoSansKrRegular: Typeface
 
-    private val passwordTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.onPasswordInputChanged(s.toString())
-        }
-        override fun afterTextChanged(s: Editable?) {}
-    }
+    private val passwordTextWatcher =
+        object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int,
+            ) {}
 
-    private val passwordConfirmTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.onPasswordConfirmChanged(s.toString())
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int,
+            ) {
+                viewModel.onPasswordInputChanged(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
         }
-        override fun afterTextChanged(s: Editable?) {}
-    }
+
+    private val passwordConfirmTextWatcher =
+        object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int,
+            ) {}
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int,
+            ) {
+                viewModel.onPasswordConfirmChanged(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = SignUpStep4Binding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         context?.let {
@@ -146,7 +175,10 @@ class SignUpStep4Fragment : Fragment() {
         }
     }
 
-    private fun togglePasswordVisibility(editText: EditText, toggleButton: ImageButton) {
+    private fun togglePasswordVisibility(
+        editText: EditText,
+        toggleButton: ImageButton,
+    ) {
         isPasswordVisible = !isPasswordVisible
 
         if (isPasswordVisible) {
@@ -163,7 +195,10 @@ class SignUpStep4Fragment : Fragment() {
         editText.typeface = notoSansKrRegular
     }
 
-    private fun toggleConfirmPasswordVisibility(editText: EditText, toggleButton: ImageButton) {
+    private fun toggleConfirmPasswordVisibility(
+        editText: EditText,
+        toggleButton: ImageButton,
+    ) {
         isConfirmVisible = !isConfirmVisible
 
         if (isConfirmVisible) {
@@ -179,7 +214,10 @@ class SignUpStep4Fragment : Fragment() {
         editText.typeface = notoSansKrRegular
     }
 
-    private fun setEditTextUnderlineColor(editText: EditText, colorResId: Int) {
+    private fun setEditTextUnderlineColor(
+        editText: EditText,
+        colorResId: Int,
+    ) {
         val color = ContextCompat.getColor(requireContext(), colorResId)
         val drawable = editText.background
         if (drawable != null) {

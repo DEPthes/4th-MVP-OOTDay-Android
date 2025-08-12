@@ -10,23 +10,26 @@ import androidx.fragment.app.DialogFragment
 import com.bottari.ootday.R
 import com.bottari.ootday.databinding.DialogPictureBinding
 
-class dialogPictureFragment (
+class DialogPictureFragment(
     private val onCameraButtonClick: () -> Unit,
-    private val onGalleryButtonClick: () -> Unit
-    ) : DialogFragment() {
-
+    private val onGalleryButtonClick: () -> Unit,
+) : DialogFragment() {
     private var _binding: DialogPictureBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DialogPictureBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         // 다이얼로그의 배경을 투명하게 설정하여 둥근 모서리만 보이게 합니다.
@@ -56,9 +59,9 @@ class dialogPictureFragment (
             this.attributes = params
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

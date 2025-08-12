@@ -3,16 +3,15 @@ package com.bottari.ootday.data.model.mainModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.bottari.ootday.data.repository.ClosetRepository
-import com.bottari.ootday.domain.model.ClosetItem
 import com.bottari.ootday.domain.model.DisplayableClosetItem
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 
-class FirstClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
-
+class FirstClosetViewModel(
+    private val repository: ClosetRepository,
+) : ViewModel() {
     private val _closetItems = MutableLiveData<List<DisplayableClosetItem>>()
     val closetItems: LiveData<List<DisplayableClosetItem>> = _closetItems
 
@@ -31,7 +30,6 @@ class FirstClosetViewModel(private val repository: ClosetRepository) : ViewModel
     private val _isAllSelectedInCurrentCategory = MutableLiveData<Boolean>(false)
     val isAllSelectedInCurrentCategory: LiveData<Boolean> = _isAllSelectedInCurrentCategory
 
-
     private var currentCategory: String = "상의"
 
     init {
@@ -45,12 +43,14 @@ class FirstClosetViewModel(private val repository: ClosetRepository) : ViewModel
     fun loadItemsByCategory(category: String) {
         currentCategory = category
         viewModelScope.launch {
-            val items = repository.getClosetItems(category).map { dto ->
-                val isSelected = _selectedItems.value?.any { selected ->
-                    selected.uuid == dto.uuid
-                } ?: false
-                DisplayableClosetItem.ClosetData(dto.id, dto.uuid, dto.name, dto.category, dto.mood, dto.description, isSelected)
-            }
+            val items =
+                repository.getClosetItems(category).map { dto ->
+                    val isSelected =
+                        _selectedItems.value?.any { selected ->
+                            selected.uuid == dto.uuid
+                        } ?: false
+                    DisplayableClosetItem.ClosetData(dto.id, dto.uuid, dto.name, dto.category, dto.mood, dto.description, isSelected)
+                }
             val listWithPlusItem = listOf(DisplayableClosetItem.AddButton) + items
             _closetItems.value = listWithPlusItem
 
@@ -85,11 +85,15 @@ class FirstClosetViewModel(private val repository: ClosetRepository) : ViewModel
     }
 
     private fun updateAllSelectedState() {
-        val allItemsInCurrentCategory = _closetItems.value?.filterIsInstance<DisplayableClosetItem.ClosetData>()?.map { it.uuid }.orEmpty()
+        val allItemsInCurrentCategory =
+            _closetItems.value
+                ?.filterIsInstance<DisplayableClosetItem.ClosetData>()
+                ?.map { it.uuid }
+                .orEmpty()
         val selectedItemsInCurrentCategory = _selectedItems.value?.filter { allItemsInCurrentCategory.contains(it.uuid) }.orEmpty()
 
         _isAllSelectedInCurrentCategory.value = allItemsInCurrentCategory.isNotEmpty() &&
-                allItemsInCurrentCategory.size == selectedItemsInCurrentCategory.size
+            allItemsInCurrentCategory.size == selectedItemsInCurrentCategory.size
     }
 
     private fun updateButtonEnabledState() {
@@ -98,7 +102,6 @@ class FirstClosetViewModel(private val repository: ClosetRepository) : ViewModel
         val selectedShoes = _selectedItems.value?.any { it.category == "신발" } ?: false
         _isStylingButtonEnabled.value = selectedTop && selectedBottom && selectedShoes
     }
-
 
     fun selectAllItemsInCurrentCategory() {
         viewModelScope.launch {
@@ -112,9 +115,11 @@ class FirstClosetViewModel(private val repository: ClosetRepository) : ViewModel
                 currentSelectedItems.removeIf { currentCategoryUuids.contains(it.uuid) }
             } else {
                 // 모두 선택된 상태가 아니므로 모두 선택합니다.
-                val itemsToAdd = allItemsInCurrentCategory.filter { item ->
-                    !currentSelectedItems.any { it.uuid == item.uuid }
-                }.map { it.copy(isSelected = true) }
+                val itemsToAdd =
+                    allItemsInCurrentCategory
+                        .filter { item ->
+                            !currentSelectedItems.any { it.uuid == item.uuid }
+                        }.map { it.copy(isSelected = true) }
                 currentSelectedItems.addAll(itemsToAdd)
             }
 
@@ -125,7 +130,10 @@ class FirstClosetViewModel(private val repository: ClosetRepository) : ViewModel
         }
     }
 
-    fun onCategorySelected(category: String, isSelected: Boolean) {
+    fun onCategorySelected(
+        category: String,
+        isSelected: Boolean,
+    ) {
         if (isSelected) {
             // 이 로직은 updateCategorySelection에서만 사용되므로 ViewModel에서는 필요하지 않습니다.
         } else {

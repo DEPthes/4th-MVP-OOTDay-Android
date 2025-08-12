@@ -9,16 +9,15 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bottari.ootday.R
 import com.bottari.ootday.data.model.signupModel.SignUpStep3ViewModel
+import com.bottari.ootday.data.model.signupModel.SignUpViewModel
 import com.bottari.ootday.databinding.SignUpStep3Binding
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
-import androidx.fragment.app.activityViewModels
-import com.bottari.ootday.data.model.signupModel.SignUpViewModel
 
 class SignUpStep3Fragment : Fragment() {
-
     private var _binding: SignUpStep3Binding? = null
     val binding get() = _binding!!
 
@@ -26,23 +25,40 @@ class SignUpStep3Fragment : Fragment() {
 
     private val viewModel: SignUpStep3ViewModel by viewModels()
 
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.onInputIdChanged(s.toString())
+    private val textWatcher =
+        object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int,
+            ) {}
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int,
+            ) {
+                viewModel.onInputIdChanged(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
         }
-        override fun afterTextChanged(s: Editable?) {}
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = SignUpStep3Binding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         setupListeners()
@@ -89,7 +105,10 @@ class SignUpStep3Fragment : Fragment() {
         }
     }
 
-    private fun setEditTextUnderlineColor(editText: android.widget.EditText, colorResId: Int) {
+    private fun setEditTextUnderlineColor(
+        editText: android.widget.EditText,
+        colorResId: Int,
+    ) {
         val color = ContextCompat.getColor(requireContext(), colorResId)
         val drawable = editText.background
         if (drawable != null) {

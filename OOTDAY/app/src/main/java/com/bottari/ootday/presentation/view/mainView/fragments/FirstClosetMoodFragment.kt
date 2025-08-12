@@ -19,19 +19,25 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
 class FirstClosetMoodFragment : Fragment() {
-
     private var _binding: FirstClosetMoodFragmentBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     private val viewModel: MoodPlaceViewModel by viewModels()
     private lateinit var keywordAdapter: KeywordAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FirstClosetMoodFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
@@ -43,18 +49,20 @@ class FirstClosetMoodFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        keywordAdapter = KeywordAdapter { selectedItem ->
-            when (selectedItem) {
-                is KeywordItem.AddButton -> showAddKeywordDialog()
-                is KeywordItem.KeywordData -> viewModel.onKeywordClicked(selectedItem)
+        keywordAdapter =
+            KeywordAdapter { selectedItem ->
+                when (selectedItem) {
+                    is KeywordItem.AddButton -> showAddKeywordDialog()
+                    is KeywordItem.KeywordData -> viewModel.onKeywordClicked(selectedItem)
+                }
             }
-        }
 
-        val flexboxLayoutManager = FlexboxLayoutManager(requireContext()).apply {
-            flexWrap = FlexWrap.WRAP
-            flexDirection = FlexDirection.ROW
-            justifyContent = JustifyContent.FLEX_START
-        }
+        val flexboxLayoutManager =
+            FlexboxLayoutManager(requireContext()).apply {
+                flexWrap = FlexWrap.WRAP
+                flexDirection = FlexDirection.ROW
+                justifyContent = JustifyContent.FLEX_START
+            }
 
         binding.moodRecyclerview.apply {
             layoutManager = flexboxLayoutManager
@@ -77,10 +85,11 @@ class FirstClosetMoodFragment : Fragment() {
     }
 
     private fun showAddKeywordDialog() {
-        val dialog = AddMoodDialogFragment { newKeyword ->
-            // ✨ 이 부분이 정상적으로 ViewModel의 addNewKeyword를 호출합니다.
-            viewModel.addNewKeyword(newKeyword)
-        }
+        val dialog =
+            AddMoodDialogFragment { newKeyword ->
+                // ✨ 이 부분이 정상적으로 ViewModel의 addNewKeyword를 호출합니다.
+                viewModel.addNewKeyword(newKeyword)
+            }
         dialog.show(childFragmentManager, "AddMoodDialog")
     }
 

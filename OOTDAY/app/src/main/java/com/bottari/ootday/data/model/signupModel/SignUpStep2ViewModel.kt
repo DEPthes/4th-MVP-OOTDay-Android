@@ -11,12 +11,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SignUpStep2ViewModel : ViewModel() {
-
     // (기존 코드 유지)
     private val authRepository: AuthRepository = AuthRepository()
 
-    private var _currentPhoneNumber = ""
-    private var _currentAuthCode = ""
+    private var currentPhoneNumber = ""
+    private var currentAuthCode = ""
 
     private val _isGetAuthButtonEnabled = MutableLiveData<Boolean>()
     val isGetAuthButtonEnabled: LiveData<Boolean> get() = _isGetAuthButtonEnabled
@@ -50,35 +49,35 @@ class SignUpStep2ViewModel : ViewModel() {
 
     // (기존 코드 유지)
     fun onPhoneNumberChanged(phoneNumber: String) {
-        _currentPhoneNumber = phoneNumber
+        currentPhoneNumber = phoneNumber
         updateButtonStates()
     }
 
     // (기존 코드 유지)
     fun onAuthCodeChanged(authCode: String) {
-        _currentAuthCode = authCode
+        currentAuthCode = authCode
         updateButtonStates()
     }
 
     // (기존 코드 유지)
     private fun updateButtonStates() {
         // 인증받기 버튼 활성화 로직
-        _isGetAuthButtonEnabled.value = _currentPhoneNumber.length >= 10 && _currentPhoneNumber.startsWith("010")
+        _isGetAuthButtonEnabled.value = currentPhoneNumber.length >= 10 && currentPhoneNumber.startsWith("010")
 
         // 인증확인 버튼 활성화 로직
-        _isCheckAuthButtonEnabled.value = _currentAuthCode.length == 6 && _isAuthCodeInputEnabled.value == true
+        _isCheckAuthButtonEnabled.value = currentAuthCode.length == 6 && _isAuthCodeInputEnabled.value == true
 
         // 다음 버튼 활성화 로직
         _isNextButtonEnabled.value = _isAuthSuccessful.value == true
     }
 
     fun onRequestAuthClick() {
-        if (_currentPhoneNumber.length >= 3) {
+        if (currentPhoneNumber.length >= 3) {
             _isLoading.value = true
             viewModelScope.launch {
                 // 백엔드 명세가 나오기 전까지 사용할 Mocking 코드
                 // 어떤 번호를 입력해도 성공 응답을 반환합니다.
-                val mockedResponse = authRepository.requestPhoneNumberAuth(_currentPhoneNumber)
+                val mockedResponse = authRepository.requestPhoneNumberAuth(currentPhoneNumber)
                 mockedResponse
                     .onSuccess {
                         _isLoading.value = false
@@ -90,38 +89,37 @@ class SignUpStep2ViewModel : ViewModel() {
                         _isAuthSuccessful.value = false
                         _authCodeErrorMessage.value = null
                         updateButtonStates()
-                    }
-                    .onFailure {
+                    }.onFailure {
                         _isLoading.value = false
                         _eventMessage.value = Event("인증번호 요청 실패: ${it.message ?: "알 수 없는 오류"}")
                         setAuthFailedState()
                     }
 
                 // 백엔드 연결 후 이 아래 코드로 대체하세요.
-                /*
-                authRepository.requestPhoneNumberAuth(_currentPhoneNumber)
-                    .onSuccess { response ->
-                        _isLoading.value = false
-                        if (response.success) {
-                            _eventMessage.value = Event("인증번호가 발송되었습니다.")
-                            _isAuthCodeInputEnabled.value = true
-                            _isCheckAuthButtonEnabled.value = false
-                            _isGetAuthButtonEnabled.value = false
-                            startAuthTimer()
-                            _isAuthSuccessful.value = false
-                            _authCodeErrorMessage.value = null
-                            updateButtonStates()
-                        } else {
-                            _eventMessage.value = Event(response.message)
-                            setAuthFailedState()
-                        }
-                    }
-                    .onFailure { exception ->
-                        _isLoading.value = false
-                        _eventMessage.value = Event("인증번호 요청 실패: ${exception.message ?: "알 수 없는 오류"}")
-                        setAuthFailedState()
-                    }
-                */
+
+//                authRepository.requestPhoneNumberAuth(_currentPhoneNumber)
+//                    .onSuccess { response ->
+//                        _isLoading.value = false
+//                        if (response.success) {
+//                            _eventMessage.value = Event("인증번호가 발송되었습니다.")
+//                            _isAuthCodeInputEnabled.value = true
+//                            _isCheckAuthButtonEnabled.value = false
+//                            _isGetAuthButtonEnabled.value = false
+//                            startAuthTimer()
+//                            _isAuthSuccessful.value = false
+//                            _authCodeErrorMessage.value = null
+//                            updateButtonStates()
+//                        } else {
+//                            _eventMessage.value = Event(response.message)
+//                            setAuthFailedState()
+//                        }
+//                    }
+//                    .onFailure { exception ->
+//                        _isLoading.value = false
+//                        _eventMessage.value = Event("인증번호 요청 실패: ${exception.message ?: "알 수 없는 오류"}")
+//                        setAuthFailedState()
+//                    }
+//
             }
         } else {
             _eventMessage.value = Event("휴대폰 번호를 3자 이상 입력해주세요.")
@@ -130,12 +128,12 @@ class SignUpStep2ViewModel : ViewModel() {
 
     // 인증번호 확인 버튼 클릭 시 로직
     fun onCheckAuthClick() {
-        if (_currentAuthCode.length == 6) {
+        if (currentAuthCode.length == 6) {
             _isLoading.value = true
             viewModelScope.launch {
                 // 백엔드 명세가 나오기 전까지 사용할 Mocking 코드
                 // 입력된 인증번호가 "123456"일 경우에만 성공으로 간주합니다.
-                val isCodeValid = _currentAuthCode == "123456"
+                val isCodeValid = currentAuthCode == "123456"
                 delay(500) // 가짜 네트워크 지연
                 _isLoading.value = false
                 if (isCodeValid) {
@@ -157,28 +155,28 @@ class SignUpStep2ViewModel : ViewModel() {
                 }
 
                 // 백엔드 연결 후 이 아래 코드로 대체하세요.
-                /*
-                authRepository.checkPhoneNumberAuth(_currentPhoneNumber, _currentAuthCode)
-                    .onSuccess { response ->
-                        _isLoading.value = false
-                        if (response.success) {
-                            _eventMessage.value = Event("인증되었습니다.")
-                            _isAuthSuccessful.value = true
-                            _authCodeErrorMessage.value = null
-                            timerJob?.cancel()
-                        } else {
-                            _authCodeErrorMessage.value = response.message ?: "인증번호가 일치하지 않습니다."
-                            _isAuthSuccessful.value = false
-                        }
-                        updateButtonStates()
-                    }
-                    .onFailure { exception ->
-                        _isLoading.value = false
-                        _authCodeErrorMessage.value = "인증 실패: ${exception.message ?: "알 수 없는 오류"}"
-                        _isAuthSuccessful.value = false
-                        updateButtonStates()
-                    }
-                */
+
+//                authRepository.checkPhoneNumberAuth(_currentPhoneNumber, _currentAuthCode)
+//                    .onSuccess { response ->
+//                        _isLoading.value = false
+//                        if (response.success) {
+//                            _eventMessage.value = Event("인증되었습니다.")
+//                            _isAuthSuccessful.value = true
+//                            _authCodeErrorMessage.value = null
+//                            timerJob?.cancel()
+//                        } else {
+//                            _authCodeErrorMessage.value = response.message ?: "인증번호가 일치하지 않습니다."
+//                            _isAuthSuccessful.value = false
+//                        }
+//                        updateButtonStates()
+//                    }
+//                    .onFailure { exception ->
+//                        _isLoading.value = false
+//                        _authCodeErrorMessage.value = "인증 실패: ${exception.message ?: "알 수 없는 오류"}"
+//                        _isAuthSuccessful.value = false
+//                        updateButtonStates()
+//                    }
+//
             }
         } else {
             _authCodeErrorMessage.value = "인증번호 6자리를 모두 입력해주세요."
@@ -188,19 +186,20 @@ class SignUpStep2ViewModel : ViewModel() {
     private fun startAuthTimer() {
         // (기존 코드 유지)
         timerJob?.cancel()
-        timerJob = viewModelScope.launch {
-            for (i in totalTime downTo 0) {
-                val minutes = i / 60
-                val seconds = i % 60
-                _timerText.value = String.format("%02d:%02d", minutes, seconds)
-                delay(1000)
-                if (i == 0) {
-                    // 타이머 종료 시 인증 실패 상태로 전환
-                    setAuthFailedState()
-                    _eventMessage.value = Event("인증 시간이 초과되었습니다. 다시 시도해주세요.")
+        timerJob =
+            viewModelScope.launch {
+                for (i in totalTime downTo 0) {
+                    val minutes = i / 60
+                    val seconds = i % 60
+                    _timerText.value = String.format("%02d:%02d", minutes, seconds)
+                    delay(1000)
+                    if (i == 0) {
+                        // 타이머 종료 시 인증 실패 상태로 전환
+                        setAuthFailedState()
+                        _eventMessage.value = Event("인증 시간이 초과되었습니다. 다시 시도해주세요.")
+                    }
                 }
             }
-        }
     }
 
     private fun setAuthFailedState() {

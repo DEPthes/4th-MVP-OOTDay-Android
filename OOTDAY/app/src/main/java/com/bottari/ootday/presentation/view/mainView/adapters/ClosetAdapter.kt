@@ -1,7 +1,6 @@
 // ClosetAdapter.kt
 package com.bottari.ootday.presentation.view.mainView.adapters
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,8 @@ import com.bottari.ootday.databinding.ClosetPlusItemBinding
 import com.bottari.ootday.domain.model.DisplayableClosetItem
 
 class ClosetAdapter(
-    private val onItemClick: (DisplayableClosetItem) -> Unit
+    private val onItemClick: (DisplayableClosetItem) -> Unit,
 ) : ListAdapter<DisplayableClosetItem, RecyclerView.ViewHolder>(ClosetItemDiffCallback()) {
-
     private var isSelectionMode = false
     private var selectedItemUuids: Set<String> = emptySet()
 
@@ -38,36 +36,42 @@ class ClosetAdapter(
         private const val VIEW_TYPE_IMAGE = 1
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)) {
+    override fun getItemViewType(position: Int): Int =
+        when (getItem(position)) {
             is DisplayableClosetItem.AddButton -> VIEW_TYPE_PLUS
             is DisplayableClosetItem.ClosetData -> VIEW_TYPE_IMAGE
         }
-    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder =
+        when (viewType) {
             VIEW_TYPE_PLUS -> {
-                val binding = ClosetPlusItemBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+                val binding =
+                    ClosetPlusItemBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false,
+                    )
                 PlusViewHolder(binding, onItemClick)
             }
             VIEW_TYPE_IMAGE -> {
-                val binding = ClosetImageItemBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+                val binding =
+                    ClosetImageItemBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false,
+                    )
                 ImageViewHolder(binding, onItemClick)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
-    }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         val item = getItem(position)
         when (holder) {
             is PlusViewHolder -> holder.bind()
@@ -77,19 +81,20 @@ class ClosetAdapter(
 
     inner class PlusViewHolder(
         private val binding: ClosetPlusItemBinding,
-        private val onItemClick: (DisplayableClosetItem) -> Unit
+        private val onItemClick: (DisplayableClosetItem) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.plusButton.setOnClickListener {
                 onItemClick(DisplayableClosetItem.AddButton)
             }
         }
+
         fun bind() { /* 바인딩할 데이터가 없음 */ }
     }
 
     inner class ImageViewHolder(
         private val binding: ClosetImageItemBinding,
-        private val onItemClick: (DisplayableClosetItem) -> Unit
+        private val onItemClick: (DisplayableClosetItem) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.clothingImage.setOnClickListener {
@@ -114,23 +119,19 @@ class ClosetAdapter(
     }
 
     class ClosetItemDiffCallback : DiffUtil.ItemCallback<DisplayableClosetItem>() {
-
         override fun areItemsTheSame(
             oldItem: DisplayableClosetItem,
-            newItem: DisplayableClosetItem
-        ): Boolean {
-            return when {
+            newItem: DisplayableClosetItem,
+        ): Boolean =
+            when {
                 oldItem is DisplayableClosetItem.AddButton && newItem is DisplayableClosetItem.AddButton -> true
                 oldItem is DisplayableClosetItem.ClosetData && newItem is DisplayableClosetItem.ClosetData -> oldItem.uuid == newItem.uuid
                 else -> false
             }
-        }
 
         override fun areContentsTheSame(
             oldItem: DisplayableClosetItem,
-            newItem: DisplayableClosetItem
-        ): Boolean {
-            return oldItem == newItem
-        }
+            newItem: DisplayableClosetItem,
+        ): Boolean = oldItem == newItem
     }
 }

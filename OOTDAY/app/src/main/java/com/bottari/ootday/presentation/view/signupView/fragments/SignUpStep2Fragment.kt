@@ -11,13 +11,13 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bottari.ootday.R
 import com.bottari.ootday.data.model.signupModel.SignUpStep2ViewModel
+import com.bottari.ootday.data.model.signupModel.SignUpViewModel
 import com.bottari.ootday.databinding.SignUpStep2Binding
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
-import androidx.fragment.app.activityViewModels
-import com.bottari.ootday.data.model.signupModel.SignUpViewModel
 
 class SignUpStep2Fragment : Fragment() {
     private var _binding: SignUpStep2Binding? = null
@@ -27,23 +27,49 @@ class SignUpStep2Fragment : Fragment() {
 
     private val viewModel: SignUpStep2ViewModel by viewModels()
 
-    private val phoneNumberTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.onPhoneNumberChanged(s.toString())
-            setEditTextUnderlineColor(binding.step2PhoneNumberInput, R.color.gray_100)
-        }
-        override fun afterTextChanged(s: Editable?) {}
-    }
+    private val phoneNumberTextWatcher =
+        object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int,
+            ) {}
 
-    private val authCodeTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.onAuthCodeChanged(s.toString())
-            setEditTextUnderlineColor(binding.step2PhoneNumberConfirm, R.color.gray_100)
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int,
+            ) {
+                viewModel.onPhoneNumberChanged(s.toString())
+                setEditTextUnderlineColor(binding.step2PhoneNumberInput, R.color.gray_100)
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
         }
-        override fun afterTextChanged(s: Editable?) {}
-    }
+
+    private val authCodeTextWatcher =
+        object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int,
+            ) {}
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int,
+            ) {
+                viewModel.onAuthCodeChanged(s.toString())
+                setEditTextUnderlineColor(binding.step2PhoneNumberConfirm, R.color.gray_100)
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,7 +112,6 @@ class SignUpStep2Fragment : Fragment() {
     }
 
     private fun observeViewModel() {
-
         viewModel.isAuthSuccessful.observe(viewLifecycleOwner) { isSuccessful ->
             if (isSuccessful) {
                 // 인증 성공 시 휴대폰 번호 입력 EditText 비활성화
@@ -161,7 +186,10 @@ class SignUpStep2Fragment : Fragment() {
         setEditTextUnderlineColor(binding.step2PhoneNumberConfirm, R.color.gray_100)
     }
 
-    private fun setEditTextUnderlineColor(editText: EditText, colorResId: Int) {
+    private fun setEditTextUnderlineColor(
+        editText: EditText,
+        colorResId: Int,
+    ) {
         // (기존 코드 유지)
         val color = ContextCompat.getColor(requireContext(), colorResId)
         val drawable = editText.background

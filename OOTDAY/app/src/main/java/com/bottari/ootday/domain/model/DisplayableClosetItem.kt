@@ -8,7 +8,7 @@ sealed class DisplayableClosetItem {
         val category: String,
         val mood: String,
         val description: String,
-        var isSelected: Boolean = false
+        var isSelected: Boolean = false,
     ) : DisplayableClosetItem()
 
     object AddButton : DisplayableClosetItem()

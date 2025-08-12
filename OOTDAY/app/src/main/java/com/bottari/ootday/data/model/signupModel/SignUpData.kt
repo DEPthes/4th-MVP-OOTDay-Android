@@ -4,5 +4,5 @@ data class SignUpData(
     var name: String = "",
     var id: String = "",
     var phoneNumber: String = "",
-    var password: String = ""
+    var password: String = "",
 )

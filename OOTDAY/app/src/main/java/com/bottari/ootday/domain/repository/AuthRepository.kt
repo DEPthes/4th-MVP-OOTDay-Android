@@ -1,8 +1,6 @@
 package com.bottari.ootday.domain.repository
 
-import com.bottari.ootday.domain.repository.dataClass.AuthCheckRequest
 import com.bottari.ootday.domain.repository.dataClass.AuthCheckResponse
-import com.bottari.ootday.domain.repository.dataClass.PhoneNumberAuthRequest
 import com.bottari.ootday.domain.repository.dataClass.PhoneNumberAuthResponse
 import kotlinx.coroutines.delay
 import retrofit2.Retrofit
@@ -10,17 +8,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class AuthRepository {
     // Retrofit 인스턴스 (싱글톤으로 관리하거나 Dagger Hilt 등으로 주입받는 것이 좋습니다)
-    private val BASE_URL = "https://temp.example.com/api/"
+    private val baseUrl = "https://temp.example.com/api/"
 
-    private val authApiService : AuthApiService
+    private val authApiService: AuthApiService
 
     init {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        val retrofit =
+            Retrofit
+                .Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
         authApiService = retrofit.create(AuthApiService::class.java)
     }
+
     suspend fun login(
         username: String,
         password: String,
@@ -50,11 +51,14 @@ class AuthRepository {
         } catch (e: Exception) {
             Result.failure(e)
         }
-        */
+         */
     }
 
     // 인증 번호 확인 함수 (이 함수도 필요하다면 모킹할 수 있습니다.)
-    suspend fun checkPhoneNumberAuth(phoneNumber: String, authCode: String): Result<AuthCheckResponse> {
+    suspend fun checkPhoneNumberAuth(
+        phoneNumber: String,
+        authCode: String,
+    ): Result<AuthCheckResponse> {
         // 현재는 어떤 인증번호를 입력해도 성공으로 처리
         delay(300) // 실제 네트워크 지연을 흉내내기 위해 잠시 대기
         val isCodeValid = authCode == "123456" // 예시: "123456"을 올바른 인증번호로 가정
@@ -73,7 +77,7 @@ class AuthRepository {
         } catch (e: Exception) {
             Result.failure(e)
         }
-        */
+         */
     }
 
     // 로그인 상태 저장/불러오기 (SharedPreferences 사용)

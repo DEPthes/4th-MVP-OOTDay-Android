@@ -1,6 +1,5 @@
 package com.bottari.ootday.data.model.loginModel
 
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

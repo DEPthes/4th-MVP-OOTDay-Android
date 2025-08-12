@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SignUpStep3ViewModel : ViewModel() {
-
     private val _inputId = MutableLiveData<String>("")
     val inputId: LiveData<String> get() = _inputId
 

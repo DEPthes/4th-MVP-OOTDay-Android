@@ -12,20 +12,26 @@ import com.bottari.ootday.data.model.mainModel.SecondClosetViewModelFactory
 import com.bottari.ootday.databinding.SecondClosetLoadingFragmentBinding
 
 class SecondClosetLoadingFragment : Fragment() {
-
     private var _binding: SecondClosetLoadingFragmentBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     private val viewModel: SecondClosetViewModel by activityViewModels {
         SecondClosetViewModelFactory()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = SecondClosetLoadingFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         // ViewModel의 추천 결과 LiveData를 관찰
@@ -33,7 +39,10 @@ class SecondClosetLoadingFragment : Fragment() {
             // result가 null이 아닐 때만 실행
             result?.let { recommendedItem ->
                 // 결과 데이터를 담아 Result Fragment로 이동
-                val action = SecondClosetLoadingFragmentDirections.actionSecondClosetLoadingFragmentToSecondClosetResultFragment(recommendedItem)
+                val action =
+                    SecondClosetLoadingFragmentDirections.actionSecondClosetLoadingFragmentToSecondClosetResultFragment(
+                        recommendedItem,
+                    )
                 findNavController().navigate(action)
 
                 // LiveData 초기화 (중복 실행 방지)

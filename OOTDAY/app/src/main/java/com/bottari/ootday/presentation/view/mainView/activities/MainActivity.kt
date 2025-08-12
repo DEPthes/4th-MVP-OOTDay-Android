@@ -10,7 +10,6 @@ import com.bottari.ootday.R
 import com.bottari.ootday.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var navController: NavController
     private lateinit var binding: MainActivityBinding // 데이터 바인딩을 사용한다고 가정합니다.
 
@@ -32,7 +31,8 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.homeFragment,
                 R.id.secondClosetLoadingFragment, // 로딩 화면일 때
-                R.id.secondClosetResultFragment -> { // 결과 화면일 때
+                R.id.secondClosetResultFragment,
+                -> { // 결과 화면일 때
                     binding.mainBackButton.visibility = View.GONE
                 }
                 // 그 외 모든 Fragment에서는 백 버튼을 보여줌
@@ -47,5 +47,4 @@ class MainActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
     }
-
 }

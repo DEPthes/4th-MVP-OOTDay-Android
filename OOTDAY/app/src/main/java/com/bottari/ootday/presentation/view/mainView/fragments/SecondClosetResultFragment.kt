@@ -15,26 +15,33 @@ import com.bottari.ootday.databinding.SecondClosetResultFragmentBinding
 import com.bumptech.glide.Glide
 
 class SecondClosetResultFragment : Fragment() {
-
     private var _binding: SecondClosetResultFragmentBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     // Navigation Component를 통해 전달받은 arguments
     private val args: SecondClosetResultFragmentArgs by navArgs()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = SecondClosetResultFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         // 전달받은 추천 아이템 데이터
         val recommendedItem = args.recommendedItem
 
         // Glide를 이용해 추천 아이템 이미지 로드
-        Glide.with(this)
+        Glide
+            .with(this)
             .load(recommendedItem.imageUrl)
             .placeholder(R.drawable.ic_loading_second) // 로딩 중 보여줄 이미지
             .into(binding.resultPicture)
@@ -52,9 +59,11 @@ class SecondClosetResultFragment : Fragment() {
         // '홈으로 돌아가기' 버튼 클릭 시
         binding.backHomeButton.setOnClickListener {
             val startDestinationId = findNavController().graph.startDestinationId
-            val navOptions = NavOptions.Builder()
-                .setPopUpTo(startDestinationId, true)
-                .build()
+            val navOptions =
+                NavOptions
+                    .Builder()
+                    .setPopUpTo(startDestinationId, true)
+                    .build()
             findNavController().navigate(startDestinationId, null, navOptions)
         }
     }

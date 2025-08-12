@@ -2,13 +2,11 @@ package com.bottari.ootday.presentation.view.mainView.fragments
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +22,7 @@ import com.bottari.ootday.R
 import com.bottari.ootday.data.model.mainModel.SecondClosetViewModel
 import com.bottari.ootday.data.model.mainModel.SecondClosetViewModelFactory
 import com.bottari.ootday.databinding.HomeFragmentBinding
-import com.bottari.ootday.presentation.view.mainView.fragments.dialog.dialogPictureFragment
+import com.bottari.ootday.presentation.view.mainView.fragments.dialog.DialogPictureFragment
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -35,45 +33,54 @@ import java.util.Date
 import java.util.Locale
 
 class HomeFragment : Fragment() {
-
     private var _binding: HomeFragmentBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     // ✨ SecondCloset 기능의 상태를 관리할 ViewModel
     private val viewModel: SecondClosetViewModel by viewModels { SecondClosetViewModelFactory() }
 
     private var tempImageUri: Uri? = null
 
-    private val pickImageFromGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { uri -> onImageSelected(uri) }
+    private val pickImageFromGallery =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { uri -> onImageSelected(uri) }
+            }
         }
-    }
-    private val takePicture = registerForActivityResult(
-        ActivityResultContracts.TakePicture()
-    ) { success ->
-        if (success) {
-            tempImageUri?.let { uri -> onImageSelected(uri) }
+    private val takePicture =
+        registerForActivityResult(
+            ActivityResultContracts.TakePicture(),
+        ) { success ->
+            if (success) {
+                tempImageUri?.let { uri -> onImageSelected(uri) }
+            }
         }
-    }
-    private val requestGalleryPermission = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted -> if (isGranted) openGallery() }
-    private val requestCameraPermission = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted -> if (isGranted) openCamera() }
+    private val requestGalleryPermission =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted -> if (isGranted) openGallery() }
+    private val requestCameraPermission =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted -> if (isGranted) openCamera() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
-
     }
 
     private fun setupClickListeners() {
@@ -106,8 +113,8 @@ class HomeFragment : Fragment() {
     }
 
     // ✨ URI를 MultipartBody.Part로 변환하는 헬퍼 함수
-    private fun uriToMultipartBodyPart(uri: Uri): MultipartBody.Part? {
-        return try {
+    private fun uriToMultipartBodyPart(uri: Uri): MultipartBody.Part? =
+        try {
             val fileContent = requireContext().contentResolver.openInputStream(uri)?.readBytes()
             fileContent?.let {
                 val requestBody = it.toRequestBody("image/*".toMediaTypeOrNull())
@@ -116,22 +123,40 @@ class HomeFragment : Fragment() {
         } catch (e: Exception) {
             null
         }
-    }
 
     private fun showImageSelectionDialog() {
-        dialogPictureFragment(
+        DialogPictureFragment(
             onCameraButtonClick = { checkCameraPermission() },
-            onGalleryButtonClick = { checkGalleryPermission() }
+            onGalleryButtonClick = { checkGalleryPermission() },
         ).show(childFragmentManager, "PictureSelectionDialog")
     }
 
     private fun checkGalleryPermission() {
-        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) Manifest.permission.READ_MEDIA_IMAGES else Manifest.permission.READ_EXTERNAL_STORAGE
-        if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED) openGallery() else requestGalleryPermission.launch(permission)
+        val permission =
+            if (Build.VERSION.SDK_INT >=
+                Build.VERSION_CODES.TIRAMISU
+            ) {
+                Manifest.permission.READ_MEDIA_IMAGES
+            } else {
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            }
+        if (ContextCompat.checkSelfPermission(requireContext(), permission) ==
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            openGallery()
+        } else {
+            requestGalleryPermission.launch(permission)
+        }
     }
 
     private fun checkCameraPermission() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) openCamera() else requestCameraPermission.launch(Manifest.permission.CAMERA)
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) ==
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            openCamera()
+        } else {
+            requestCameraPermission.launch(Manifest.permission.CAMERA)
+        }
     }
 
     private fun openGallery() {
@@ -144,7 +169,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun createImageUri(): Uri? {
-        val imageFile = File.createTempFile("JPEG_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA).format(Date())}_", ".jpg", requireContext().externalCacheDir)
+        val imageFile =
+            File.createTempFile(
+                "JPEG_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA).format(Date())}_",
+                ".jpg",
+                requireContext().externalCacheDir,
+            )
         return FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.fileprovider", imageFile)
     }
 

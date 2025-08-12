@@ -28,7 +28,7 @@ import com.bottari.ootday.data.repository.ClosetRepository
 import com.bottari.ootday.databinding.FirstClosetFragmentBinding
 import com.bottari.ootday.domain.model.DisplayableClosetItem
 import com.bottari.ootday.presentation.view.mainView.adapters.ClosetAdapter
-import com.bottari.ootday.presentation.view.mainView.fragments.dialog.dialogPictureFragment
+import com.bottari.ootday.presentation.view.mainView.fragments.dialog.DialogPictureFragment
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -39,7 +39,6 @@ import java.util.Date
 import java.util.Locale
 
 class FirstClosetFragment : Fragment() {
-
     private lateinit var binding: FirstClosetFragmentBinding
     private var tempImageUri: Uri? = null
 
@@ -49,47 +48,53 @@ class FirstClosetFragment : Fragment() {
 
     private lateinit var closetAdapter: ClosetAdapter
 
-    private val pickImagesFromGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.let { intent ->
-                if (intent.clipData != null) {
-                    val count = intent.clipData!!.itemCount
-                    for (i in 0 until count) {
-                        val imageUri = intent.clipData!!.getItemAt(i).uri
+    private val pickImagesFromGallery =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.let { intent ->
+                    if (intent.clipData != null) {
+                        val count = intent.clipData!!.itemCount
+                        for (i in 0 until count) {
+                            val imageUri = intent.clipData!!.getItemAt(i).uri
+                            uploadImageToFakeServer(imageUri)
+                        }
+                    } else if (intent.data != null) {
+                        val imageUri = intent.data!!
                         uploadImageToFakeServer(imageUri)
                     }
-                } else if (intent.data != null) {
-                    val imageUri = intent.data!!
-                    uploadImageToFakeServer(imageUri)
                 }
             }
         }
-    }
 
-    private val takePicture = registerForActivityResult(
-        ActivityResultContracts.TakePicture()
-    ) { success ->
-        if (success) {
-            tempImageUri?.let { uri ->
-                Log.d("Camera", "카메라 촬영 성공: $uri")
-                uploadImageToFakeServer(uri)
+    private val takePicture =
+        registerForActivityResult(
+            ActivityResultContracts.TakePicture(),
+        ) { success ->
+            if (success) {
+                tempImageUri?.let { uri ->
+                    Log.d("Camera", "카메라 촬영 성공: $uri")
+                    uploadImageToFakeServer(uri)
+                }
+            } else {
+                Log.d("Camera", "카메라 촬영 실패 또는 취소")
             }
-        } else {
-            Log.d("Camera", "카메라 촬영 실패 또는 취소")
         }
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         binding = FirstClosetFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupListeners()
@@ -99,105 +104,109 @@ class FirstClosetFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        closetAdapter = ClosetAdapter(
-            onItemClick = { item ->
-                when (item) {
-                    is DisplayableClosetItem.AddButton -> {
-                        showImageSelectionDialog()
+        closetAdapter =
+            ClosetAdapter(
+                onItemClick = { item ->
+                    when (item) {
+                        is DisplayableClosetItem.AddButton -> {
+                            showImageSelectionDialog()
+                        }
+                        is DisplayableClosetItem.ClosetData -> {
+                            viewModel.toggleItemSelection(item)
+                        }
                     }
-                    is DisplayableClosetItem.ClosetData -> {
-                        viewModel.toggleItemSelection(item)
-                    }
-                }
-            }
-        )
+                },
+            )
         binding.closetRecyclerview.apply {
             layoutManager = GridLayoutManager(context, 3)
             adapter = closetAdapter
         }
     }
 
-    private val requestGalleryPermission = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            openGalleryForImage()
-        } else {
-            Toast.makeText(context, "권한 거부. 기능을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private val requestCameraPermission = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            Log.d("CameraPermission", "카메라 권한 승인됨")
-            openCameraForImage()
-        } else {
-            if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                showPermissionRationaleDialog()
+    private val requestGalleryPermission =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                openGalleryForImage()
             } else {
-                showPermissionDeniedDialog()
+                Toast.makeText(context, "권한 거부. 기능을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show()
             }
         }
-    }
+
+    private val requestCameraPermission =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Log.d("CameraPermission", "카메라 권한 승인됨")
+                openCameraForImage()
+            } else {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                    showPermissionRationaleDialog()
+                } else {
+                    showPermissionDeniedDialog()
+                }
+            }
+        }
 
     private fun showPermissionDeniedDialog() {
-        AlertDialog.Builder(requireContext())
+        AlertDialog
+            .Builder(requireContext())
             .setTitle("카메라 권한 필요")
             .setMessage("사진 촬영을 위해서는 카메라 권한이 필요합니다. 설정에서 권한을 허용해 주세요.")
             .setPositiveButton("설정으로 이동") { _, _ ->
-                val intent = Intent(
-                    android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                    Uri.fromParts("package", requireContext().packageName, null)
-                )
+                val intent =
+                    Intent(
+                        android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.fromParts("package", requireContext().packageName, null),
+                    )
                 startActivity(intent)
-            }
-            .setNegativeButton("취소") { dialog, _ ->
+            }.setNegativeButton("취소") { dialog, _ ->
                 dialog.dismiss()
-            }
-            .show()
+            }.show()
     }
 
     private fun showPermissionRationaleDialog() {
-        AlertDialog.Builder(requireContext())
+        AlertDialog
+            .Builder(requireContext())
             .setTitle("카메라 권한 필요")
             .setMessage("이 기능을 사용하려면 카메라 권한이 필요합니다.")
             .setPositiveButton("확인") { _, _ ->
                 requestCameraPermission.launch(Manifest.permission.CAMERA)
-            }
-            .setNegativeButton("취소") { dialog, _ ->
+            }.setNegativeButton("취소") { dialog, _ ->
                 dialog.dismiss()
-            }
-            .show()
+            }.show()
     }
 
     private fun showImageSelectionDialog() {
-        val dialogFragment = dialogPictureFragment(
-            onCameraButtonClick = {
-                if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.CAMERA
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    openCameraForImage()
-                } else {
-                    requestCameraPermission.launch(Manifest.permission.CAMERA)
-                }
-            },
-            onGalleryButtonClick = {
-                val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    Manifest.permission.READ_MEDIA_IMAGES
-                } else {
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                }
-                if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED) {
-                    openGalleryForImage()
-                } else {
-                    requestGalleryPermission.launch(permission)
-                }
-            }
-        )
+        val dialogFragment =
+            DialogPictureFragment(
+                onCameraButtonClick = {
+                    if (ContextCompat.checkSelfPermission(
+                            requireContext(),
+                            Manifest.permission.CAMERA,
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        openCameraForImage()
+                    } else {
+                        requestCameraPermission.launch(Manifest.permission.CAMERA)
+                    }
+                },
+                onGalleryButtonClick = {
+                    val permission =
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            Manifest.permission.READ_MEDIA_IMAGES
+                        } else {
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                        }
+                    if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED) {
+                        openGalleryForImage()
+                    } else {
+                        requestGalleryPermission.launch(permission)
+                    }
+                },
+            )
         dialogFragment.show(childFragmentManager, "imageSelectionDialog")
     }
 
@@ -216,25 +225,25 @@ class FirstClosetFragment : Fragment() {
         } ?: Log.e("CameraDebug", "Uri 생성 실패")
     }
 
-    private fun createImageUri(): Uri? {
-        return try {
+    private fun createImageUri(): Uri? =
+        try {
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
             val fileName = "JPEG_${timeStamp}_"
-            val tempFile = File.createTempFile(
-                fileName,
-                ".jpg",
-                requireContext().externalCacheDir
-            )
+            val tempFile =
+                File.createTempFile(
+                    fileName,
+                    ".jpg",
+                    requireContext().externalCacheDir,
+                )
             FileProvider.getUriForFile(
                 requireContext(),
                 "${requireContext().packageName}.fileprovider",
-                tempFile
+                tempFile,
             )
         } catch (e: IllegalArgumentException) {
             Log.e("FileProvider", "FileProvider 설정 오류: ${e.message}")
             null
         }
-    }
 
     private fun uploadImageToFakeServer(imageUri: Uri) {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -320,11 +329,12 @@ class FirstClosetFragment : Fragment() {
         }
 
         viewModel.isAllSelectedInCurrentCategory.observe(viewLifecycleOwner) { isAllSelected ->
-            val textColor = if (isAllSelected) {
-                ContextCompat.getColor(requireContext(), R.color.gray_100)
-            } else {
-                ContextCompat.getColor(requireContext(), R.color.gray_200)
-            }
+            val textColor =
+                if (isAllSelected) {
+                    ContextCompat.getColor(requireContext(), R.color.gray_100)
+                } else {
+                    ContextCompat.getColor(requireContext(), R.color.gray_200)
+                }
             binding.rememberMeCheckbox.isChecked = isAllSelected
             binding.selectAllText.setTextColor(textColor)
         }

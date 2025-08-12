@@ -8,7 +8,6 @@ import android.provider.MediaStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.bottari.ootday.data.repository.ClosetRepository
 import com.bumptech.glide.Glide
@@ -16,8 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.OutputStream
 
-class ClosetResultViewModel(private val repository: ClosetRepository) : ViewModel() {
-
+class ClosetResultViewModel(
+    private val repository: ClosetRepository,
+) : ViewModel() {
     private val _imageUrls = MutableLiveData<List<String>>()
     val imageUrls: LiveData<List<String>> = _imageUrls
 
@@ -36,15 +36,18 @@ class ClosetResultViewModel(private val repository: ClosetRepository) : ViewMode
             return
         }
 
-        viewModelScope.launch(Dispatchers.IO) { // 파일 I/O 작업이므로 IO 스레드에서 실행
+        viewModelScope.launch(Dispatchers.IO) {
+            // 파일 I/O 작업이므로 IO 스레드에서 실행
             try {
                 _imageUrls.value?.forEach { url ->
                     // Glide를 사용해 이미지를 비트맵으로 다운로드
-                    val bitmap = Glide.with(context)
-                        .asBitmap()
-                        .load(url)
-                        .submit()
-                        .get()
+                    val bitmap =
+                        Glide
+                            .with(context)
+                            .asBitmap()
+                            .load(url)
+                            .submit()
+                            .get()
 
                     // MediaStore를 사용해 갤러리에 저장
                     saveImageToGallery(context, bitmap, "OOTDay_${System.currentTimeMillis()}.jpg")
@@ -57,20 +60,26 @@ class ClosetResultViewModel(private val repository: ClosetRepository) : ViewMode
     }
 
     // ✨ 비트맵을 갤러리에 저장하는 함수
-    private fun saveImageToGallery(context: Context, bitmap: Bitmap, fileName: String) {
-        val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-        } else {
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        }
-
-        val contentValues = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
-            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+    private fun saveImageToGallery(
+        context: Context,
+        bitmap: Bitmap,
+        fileName: String,
+    ) {
+        val collection =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                put(MediaStore.Images.Media.IS_PENDING, 1)
+                MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+            } else {
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             }
-        }
+
+        val contentValues =
+            ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    put(MediaStore.Images.Media.IS_PENDING, 1)
+                }
+            }
 
         val resolver = context.contentResolver
         val uri = resolver.insert(collection, contentValues)
@@ -103,8 +112,6 @@ class ClosetResultViewModel(private val repository: ClosetRepository) : ViewMode
             } finally {
                 _isLoading.value = false
             }
-
         }
     }
 }
-

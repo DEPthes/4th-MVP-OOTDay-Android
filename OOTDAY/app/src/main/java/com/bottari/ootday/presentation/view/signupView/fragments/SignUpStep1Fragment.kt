@@ -9,17 +9,15 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels // 추가
 import androidx.fragment.app.viewModels
 import com.bottari.ootday.R
 import com.bottari.ootday.data.model.signupModel.SignUpStep1ViewModel
+import com.bottari.ootday.data.model.signupModel.SignUpViewModel // 추가
 import com.bottari.ootday.databinding.SignUpStep1Binding
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
-import androidx.fragment.app.activityViewModels // 추가
-import com.bottari.ootday.data.model.signupModel.SignUpViewModel // 추가
-
 
 class SignUpStep1Fragment : Fragment() {
-
     private var _binding: SignUpStep1Binding? = null
     val binding get() = _binding!! // ktlint 규칙 준수를 위해 'private' 제거
 
@@ -29,24 +27,41 @@ class SignUpStep1Fragment : Fragment() {
     private val viewModel: SignUpStep1ViewModel by viewModels()
 
     // EditText 텍스트 변경을 ViewModel에 알리는 TextWatcher
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            // 텍스트 변경 이벤트를 ViewModel로 전달
-            viewModel.onInputNameChanged(s.toString())
+    private val textWatcher =
+        object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int,
+            ) {}
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int,
+            ) {
+                // 텍스트 변경 이벤트를 ViewModel로 전달
+                viewModel.onInputNameChanged(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
         }
-        override fun afterTextChanged(s: Editable?) {}
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = SignUpStep1Binding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         setupListeners()
@@ -106,7 +121,10 @@ class SignUpStep1Fragment : Fragment() {
      * @param editText 색상을 변경할 EditText 인스턴스
      * @param colorResId 적용할 색상의 리소스 ID (예: R.color.gray_dark)
      */
-    private fun setEditTextUnderlineColor(editText: android.widget.EditText, colorResId: Int) {
+    private fun setEditTextUnderlineColor(
+        editText: android.widget.EditText,
+        colorResId: Int,
+    ) {
         val color = ContextCompat.getColor(requireContext(), colorResId)
         val drawable = editText.background
         if (drawable != null) {

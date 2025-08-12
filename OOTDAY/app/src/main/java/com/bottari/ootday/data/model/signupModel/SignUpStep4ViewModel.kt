@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SignUpStep4ViewModel : ViewModel() {
-
     // LiveData for password and confirmation input
     private val _passwordInput = MutableLiveData<String>("")
     val passwordInput: LiveData<String> get() = _passwordInput
@@ -77,9 +76,8 @@ class SignUpStep4ViewModel : ViewModel() {
             _isNextButtonEnabled.value = true // 다음 버튼 활성화 상태 유지
             _passwordError.value = null // 에러 메시지 초기화
             return false
-        }
-        // 2. 비밀번호 확인 입력창이 보이는 상태 (두 번째 '다음' 버튼 클릭)
-        else {
+        } else {
+            // 2. 비밀번호 확인 입력창이 보이는 상태 (두 번째 '다음' 버튼 클릭)
             if (currentPassword == currentConfirm) {
                 _passwordConfirmError.value = null
                 return true // 다음 단계로 이동

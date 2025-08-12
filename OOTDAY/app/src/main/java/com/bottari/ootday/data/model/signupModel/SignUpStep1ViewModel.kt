@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SignUpStep1ViewModel : ViewModel() {
-
     // 현재 EditText에 입력된 이름
     private val _inputName = MutableLiveData<String>("")
     val inputName: LiveData<String> get() = _inputName

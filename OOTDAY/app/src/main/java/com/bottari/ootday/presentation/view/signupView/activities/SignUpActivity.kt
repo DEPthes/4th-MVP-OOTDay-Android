@@ -4,16 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.bottari.ootday.data.model.signupModel.SignUpViewModel
 import com.bottari.ootday.databinding.SignUpActivityBinding // 올바른 바인딩 클래스
 import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep1Fragment
 import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep2Fragment
 import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep3Fragment
 import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep4Fragment
-import com.bottari.ootday.data.model.signupModel.SignUpData
-import com.bottari.ootday.data.model.signupModel.SignUpViewModel
-import androidx.activity.viewModels
 
 // 각 Fragment들을 import 해야 합니다.
 
@@ -24,7 +23,6 @@ class SignUpActivity : AppCompatActivity() {
 
     // 회원가입 전체 데이터를 관리할 ViewModel
     private val signUpViewModel: SignUpViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +81,8 @@ class SignUpActivity : AppCompatActivity() {
             // TODO: 백엔드 연동 로직을 이곳에 구현하세요.
             // 예를 들어, authRepository.signUp(finalSignUpData)와 같이 호출하면 됩니다.
             // 여기서는 임시로 Toast 메시지를 띄우겠습니다.
-            val message = "회원가입 완료! \n" +
+            val message =
+                "회원가입 완료! \n" +
                     "이름: ${finalSignUpData?.name}\n" +
                     "아이디: ${finalSignUpData?.id}\n" +
                     "전화번호: ${finalSignUpData?.phoneNumber}\n" +

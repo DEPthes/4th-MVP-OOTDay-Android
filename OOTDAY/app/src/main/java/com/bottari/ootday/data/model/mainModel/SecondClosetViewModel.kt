@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 
 class SecondClosetViewModel : ViewModel() {
-
     // 기존 코드: 서버로 보낼 이미지 파일 데이터
     private val _imagePart = MutableLiveData<MultipartBody.Part?>()
     val imagePart: LiveData<MultipartBody.Part?> = _imagePart
@@ -33,10 +32,11 @@ class SecondClosetViewModel : ViewModel() {
             delay(3000)
 
             // 가상 데이터 생성 (실제 Glide로 로드 가능한 이미지 URL 사용)
-            val fakeItem = RecommendedItem(
-                imageUrl = "https://picsum.photos/seed/ootday/800/1200", // 테스트용 이미지 URL
-                productUrl = "https://www.musinsa.com/app/" // 테스트용 상품 링크
-            )
+            val fakeItem =
+                RecommendedItem(
+                    imageUrl = "https://picsum.photos/seed/ootday/800/1200", // 테스트용 이미지 URL
+                    productUrl = "https://www.musinsa.com/app/", // 테스트용 상품 링크
+                )
 
             // LiveData에 결과 값 전달
             _recommendationResult.value = fakeItem

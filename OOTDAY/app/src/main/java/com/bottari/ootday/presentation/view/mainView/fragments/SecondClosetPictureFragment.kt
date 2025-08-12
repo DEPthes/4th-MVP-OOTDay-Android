@@ -15,9 +15,8 @@ import com.bottari.ootday.databinding.SecondClosetPictureFragmentBinding
 import com.bumptech.glide.Glide
 
 class SecondClosetPictureFragment : Fragment() {
-
     private var _binding: SecondClosetPictureFragmentBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     private val args: SecondClosetPictureFragmentArgs by navArgs()
 
@@ -26,17 +25,25 @@ class SecondClosetPictureFragment : Fragment() {
         SecondClosetViewModelFactory()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = SecondClosetPictureFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         val imageUri = Uri.parse(args.imageUri)
 
-        Glide.with(this)
+        Glide
+            .with(this)
             .load(imageUri)
             .into(binding.myPicture)
 

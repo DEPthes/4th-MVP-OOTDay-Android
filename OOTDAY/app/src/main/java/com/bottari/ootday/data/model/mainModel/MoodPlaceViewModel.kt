@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.bottari.ootday.domain.model.KeywordItem
 
 class MoodPlaceViewModel : ViewModel() {
-
     private val _keywords = MutableLiveData<List<KeywordItem>>()
     val keywords: LiveData<List<KeywordItem>> = _keywords
 
@@ -18,8 +17,10 @@ class MoodPlaceViewModel : ViewModel() {
 
     // ✨ 현재 화면 타입에 맞는 기본 키워드 리스트
     private var currentBaseList = listOf<String>()
+
     // ✨ 사용자가 직접 추가한 키워드 리스트 (메모리)
     private val userAddedKeywords = mutableListOf<String>()
+
     // ✨ 현재 선택된 키워드 이름 Set
     private val selectedKeywordNames = mutableSetOf<String>()
 
@@ -77,12 +78,13 @@ class MoodPlaceViewModel : ViewModel() {
     private fun updateUi() {
         val combinedList = currentBaseList + userAddedKeywords
 
-        val updatedItems = combinedList.map { keywordName ->
-            KeywordItem.KeywordData(
-                name = keywordName,
-                isSelected = selectedKeywordNames.contains(keywordName)
-            )
-        }
+        val updatedItems =
+            combinedList.map { keywordName ->
+                KeywordItem.KeywordData(
+                    name = keywordName,
+                    isSelected = selectedKeywordNames.contains(keywordName),
+                )
+            }
 
         _keywords.value = listOf(KeywordItem.AddButton) + updatedItems
         _selectedCountText.value = "(${selectedKeywordNames.size}/$maxSelectionCount)"
