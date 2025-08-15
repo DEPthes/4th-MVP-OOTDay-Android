@@ -2,16 +2,20 @@
 <resources>
     <!-- 폰트 시스템 컬러 -->
     <color name="font_gray">#333333</color>
-    <color name="font_red">#B00020</color>
+    <color name="font_red">#FF0020</color>
 
     <!-- 컬러 시스템 - Primary Color -->
     <color name="primary_brown">#927B58</color>
 
     <!-- 컬러 시스템 - Brown Palette -->
-    <color name="brown_light">#EECFC0</color>
-    <color name="brown_medium">#CBA27E</color>
-    <color name="brown_dark">#B59573</color>
-    <color name="brown_darkest">#92735B</color>
+    <color name="brown_400">#EBD3B9</color>
+    <color name="brown_300">#D5A773</color>
+    <color name="brown_200">#C68942</color>
+    <color name="brown_100">#B96D15</color>
+
+    <color name="brown_400_alpha_40">#66EBD3B9</color>
+    <color name="brown_200_alpha_40">#66C68942</color>
+    <color name="brown_200_alpha_60">#99C68942</color>
 
     <!-- 컬러 login - title -->
     <color name="title_light_pink">#F0ECEC</color>
@@ -20,13 +24,17 @@
     <color name="warm_gray">#8B8680</color>
 
     <!-- 컬러 시스템 - Gray Palette -->
-    <color name="gray_light">#FAFAFA</color>
-    <color name="gray_medium_light">#FEFEFE</color>
-    <color name="gray_medium">#EDEDED</color>
-    <color name="gray_dark">#A5A5A5</color>
+    <color name="gray_400">#FAFAFA</color>
+    <color name="gray_300">#F1EFEF</color>
+    <color name="gray_200">#E0E0E0</color>
+    <color name="gray_100">#A5A5A5</color>
+    <color name="gray_500">#F0ECEC</color>
 
     <!-- 추가 시스템 컬러 -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
+
+    <!-- 회원가입 텍스트 컬러-->
+    <color name="signup_text_color">#333333</color>
 </resources>

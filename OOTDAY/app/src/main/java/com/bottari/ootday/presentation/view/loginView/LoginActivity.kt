@@ -1,5 +1,6 @@
 package com.bottari.ootday.presentation.view.loginView
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -8,7 +9,6 @@ import android.text.InputType // InputType 임포트
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,11 +19,13 @@ import com.bottari.ootday.R
 import com.bottari.ootday.data.model.loginModel.LoginRequest
 import com.bottari.ootday.data.model.loginModel.LoginViewModel
 import com.bottari.ootday.data.model.loginModel.LoginViewModelFactory
-import com.bottari.ootday.databinding.LoginViewBinding
+import com.bottari.ootday.databinding.LoginActivityBinding
 import com.bottari.ootday.domain.repository.AuthRepository
+import com.bottari.ootday.presentation.view.mainView.activities.MainActivity
+import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: LoginViewBinding
+    private lateinit var binding: LoginActivityBinding
     private val loginViewModel: LoginViewModel by viewModels {
         LoginViewModelFactory(AuthRepository())
     }
@@ -35,11 +37,11 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = LoginViewBinding.inflate(layoutInflater)
+        binding = LoginActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         notoSansKrRegular = ResourcesCompat.getFont(this, R.font.noto_sans_kr_regular)!!
-        defaultEditTextTint = ContextCompat.getColor(this, R.color.gray_dark)
+        defaultEditTextTint = ContextCompat.getColor(this, R.color.gray_100)
 
         updateLoginButtonState()
 
@@ -58,13 +60,19 @@ class LoginActivity : AppCompatActivity() {
             togglePasswordVisibility()
         }
 
+        binding.textSignup.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+
         // ViewModel의 LiveData 관찰
         loginViewModel.loginResult.observe(
             this,
             Observer { event ->
                 event.getContentIfNotHandled()?.let { success ->
                     if (success) {
-                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
                         clearLoginErrors()
                     }
                 }
@@ -123,11 +131,11 @@ class LoginActivity : AppCompatActivity() {
         if (isPasswordVisible) {
             // 비밀번호 보이게: text visible password
             binding.passwordArea.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            binding.passwordToggleButton.setImageResource(R.drawable.ps_visible_on) // 눈 뜨인 아이콘
+            binding.passwordToggleButton.setImageResource(R.drawable.btn_ps_visible_on) // 눈 뜨인 아이콘
         } else {
             // 비밀번호 숨김: text password
             binding.passwordArea.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            binding.passwordToggleButton.setImageResource(R.drawable.ps_visible_off) // 눈 감긴 아이콘
+            binding.passwordToggleButton.setImageResource(R.drawable.btn_ps_visible_off) // 눈 감긴 아이콘
         }
         // visible on/off 시 font가 default로 설정되기에 다시 원래 font로 설정
         binding.passwordArea.typeface = notoSansKrRegular
@@ -186,8 +194,8 @@ class LoginActivity : AppCompatActivity() {
 
     // 모든 오류 UI를 초기화하는 함수
     private fun clearLoginErrors() {
-        setEditTextUnderlineColor(binding.loginArea, R.color.gray_dark)
-        setEditTextUnderlineColor(binding.passwordArea, R.color.gray_dark)
+        setEditTextUnderlineColor(binding.loginArea, R.color.gray_100)
+        setEditTextUnderlineColor(binding.passwordArea, R.color.gray_100)
         setLoginErrorVisibility(false)
     }
 }

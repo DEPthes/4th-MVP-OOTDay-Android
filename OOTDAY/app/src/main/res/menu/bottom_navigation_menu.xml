@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/sl_home_selector"
+        android:title="홈" />
+
+    <item
+        android:id="@+id/feedFragment"
+        android:icon="@drawable/sl_feed_selector"
+        android:title="피드" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/sl_profile_selector"
+        android:title="프로필" />
+</menu>

@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -34,6 +36,7 @@ android {
         jvmTarget = "21"
     }
     buildFeatures {
+        dataBinding = true
         viewBinding = true
     }
 }
@@ -55,9 +58,16 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
     // editText 감지
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.13.1")
     // 네트워크 통신
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    // Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    // flexboxLayoutmanager
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
+    // ✨ 이미지 로딩을 위한 Glide 라이브러리
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_400">
+
+    <HorizontalScrollView
+        android:id="@+id/closet_category_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="0dp">
+
+            <TextView
+                android:id="@+id/category_top"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="상의"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:gravity="center"
+                android:paddingHorizontal="15dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="@dimen/body_medium_size"
+                android:textColor="@color/gray_200" />
+
+            <TextView
+                android:id="@+id/category_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="하의"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:gravity="center"
+                android:paddingHorizontal="15dp"
+                android:textSize="@dimen/body_medium_size"
+                android:textColor="@color/gray_200" />
+
+            <TextView
+                android:id="@+id/category_dress"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="원피스"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:gravity="center"
+                android:paddingHorizontal="15dp"
+                android:textSize="@dimen/body_medium_size"
+                android:textColor="@color/gray_200" />
+
+            <TextView
+                android:id="@+id/category_shoes"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="신발"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:gravity="center"
+                android:paddingHorizontal="15dp"
+                android:textSize="@dimen/body_medium_size"
+                android:textColor="@color/gray_200" />
+
+            <TextView
+                android:id="@+id/category_passion_item"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="패션소품"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:gravity="center"
+                android:paddingHorizontal="15dp"
+                android:textSize="@dimen/body_medium_size"
+                android:textColor="@color/gray_200" />
+
+            <TextView
+                android:id="@+id/category_decorations"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="악세사리"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:gravity="center"
+                android:paddingHorizontal="15dp"
+                android:textSize="@dimen/body_medium_size"
+                android:textColor="@color/gray_200" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/all_select_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/closet_category_bar"
+        app:layout_constraintEnd_toEndOf="@id/closet_category_bar"
+        app:layout_constraintBottom_toTopOf="@+id/closet_tooltip"
+        android:layout_marginRight="30dp"
+        android:layout_marginVertical="5dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:visibility="visible"
+        >
+
+        <CheckBox
+            android:id="@+id/remember_me_checkbox"
+            android:layout_width="16dp"
+            android:layout_height="10dp"
+            android:clickable="false"
+            android:background="@drawable/sl_check_selector"
+            android:button="@null" />
+
+        <TextView
+            android:id="@+id/select_all_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="모두 선택"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:textSize="@dimen/title_small_size"
+            android:textColor="@color/gray_100"
+            android:paddingLeft="4dp"
+            />
+
+    </LinearLayout>
+        
+
+    <com.bottari.ootday.data.service.RatioFrameLayout
+        android:id="@+id/closet_tooltip"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:background="@drawable/ic_tooltip"
+        android:layout_marginTop="-15dp"
+        android:layout_marginHorizontal="20dp"
+        app:ratio="320:47"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/all_select_button"
+        app:layout_constraintBottom_toTopOf="@+id/closet_recyclerview"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/closet_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/styling_start_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/closet_tooltip" />
+
+    <Button
+        android:id="@+id/styling_start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/closet_recyclerview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+
+        android:background="@drawable/sl_styling_start_selector"
+
+        android:layout_marginBottom="20dp"
+        app:backgroundTint="@null"
+        app:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:enabled="false"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

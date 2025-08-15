@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/place_title_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="외출 장소는 하나만 선택해 주세요."
+        android:fontFamily="@font/noto_sans_kr_bold"
+        android:textSize="@dimen/body_medium_large_size"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <FrameLayout
+        android:id="@+id/place_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="368dp"
+        android:background="@drawable/rounded_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/place_title_text1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ootd_place_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:paddingTop="3dp"
+                android:text="OOTD Place"
+                android:textSize="@dimen/body_medium_large_size" />
+
+            <TextView
+                android:id="@+id/ootd_place_max_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:paddingTop="6dp"
+                android:text="(0/1)"
+                android:textColor="@color/gray_100"
+                android:textSize="@dimen/body_mega_small_size" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/place_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="20dp"
+           />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/finish_place_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/sl_select_finish_selector"
+        android:enabled="false"
+
+
+        android:stateListAnimator="@null"
+
+        app:backgroundTint="@null"
+        app:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
