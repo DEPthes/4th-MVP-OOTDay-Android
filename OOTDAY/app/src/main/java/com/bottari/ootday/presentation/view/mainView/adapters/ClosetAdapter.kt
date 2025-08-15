@@ -89,7 +89,7 @@ class ClosetAdapter(
             }
         }
 
-        fun bind() { /* 바인딩할 데이터가 없음 */ }
+        fun bind() {  }
     }
 
     inner class ImageViewHolder(

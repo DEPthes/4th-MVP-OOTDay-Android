@@ -12,8 +12,8 @@
         android:text="외출 장소는 하나만 선택해 주세요."
         android:fontFamily="@font/noto_sans_kr_bold"
         android:textSize="@dimen/body_medium_large_size"
-        android:layout_marginTop="25sp"
-        android:layout_marginLeft="20sp"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,12 +21,11 @@
     <FrameLayout
         android:id="@+id/place_frame"
         android:layout_width="match_parent"
-        android:layout_height="0sp"
-        android:layout_marginHorizontal="20sp"
-        android:layout_marginTop="10sp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="368dp"
         android:background="@drawable/rounded_background"
-        app:layout_constraintBottom_toTopOf="@+id/finish_place_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/place_title_text1">
@@ -41,9 +40,9 @@
                 android:id="@+id/ootd_place_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15sp"
+                android:layout_marginLeft="15dp"
                 android:fontFamily="@font/noto_sans_kr_bold"
-                android:paddingTop="3sp"
+                android:paddingTop="3dp"
                 android:text="OOTD Place"
                 android:textSize="@dimen/body_medium_large_size" />
 
@@ -51,9 +50,9 @@
                 android:id="@+id/ootd_place_max_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7sp"
+                android:layout_marginLeft="7dp"
                 android:fontFamily="@font/noto_sans_kr_regular"
-                android:paddingTop="6sp"
+                android:paddingTop="6dp"
                 android:text="(0/1)"
                 android:textColor="@color/gray_100"
                 android:textSize="@dimen/body_mega_small_size" />
@@ -63,10 +62,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/place_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10sp"
-            android:layout_marginTop="45sp"
-            android:layout_marginBottom="20sp"
+            android:layout_height="200dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="20dp"
            />
     </FrameLayout>
 
@@ -74,7 +73,7 @@
         android:id="@+id/finish_place_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/sl_select_finish_selector"
         android:enabled="false"
 

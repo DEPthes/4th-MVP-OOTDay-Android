@@ -17,7 +17,7 @@
             android:id="@+id/signup_toolbar"
             android:layout_width="match_parent"
             android:background="@color/gray_400"
-            android:layout_height="72sp"
+            android:layout_height="72dp"
             app:contentInsetStart="0dp"
             app:contentInsetStartWithNavigation="0dp"
             app:layout_scrollFlags="noScroll">
@@ -32,8 +32,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/btn_back"
                 android:contentDescription="뒤로가기"
-                android:padding="10sp"
-                android:layout_marginLeft="20sp"
+                android:padding="10dp"
+                android:layout_marginLeft="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
@@ -61,8 +61,8 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/signup_main_fragment"
 
-        android:layout_width="0sp"
-        android:layout_height="0sp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:tag="signup_main_fragment"
 
 

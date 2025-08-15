@@ -3,6 +3,8 @@ package com.bottari.ootday.presentation.view.mainView.activities
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -16,11 +18,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = MainActivityBinding.inflate(layoutInflater)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        binding.bottomNavigation.setOnApplyWindowInsetsListener(null)
+
         setContentView(binding.root)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+
 
         // bottom_navigation와 navController 연결
         binding.bottomNavigation.setupWithNavController(navController)
@@ -46,5 +57,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainBackButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+
+
     }
 }

@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.bottari.ootday.data.model.signupModel.SignUpViewModel
 import com.bottari.ootday.databinding.SignUpActivityBinding // 올바른 바인딩 클래스
@@ -27,6 +29,13 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SignUpActivityBinding.inflate(layoutInflater)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
         setContentView(binding.root)
 
         // 툴바 설정 (선택 사항: ActionBar로 사용하고 싶을 경우)
