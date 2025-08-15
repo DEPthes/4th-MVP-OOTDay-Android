@@ -89,7 +89,7 @@ class ClosetAdapter(
             }
         }
 
-        fun bind() {  }
+        fun bind() { }
     }
 
     inner class ImageViewHolder(

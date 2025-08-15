@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-
         // bottom_navigation와 navController 연결
         binding.bottomNavigation.setupWithNavController(navController)
 
@@ -57,7 +56,5 @@ class MainActivity : AppCompatActivity() {
         binding.mainBackButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
-
     }
 }
