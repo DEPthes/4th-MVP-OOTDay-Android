@@ -80,7 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/sl_plus_selector" />
+            android:background="@drawable/sl_logout_button_selector" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
