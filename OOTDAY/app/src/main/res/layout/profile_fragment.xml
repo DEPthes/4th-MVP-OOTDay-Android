@@ -29,48 +29,23 @@
         app:layout_constraintTop_toBottomOf="@id/banner_view"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <LinearLayout
-            android:id="@+id/name_and_title_text_container"
+        <TextView
+            android:id="@+id/name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:gravity="center"
-            android:orientation="horizontal"
+            android:text="강안나"
+            android:fontFamily="@font/noto_sans_kr_bold"
+            android:textSize="@dimen/title_large_size"
+            android:textColor="@color/font_gray"
+            android:alpha="0.8"
 
             android:layout_marginTop="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/profile_view"
-            >
-
-            <TextView
-                android:id="@+id/title_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="패션왕😎"
-                android:fontFamily="@font/noto_sans_kr_bold"
-                android:textSize="@dimen/title_large_size"
-                android:textColor="@color/font_red"
-                android:alpha="0.8"
-
-                android:layout_marginRight="10dp"
-                />
-
-            <TextView
-                android:id="@+id/name_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="강안나"
-                android:fontFamily="@font/noto_sans_kr_bold"
-                android:textSize="@dimen/title_large_size"
-                android:textColor="@color/font_gray"
-                android:alpha="0.8"
-                />
-
-        </LinearLayout>
+            />
 
         <View
         android:id="@+id/profile_view"
@@ -81,7 +56,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="30dp"
 
-        app:layout_constraintTop_toBottomOf="@+id/name_and_title_text_container"
+        app:layout_constraintTop_toBottomOf="@+id/name_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />

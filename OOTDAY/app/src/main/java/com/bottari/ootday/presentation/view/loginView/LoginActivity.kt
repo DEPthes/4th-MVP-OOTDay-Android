@@ -20,7 +20,7 @@ import com.bottari.ootday.data.model.loginModel.LoginRequest
 import com.bottari.ootday.data.model.loginModel.LoginViewModel
 import com.bottari.ootday.data.model.loginModel.LoginViewModelFactory
 import com.bottari.ootday.databinding.LoginActivityBinding
-import com.bottari.ootday.domain.repository.AuthRepository
+import com.bottari.ootday.data.repository.AuthRepository
 import com.bottari.ootday.presentation.view.mainView.activities.MainActivity
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
 

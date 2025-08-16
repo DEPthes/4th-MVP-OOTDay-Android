@@ -2,7 +2,7 @@ package com.bottari.ootday.data.model.loginModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bottari.ootday.domain.repository.AuthRepository
+import com.bottari.ootday.data.repository.AuthRepository
 
 // ViewModel을 생성할 때 필요한 의존성(여기서는 AuthRepository)을 제공하는 팩토리 클래스입니다.
 class LoginViewModelFactory(

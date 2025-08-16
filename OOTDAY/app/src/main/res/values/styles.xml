@@ -2,7 +2,7 @@
 <resources>
     <!-- Typography Styles -->
     <style name="BottomNavigation.IconOnly" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemIconSize">40sp</item>
+        <item name="itemIconSize">40dp</item>
     </style>
     <!-- Headline Styles -->
 

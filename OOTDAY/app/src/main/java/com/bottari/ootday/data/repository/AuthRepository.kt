@@ -1,5 +1,6 @@
-package com.bottari.ootday.domain.repository
+package com.bottari.ootday.data.repository
 
+import com.bottari.ootday.data.service.AuthApiService
 import com.bottari.ootday.domain.repository.dataClass.AuthCheckResponse
 import com.bottari.ootday.domain.repository.dataClass.PhoneNumberAuthResponse
 import kotlinx.coroutines.delay

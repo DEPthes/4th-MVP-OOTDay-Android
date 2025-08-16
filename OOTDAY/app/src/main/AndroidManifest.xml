@@ -24,7 +24,8 @@
         android:roundIcon="@drawable/ic_ootday_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.OOTDAY"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:networkSecurityConfig="@xml/network_security_config">
         <activity
             android:name=".presentation.view.splashActivity.SplashActivity"
             android:exported="true">

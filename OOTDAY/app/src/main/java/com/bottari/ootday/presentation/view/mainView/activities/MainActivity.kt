@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment,
                 R.id.secondClosetLoadingFragment, // 로딩 화면일 때
                 R.id.secondClosetResultFragment,
+                R.id.feedFragment,
+                R.id.profileFragment
                 -> { // 결과 화면일 때
                     binding.mainBackButton.visibility = View.GONE
                 }

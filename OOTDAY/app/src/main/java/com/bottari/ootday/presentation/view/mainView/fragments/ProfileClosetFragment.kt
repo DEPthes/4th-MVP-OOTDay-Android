@@ -5,13 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.bottari.ootday.R
-import com.bottari.ootday.databinding.HomeFragmentBinding
-import com.bottari.ootday.databinding.ProfileFragmentBinding
+import com.bottari.ootday.databinding.ProfileClosetFragmentBinding
 
-class ProfileFragment : Fragment() {
-    private var _binding: ProfileFragmentBinding? = null
+class ProfileClosetFragment : Fragment() {
+    private var _binding: ProfileClosetFragmentBinding? = null
     val binding get() = _binding!!
 
     override fun onCreateView(
@@ -19,10 +16,9 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ):  View {
-        _binding = ProfileFragmentBinding.inflate(inflater, container, false)
+        _binding = ProfileClosetFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -32,13 +28,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        binding.profileSettingButton.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_profileSettingFragment)
-        }
 
-        binding.myClosetButton.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_profileClosetFragment)
-        }
 
     }
 

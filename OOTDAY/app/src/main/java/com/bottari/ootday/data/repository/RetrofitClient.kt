@@ -1,4 +1,4 @@
-package com.bottari.ootday.domain.repository
+package com.bottari.ootday.data.repository
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

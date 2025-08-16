@@ -6,31 +6,6 @@
     android:background="@color/gray_400"
     android:elevation="0dp">
 
-    <LinearLayout
-        android:id="@+id/name_and_title_text_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:gravity="center"
-        android:orientation="horizontal"
-
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:id="@+id/title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginRight="10dp"
-            android:alpha="0.8"
-            android:fontFamily="@font/noto_sans_kr_bold"
-            android:text="패션왕😎"
-            android:textColor="@color/font_red"
-
-            android:textSize="@dimen/title_large_size" />
 
         <TextView
             android:id="@+id/name_text"
@@ -41,9 +16,13 @@
             android:fontFamily="@font/noto_sans_kr_bold"
             android:text="강안나"
             android:textColor="@color/font_gray"
-            android:textSize="@dimen/title_large_size" />
+            android:textSize="@dimen/title_large_size"
 
-    </LinearLayout>
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
 
     <View
         android:id="@+id/profile_secret_view"
@@ -56,7 +35,7 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_and_title_text_container" />
+        app:layout_constraintTop_toBottomOf="@+id/name_text" />
 
     <TextView
         android:id="@+id/profile_setting_secret_data_text"
@@ -230,7 +209,7 @@
                 android:clickable="true"
 
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="12dp"
                 android:src="@drawable/btn_right"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/profile_secret_card_third_view"
@@ -290,7 +269,7 @@
                 android:clickable="true"
 
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="12dp"
                 android:src="@drawable/btn_right"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

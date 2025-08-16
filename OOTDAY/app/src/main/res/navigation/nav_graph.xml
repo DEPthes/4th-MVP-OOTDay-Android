@@ -110,6 +110,25 @@
         android:id="@+id/profileFragment"
         android:name="com.bottari.ootday.presentation.view.mainView.fragments.ProfileFragment"
         android:label="My Page"
-        tools:layout="@layout/profile_fragment" />
+        tools:layout="@layout/profile_fragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_profileSettingFragment"
+            app:destination="@id/profileSettingFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_profileClosetFragment"
+            app:destination="@id/profileClosetFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileSettingFragment"
+        android:name="com.bottari.ootday.presentation.view.mainView.fragments.ProfileSettingFragment"
+        android:label="My setting Page"
+        tools:layout="@layout/profile_setting_fragment" />
+
+    <fragment
+        android:id="@+id/profileClosetFragment"
+        android:name="com.bottari.ootday.presentation.view.mainView.fragments.ProfileClosetFragment"
+        android:label="My closet Page"
+        tools:layout="@layout/profile_closet_fragment" />
 
 </navigation>

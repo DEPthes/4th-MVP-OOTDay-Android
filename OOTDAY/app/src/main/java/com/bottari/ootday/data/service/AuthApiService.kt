@@ -1,4 +1,4 @@
-package com.bottari.ootday.domain.repository
+package com.bottari.ootday.data.service
 
 import com.bottari.ootday.domain.repository.dataClass.AuthCheckRequest
 import com.bottari.ootday.domain.repository.dataClass.AuthCheckResponse
