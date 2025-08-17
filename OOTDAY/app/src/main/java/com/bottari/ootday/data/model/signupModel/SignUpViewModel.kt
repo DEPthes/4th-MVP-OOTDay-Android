@@ -21,10 +21,14 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun setId(id: String) {
-        _signUpData.value = _signUpData.value?.copy(id = id)
+        _signUpData.value = _signUpData.value?.copy(memberId = id)
     }
 
     fun setPassword(password: String) {
         _signUpData.value = _signUpData.value?.copy(password = password)
+    }
+
+    fun setConfirmPassword(confirmPassword: String) {
+        _signUpData.value = _signUpData.value?.copy(confirmPassword = confirmPassword)
     }
 }

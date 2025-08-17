@@ -1,6 +1,10 @@
 package com.bottari.ootday.data.repository
 
+import android.util.Log
+import com.bottari.ootday.data.model.signupModel.SignUpData
 import com.bottari.ootday.data.service.AuthApiService
+import com.bottari.ootday.data.service.MemberApiService
+import com.bottari.ootday.data.service.SmsApiService
 import com.bottari.ootday.domain.repository.dataClass.AuthCheckResponse
 import com.bottari.ootday.domain.repository.dataClass.PhoneNumberAuthResponse
 import kotlinx.coroutines.delay
@@ -11,7 +15,13 @@ class AuthRepository {
     // Retrofit 인스턴스 (싱글톤으로 관리하거나 Dagger Hilt 등으로 주입받는 것이 좋습니다)
     private val baseUrl = "https://temp.example.com/api/"
 
-    private val authApiService: AuthApiService
+    private val smsApiService: SmsApiService by lazy {
+        RetrofitClient.createService(SmsApiService::class.java)
+    }
+
+    private val memberApiService: MemberApiService by lazy {
+        RetrofitClient.createService(MemberApiService::class.java)
+    }
 
     init {
         val retrofit =
@@ -20,7 +30,6 @@ class AuthRepository {
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-        authApiService = retrofit.create(AuthApiService::class.java)
     }
 
     suspend fun login(
@@ -79,6 +88,58 @@ class AuthRepository {
             Result.failure(e)
         }
          */
+    }
+
+//    suspend fun requestPhoneNumberAuth(phoneNumber: String): Result<String> {
+//        return try {
+//            val response = smsApiService.sendSmsVerification(phoneNumber)
+//            if (response.isSuccessful && response.body() != null) {
+//                Result.success(response.body()!!)
+//            } else {
+//                val errorCode = response.code()
+//                val errorBody = response.errorBody()?.string() // 에러 본문 읽기
+//                Log.e("AuthRepository", "API Error - Code: $errorCode, Body: $errorBody")
+//                Result.failure(Exception("서버 응답 오류 (코드: $errorCode)"))
+//            }
+//        } catch (e: Exception) {
+//            // 네트워크 오류 등 예외 발생 시
+//            Result.failure(e)
+//        }
+//    }
+//
+//    // 인증 번호 확인 함수 (이 함수도 필요하다면 모킹할 수 있습니다.)
+//    suspend fun checkPhoneNumberAuth(phoneNumber: String, code: String): Result<String> {
+//        return try {
+//            val response = smsApiService.verifySmsCode(phoneNumber, code)
+//            if (response.isSuccessful && response.body() != null) {
+//                Result.success(response.body()!!)
+//            } else {
+//                val errorCode = response.code()
+//                val errorBody = response.errorBody()?.string()
+//                Log.e("AuthRepository", "API Error - Code: $errorCode, Body: $errorBody")
+//                Result.failure(Exception("인증번호가 일치하지 않습니다."))
+//            }
+//        } catch (e: Exception) {
+//            Result.failure(e)
+//        }
+//    }
+
+    suspend fun signUp(signUpData: SignUpData): Result<String> {
+        return try {
+            // ✨ 호출하는 서비스 인스턴스 이름 변경
+            val response = memberApiService.join(signUpData)
+
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!)
+            } else {
+                val errorBody = response.errorBody()?.string()
+                Log.e("AuthRepository", "SignUp Error - Code: ${response.code()}, Body: $errorBody")
+                Result.failure(Exception("회원가입 실패 (코드: ${response.code()})"))
+            }
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "SignUp Exception", e)
+            Result.failure(e)
+        }
     }
 
     // 로그인 상태 저장/불러오기 (SharedPreferences 사용)

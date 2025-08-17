@@ -128,20 +128,6 @@
             />
 
     </LinearLayout>
-        
-
-    <com.bottari.ootday.data.service.RatioFrameLayout
-        android:id="@+id/closet_tooltip"
-        android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:background="@drawable/ic_tooltip"
-        android:layout_marginTop="-15dp"
-        android:layout_marginHorizontal="20dp"
-        app:ratio="320:47"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/all_select_button"
-        app:layout_constraintBottom_toTopOf="@+id/closet_recyclerview"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/closet_recyclerview"
@@ -153,7 +139,7 @@
         app:layout_constraintBottom_toTopOf="@+id/closet_delete_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/closet_tooltip" />
+        app:layout_constraintTop_toBottomOf="@+id/all_select_button" />
 
     <Button
         android:id="@+id/closet_delete_button"

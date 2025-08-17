@@ -127,7 +127,9 @@ class SignUpStep4Fragment : Fragment() {
             if (canProceed) {
                 // ViewModel에 비밀번호 데이터 저장
                 val password = binding.step4PasswordInput.text.toString()
+                val confirmPassword = binding.step4PasswordConfirmInput.text.toString()
                 signUpViewModel.setPassword(password)
+                signUpViewModel.setConfirmPassword(confirmPassword)
 
                 (activity as? SignUpActivity)?.navigateToNextStep(4)
             }

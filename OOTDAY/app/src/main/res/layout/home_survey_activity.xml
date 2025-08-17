@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_400"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_app_bar_layout"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:background="@color/gray_300"
+            android:layout_height="70dp"
+            app:layout_scrollFlags="noScroll">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:id="@+id/main_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_back"
+                    android:contentDescription="뒤로가기"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+
+                    android:src="@drawable/ic_logo_text"
+                    android:layout_marginRight="10dp"
+                    app:layout_constraintWidth_percent="0.25"
+                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/survey_title1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingHorizontal="15dp"
+        android:text="성별과 퍼스널 컬러를 알려주시면,"
+        android:textSize="@dimen/title_large_size"
+        android:fontFamily="@font/noto_sans_kr_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_app_bar_layout" />
+
+    <TextView
+        android:id="@+id/survey_title2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp"
+        android:layout_marginTop="-30dp"
+        android:text="더 어울리는 스타일을 찾아드릴 수 있어요."
+        android:textSize="@dimen/title_large_size"
+        android:fontFamily="@font/noto_sans_kr_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/survey_title1" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/survey_sexual_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="@null"
+
+        app:layout_constraintTop_toBottomOf="@+id/survey_title2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sexual_constraint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_300"
+            >
+
+            <TextView
+                android:id="@+id/survey_sexual_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="나의 성별은..."
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textColor="@color/font_gray"
+                android:alpha="0.8"
+                android:textSize="@dimen/title_large_size"
+
+                android:layout_marginStart="15dp"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+
+                />
+
+            <TextView
+                android:id="@+id/sexual_man"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="남성"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textColor="@color/sl_keyword_text_color"
+                android:textSize="@dimen/body_medium_size"
+
+                android:background="@drawable/sl_keyword_item_background"
+                android:layout_marginHorizontal="15dp"
+
+                app:layout_constraintTop_toBottomOf="@id/survey_sexual_title"
+                app:layout_constraintStart_toStartOf="parent"
+
+                />
+
+            <TextView
+                android:id="@+id/sexual_woman"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="여성"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textColor="@color/sl_keyword_text_color"
+                android:textSize="@dimen/body_medium_size"
+
+                android:background="@drawable/sl_keyword_item_background"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+
+                app:layout_constraintTop_toBottomOf="@id/sexual_man"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/survey_color_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="@null"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/survey_sexual_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/color_constraint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_300"
+            >
+
+            <TextView
+                android:id="@+id/survey_color_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="나의 퍼스널 컬러는..."
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textColor="@color/font_gray"
+                android:alpha="0.8"
+                android:textSize="@dimen/title_large_size"
+
+                android:layout_marginStart="15dp"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/color_item1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@id/survey_color_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/sl_my_color_selector"
+                >
+
+                <TextView
+                    android:id="@+id/spring_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sl_keyword_text_color"
+                    android:text="봄웜톤"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="@dimen/body_medium_size"
+
+                    android:layout_marginStart="22dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:id="@+id/spring_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sl_keyword_text_color"
+                    android:text="햇살처럼 화사하고 살구빛이 잘 어울리는 편이에요."
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="@dimen/body_medium_size"
+
+                    android:paddingStart="69dp"
+                    android:paddingEnd="40dp"
+
+                    app:layout_constraintStart_toEndOf="@id/spring_text1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/color_item2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@id/color_item1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/sl_my_color_selector"
+                >
+
+                <TextView
+                    android:id="@+id/summer_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sl_keyword_text_color"
+                    android:text="여름쿨톤"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="@dimen/body_medium_size"
+
+                    android:layout_marginStart="16dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:id="@+id/summer_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sl_keyword_text_color"
+                    android:text="맑고 차분한 분위기, 햇빛에 타면 피부가 붉어지는 편이에요."
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="@dimen/body_medium_size"
+
+                    android:paddingStart="65dp"
+                    android:paddingEnd="40dp"
+
+                    app:layout_constraintStart_toEndOf="@id/summer_text1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/color_item3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@id/color_item2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/sl_my_color_selector"
+                >
+
+                <TextView
+                    android:id="@+id/autumn_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sl_keyword_text_color"
+                    android:text="가을웜톤"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="@dimen/body_medium_size"
+
+                    android:layout_marginStart="16dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:id="@+id/autumn_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sl_keyword_text_color"
+                    android:text="톤 다운된 깊은 색이 어울리고 성숙한 인상을 주는 편이에요."
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="@dimen/body_medium_size"
+
+                    android:paddingStart="65dp"
+                    android:paddingEnd="40dp"
+
+                    app:layout_constraintStart_toEndOf="@id/autumn_text1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/color_item4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@id/color_item3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/sl_my_color_selector"
+                >
+
+                <TextView
+                    android:id="@+id/winter_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sl_keyword_text_color"
+                    android:text="겨울쿨톤"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="@dimen/body_medium_size"
+
+                    android:layout_marginStart="16dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:id="@+id/winter_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sl_keyword_text_color"
+                    android:text="도회적이고 선명하고 쨍한 색이 잘 받는 세련된 편이에요."
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="@dimen/body_medium_size"
+
+                    android:paddingStart="65dp"
+                    android:paddingEnd="40dp"
+
+                    app:layout_constraintStart_toEndOf="@id/winter_text1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

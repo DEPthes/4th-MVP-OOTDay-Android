@@ -56,6 +56,10 @@
             android:exported="false"
             />
         <activity
+            android:name=".presentation.view.surveyView.HomeSurveyActivity"
+            android:exported="false"
+            />
+        <activity
             android:name=".presentation.view.mainView.activities.MainActivity"
             android:exported="false"
             />

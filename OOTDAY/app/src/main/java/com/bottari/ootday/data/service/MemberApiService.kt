@@ -1,5 +1,7 @@
 package com.bottari.ootday.data.service
 
+import com.bottari.ootday.data.model.signupModel.SignUpData
+import com.bottari.ootday.domain.model.SurveyRequest
 import com.bottari.ootday.domain.model.WithdrawRequest
 import retrofit2.Response
 import retrofit2.http.Body
@@ -21,4 +23,16 @@ interface MemberApiService {
         @Header("Authorization") token: String,
         @Body request: WithdrawRequest
     ): Response<String>
+
+    @POST("/api/members/join")
+    suspend fun join(
+        @Body request: SignUpData
+    ): Response<String> // 성공 시 UUID (String) 응답
+
+    // 설문조사 결과 제출 API
+    @POST("/api/members/survey")
+    suspend fun submitSurvey(
+        @Header("Authorization") token: String,
+        @Body request: SurveyRequest
+    ): Response<String> // 성공 시 String 응답
 }

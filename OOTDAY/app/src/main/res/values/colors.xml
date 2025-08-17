@@ -2,6 +2,8 @@
 <resources>
     <!-- 폰트 시스템 컬러 -->
     <color name="font_gray">#333333</color>
+    <color name="font_gray_80">#CC333333</color>
+    <color name="font_gray_50">#80333333</color>
     <color name="font_red">#FF0020</color>
 
     <!-- 컬러 시스템 - Primary Color -->

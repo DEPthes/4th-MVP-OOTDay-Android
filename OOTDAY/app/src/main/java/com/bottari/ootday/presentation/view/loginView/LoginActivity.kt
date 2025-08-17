@@ -23,6 +23,7 @@ import com.bottari.ootday.databinding.LoginActivityBinding
 import com.bottari.ootday.data.repository.AuthRepository
 import com.bottari.ootday.presentation.view.mainView.activities.MainActivity
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
+import com.bottari.ootday.presentation.view.signupView.activities.SignUpCongActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: LoginActivityBinding
@@ -60,10 +61,16 @@ class LoginActivity : AppCompatActivity() {
             togglePasswordVisibility()
         }
 
-        binding.textSignup.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
+            binding.textSignup.setOnClickListener {
+            val intent = Intent(this, SignUpCongActivity::class.java)
             startActivity(intent)
         }
+
+        //실제 sign up 로직인데 위 로직으로 잠깐 디버깅
+//        binding.textSignup.setOnClickListener {
+//            val intent = Intent(this, SignUpActivity::class.java)
+//            startActivity(intent)
+//        }
 
         // ViewModel의 LiveData 관찰
         loginViewModel.loginResult.observe(

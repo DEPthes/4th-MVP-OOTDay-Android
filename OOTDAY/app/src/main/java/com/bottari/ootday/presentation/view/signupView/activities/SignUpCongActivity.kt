@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bottari.ootday.databinding.SignUpCongActivityBinding
 import com.bottari.ootday.presentation.view.loginView.LoginActivity
+import com.bottari.ootday.presentation.view.surveyView.HomeSurveyActivity
 
 class SignUpCongActivity : AppCompatActivity() {
     private lateinit var binding: SignUpCongActivityBinding
@@ -15,7 +16,7 @@ class SignUpCongActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.moveToLoginButton.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, HomeSurveyActivity::class.java)
             startActivity(intent)
             finish()
         }
