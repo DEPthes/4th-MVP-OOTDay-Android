@@ -25,7 +25,7 @@ class FirstClosetResultFragment : Fragment() {
     private var downloadCount = true
 
     private val viewModel: ClosetResultViewModel by viewModels {
-        ClosetResultViewModelFactory(ClosetRepository())
+        ClosetResultViewModelFactory(ClosetRepository(requireContext()))
     }
 
     override fun onCreateView(

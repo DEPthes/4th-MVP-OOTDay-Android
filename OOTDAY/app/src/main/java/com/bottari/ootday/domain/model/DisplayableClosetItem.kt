@@ -8,6 +8,7 @@ sealed class DisplayableClosetItem {
         val category: String,
         val mood: String,
         val description: String,
+        val imageUrl: String, // 👈 이미지 URL 필드 추가
         var isSelected: Boolean = false,
     ) : DisplayableClosetItem()
 

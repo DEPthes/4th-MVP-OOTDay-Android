@@ -1,5 +1,8 @@
 package com.bottari.ootday.data.model.mainModel
 
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,11 +12,10 @@ import com.bottari.ootday.domain.model.DisplayableClosetItem
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 
-class FirstClosetViewModel(
-    private val repository: ClosetRepository,
-) : ViewModel() {
+class FirstClosetViewModel(private val closetRepository: ClosetRepository) : ViewModel() {
+
     private val _closetItems = MutableLiveData<List<DisplayableClosetItem>>()
-    val closetItems: LiveData<List<DisplayableClosetItem>> = _closetItems
+    val closetItems: LiveData<List<DisplayableClosetItem>> get() = _closetItems
 
     private val _isTooltipVisible = MutableLiveData<Boolean>(true)
     val isTooltipVisible: LiveData<Boolean> = _isTooltipVisible
@@ -41,30 +43,45 @@ class FirstClosetViewModel(
     }
 
     fun loadItemsByCategory(category: String) {
+        Log.d("ClosetDebug", "ViewModel: loadItemsByCategory($category) 함수 실행됨") //debug
         currentCategory = category
         viewModelScope.launch {
-            val items =
-                repository.getClosetItems(category).map { dto ->
-                    val isSelected =
-                        _selectedItems.value?.any { selected ->
-                            selected.uuid == dto.uuid
-                        } ?: false
-                    DisplayableClosetItem.ClosetData(dto.id, dto.uuid, dto.name, dto.category, dto.mood, dto.description, isSelected)
+            closetRepository.getMyCloset(category)
+                .onSuccess { items ->
+                    // API 응답(ClosetItem)을 UI 표시용(DisplayableClosetItem)으로 변환
+                    val displayableItems = mutableListOf<DisplayableClosetItem>()
+                    displayableItems.add(DisplayableClosetItem.AddButton) // '추가' 버튼 항상 표시
+                    displayableItems.addAll(items.map {
+                        DisplayableClosetItem.ClosetData(
+                            id = it.id,
+                            uuid = it.uuid,
+                            name = it.name,
+                            category = it.category,
+                            mood = it.mood,
+                            description = it.description,
+                            // isSelected는 UI 상태이므로 여기서 false로 초기화
+                            imageUrl = it.imageUrl,
+                            isSelected = false
+                        )
+                    })
+                    _closetItems.value = displayableItems
                 }
-            val listWithPlusItem = listOf(DisplayableClosetItem.AddButton) + items
-            _closetItems.value = listWithPlusItem
-
-            _isAllSelectedInCurrentCategory.value = false
-            updateAllSelectedState()
+                .onFailure {
+                    // 에러 처리 (예: Toast 메시지 표시)
+                    _closetItems.value = listOf(DisplayableClosetItem.AddButton) // 실패해도 '추가' 버튼은 보이게
+                }
         }
     }
 
     fun postClosetItem(imagePart: MultipartBody.Part) {
         viewModelScope.launch {
-            val success = repository.uploadFile(imagePart)
-            if (success) {
-                loadItemsByCategory(currentCategory)
-            }
+            closetRepository.uploadCloth(imagePart, currentCategory)
+                .onSuccess {
+                    loadItemsByCategory(currentCategory)
+                }
+                .onFailure {
+                    // 에러 처리
+                }
         }
     }
 

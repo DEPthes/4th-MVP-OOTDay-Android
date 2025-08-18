@@ -43,7 +43,7 @@ class FirstClosetFragment : Fragment() {
     private var tempImageUri: Uri? = null
 
     private val viewModel: FirstClosetViewModel by viewModels {
-        FirstClosetViewModelFactory(ClosetRepository())
+        FirstClosetViewModelFactory(requireContext())
     }
 
     private lateinit var closetAdapter: ClosetAdapter
@@ -58,11 +58,11 @@ class FirstClosetFragment : Fragment() {
                         val count = intent.clipData!!.itemCount
                         for (i in 0 until count) {
                             val imageUri = intent.clipData!!.getItemAt(i).uri
-                            uploadImageToFakeServer(imageUri)
+                            uploadImageToServer(imageUri)
                         }
                     } else if (intent.data != null) {
                         val imageUri = intent.data!!
-                        uploadImageToFakeServer(imageUri)
+                        uploadImageToServer(imageUri)
                     }
                 }
             }
@@ -75,7 +75,7 @@ class FirstClosetFragment : Fragment() {
             if (success) {
                 tempImageUri?.let { uri ->
                     Log.d("Camera", "카메라 촬영 성공: $uri")
-                    uploadImageToFakeServer(uri)
+                    uploadImageToServer(uri)
                 }
             } else {
                 Log.d("Camera", "카메라 촬영 실패 또는 취소")
@@ -100,7 +100,6 @@ class FirstClosetFragment : Fragment() {
         setupListeners()
         setupObservers()
         updateCategorySelection("상의")
-        viewModel.loadItemsByCategory("상의")
     }
 
     private fun setupRecyclerView() {
@@ -245,12 +244,15 @@ class FirstClosetFragment : Fragment() {
             null
         }
 
-    private fun uploadImageToFakeServer(imageUri: Uri) {
+    private fun uploadImageToServer(imageUri: Uri) {
         viewLifecycleOwner.lifecycleScope.launch {
-            val fileContent = requireContext().contentResolver.openInputStream(imageUri)?.readBytes()
-            if (fileContent != null) {
-                val requestBody = fileContent.toRequestBody("image/*".toMediaTypeOrNull())
-                val multipart = MultipartBody.Part.createFormData("file", "image.jpg", requestBody)
+            val fileStream = requireContext().contentResolver.openInputStream(imageUri)
+            val fileBytes = fileStream?.readBytes()
+            fileStream?.close()
+
+            if (fileBytes != null) {
+                val requestBody = fileBytes.toRequestBody("image/*".toMediaTypeOrNull())
+                val multipart = MultipartBody.Part.createFormData("image", "image.jpg", requestBody) // 👈 파트 이름을 "image"로 변경
                 viewModel.postClosetItem(multipart)
             }
         }
@@ -266,6 +268,7 @@ class FirstClosetFragment : Fragment() {
         }
 
         binding.categoryTop.setOnClickListener {
+            Log.d("ClosetDebug", "Fragment: '상의' 카테고리 버튼 클릭됨") // debug
             updateCategorySelection("상의")
             viewModel.loadItemsByCategory("상의")
         }

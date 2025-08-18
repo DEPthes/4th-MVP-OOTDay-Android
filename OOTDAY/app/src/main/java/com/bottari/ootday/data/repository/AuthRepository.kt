@@ -2,7 +2,6 @@ package com.bottari.ootday.data.repository
 
 import android.util.Log
 import com.bottari.ootday.data.model.signupModel.SignUpData
-import com.bottari.ootday.data.service.AuthApiService
 import com.bottari.ootday.data.service.MemberApiService
 import com.bottari.ootday.data.service.SmsApiService
 import com.bottari.ootday.domain.model.DataStoreManager
@@ -13,6 +12,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.content.Context
 import com.bottari.ootday.data.model.loginModel.LoginRequest
+import com.bottari.ootday.data.model.loginModel.ProfileResponse
+import com.bottari.ootday.domain.model.WithdrawRequest
 import kotlinx.coroutines.flow.first
 
 sealed class LoginFlowResult {
@@ -21,26 +22,15 @@ sealed class LoginFlowResult {
 }
 
 class AuthRepository(private val context: Context) {
-    // Retrofit 인스턴스 (싱글톤으로 관리하거나 Dagger Hilt 등으로 주입받는 것이 좋습니다)
-    private val baseUrl = "https://temp.example.com/api/"
-
     private val dataStoreManager = DataStoreManager(context)
 
+    private val retrofitClient = RetrofitClient(context)
+
     private val smsApiService: SmsApiService by lazy {
-        RetrofitClient.createService(SmsApiService::class.java)
+        retrofitClient.createService<SmsApiService>()
     }
-
     private val memberApiService: MemberApiService by lazy {
-        RetrofitClient.createService(MemberApiService::class.java)
-    }
-
-    init {
-        val retrofit =
-            Retrofit
-                .Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+        retrofitClient.createService<MemberApiService>()
     }
 
     //로그인 모킹함수
@@ -152,18 +142,69 @@ class AuthRepository(private val context: Context) {
 
     // SplashActivity에서 사용할 토큰 유효성 검사 함수
     suspend fun validateToken(): Boolean {
-        val token = dataStoreManager.getToken.first()
+        // 1. 로그인 유지' 옵션을 체크했는지 먼저 확인
         val rememberMe = dataStoreManager.getRememberMe.first()
-        if (!rememberMe || token.isNullOrBlank()) return false
+        if (!rememberMe) return false
 
+        // 2. 저장된 토큰이 있는지 확인 (API 호출 전 불필요한 요청 방지)
+        val token = dataStoreManager.getToken.first()
+        if (token.isNullOrBlank()) return false
+
+        // 3. 토큰이 있다면, 실제 유효한지 서버에 프로필 조회를 요청
+        // AuthInterceptor가 자동으로 헤더에 토큰을 추가해주므로, 여기서는 파라미터 없이 호출
         return try {
-            val response = memberApiService.getMyProfile("Bearer $token")
-            response.isSuccessful
+            val response = memberApiService.getMyProfile()
+            response.isSuccessful // API 호출이 성공했는지 여부(true/false)를 반환
         } catch (e: Exception) {
-            false
+            false // 네트워크 오류 등 예외 발생 시 무효한 토큰으로 간주
+        }
+    }
+
+    suspend fun getUserProfile(): Result<ProfileResponse> {
+        return try {
+            // API 호출 시 더 이상 토큰을 직접 전달하지 않음
+            val response = memberApiService.getMyProfile()
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("프로필 조회 실패 (코드: ${response.code()})"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 
 
+    suspend fun logout(): Result<Unit> {
+        return try {
+            // API 호출 시 더 이상 토큰을 직접 전달하지 않음
+            val response = memberApiService.logout()
+            if (response.isSuccessful) {
+                dataStoreManager.clearData()
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("로그아웃 실패 (코드: ${response.code()})"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
+    suspend fun withdrawAccount(): Result<Unit> {
+        return try {
+            val requestBody = WithdrawRequest(agree = true)
+            // API 호출 시 더 이상 토큰을 직접 전달하지 않음
+            val response = memberApiService.withdraw(requestBody)
+            if (response.isSuccessful) {
+                dataStoreManager.clearData()
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("회원 탈퇴 실패 (코드: ${response.code()})"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+
+
+    }
 }

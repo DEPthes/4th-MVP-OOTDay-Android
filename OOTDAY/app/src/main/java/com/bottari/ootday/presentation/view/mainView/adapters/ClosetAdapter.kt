@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bottari.ootday.databinding.ClosetImageItemBinding
 import com.bottari.ootday.databinding.ClosetPlusItemBinding
 import com.bottari.ootday.domain.model.DisplayableClosetItem
+import com.bumptech.glide.Glide
 
 class ClosetAdapter(
     private val onItemClick: (DisplayableClosetItem) -> Unit,
@@ -106,13 +107,15 @@ class ClosetAdapter(
         }
 
         fun bind(item: DisplayableClosetItem.ClosetData) {
-            val isSelected = selectedItemUuids.contains(item.uuid)
+            // 1. Glide를 사용하여 imageUrl의 이미지를 clothingImage 뷰에 로드
+            Glide.with(itemView.context)
+                .load(item.imageUrl)
+                .into(binding.clothingImage)
 
-            // ✅ itemView와 overlay의 activated 상태를 일치시킵니다.
+            // 2. 나머지 선택모드 관련 UI 업데이트 로직은 그대로 유지
+            val isSelected = selectedItemUuids.contains(item.uuid)
             itemView.isActivated = isSelected
             binding.clothingOverlay.isActivated = isSelected
-
-            // ✅ Checkbox의 activated 상태를 일치시키고, visible 상태를 제어합니다.
             binding.checkbox.isActivated = isSelected
             binding.checkbox.visibility = if (isSelectionMode) View.VISIBLE else View.GONE
         }

@@ -15,4 +15,7 @@ data class ClosetItem(
     val mood: String,
     @SerializedName("description")
     val description: String,
+    @SerializedName("imageUrl")
+    val imageUrl: String
+
 )
