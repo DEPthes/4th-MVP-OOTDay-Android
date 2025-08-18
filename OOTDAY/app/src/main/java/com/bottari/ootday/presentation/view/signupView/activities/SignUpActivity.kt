@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: SignUpActivityBinding
 
-    private val authRepository = AuthRepository(this)
+    private val authRepository by lazy { AuthRepository(this) }
 
     // 회원가입 전체 데이터를 관리할 ViewModel
     private val signUpViewModel: SignUpViewModel by viewModels()

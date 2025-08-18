@@ -19,8 +19,8 @@ class LoginViewModel(
     val navigationEvent: LiveData<Event<LoginFlowResult>> = _navigationEvent
 
     // UI 상태 LiveData
-    private val _loginResult = MutableLiveData<Event<Boolean>>() // 로그인 성공/실패 여부 (Event 래퍼 사용)
-    val loginResult: LiveData<Event<Boolean>> = _loginResult
+    private val _loginResult = MutableLiveData<Event<Unit>>()
+    val loginResult: LiveData<Event<Unit>> = _loginResult
 
     private val _isLoading = MutableLiveData<Boolean>() // 로딩 상태
     val isLoading: LiveData<Boolean> = _isLoading
@@ -49,11 +49,11 @@ class LoginViewModel(
     fun login(user: LoginRequest) {
         _isLoading.value = true
         viewModelScope.launch {
-            val result = authRepository.loginAndCheckSurvey(user)
+            val result = authRepository.login(user) // 단순화된 login 함수 호출
             _isLoading.value = false
 
-            result.onSuccess { flowResult ->
-                _navigationEvent.value = Event(flowResult) // 성공 시 내비게이션 이벤트 발생
+            result.onSuccess {
+                _loginResult.value = Event(Unit) // 성공 시 내비게이션 이벤트 발생
             }.onFailure { exception ->
                 _errorMessage.value = Event(exception.message ?: "알 수 없는 오류 발생")
             }

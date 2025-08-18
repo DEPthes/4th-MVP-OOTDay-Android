@@ -4,7 +4,6 @@ import com.bottari.ootday.data.model.loginModel.LoginRequest
 import com.bottari.ootday.data.model.loginModel.LoginResponse
 import com.bottari.ootday.data.model.loginModel.ProfileResponse
 import com.bottari.ootday.data.model.signupModel.SignUpData
-import com.bottari.ootday.domain.model.SurveyRequest
 import com.bottari.ootday.domain.model.WithdrawRequest
 import retrofit2.Response
 import retrofit2.http.Body
@@ -33,12 +32,6 @@ interface MemberApiService {
         @Body request: SignUpData
     ): Response<String> // 성공 시 UUID (String) 응답
 
-    // 설문조사 결과 제출 API
-    @POST("/api/members/survey")
-    suspend fun submitSurvey(
-        @Header("Authorization") token: String,
-        @Body request: SurveyRequest
-    ): Response<String> // 성공 시 String 응답
     // 로그인 API
     @POST("/api/members/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>

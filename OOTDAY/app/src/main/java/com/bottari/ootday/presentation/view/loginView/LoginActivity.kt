@@ -25,7 +25,6 @@ import com.bottari.ootday.data.repository.LoginFlowResult
 import com.bottari.ootday.presentation.view.mainView.activities.MainActivity
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpCongActivity
-import com.bottari.ootday.presentation.view.surveyView.HomeSurveyActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: LoginActivityBinding
@@ -98,18 +97,13 @@ class LoginActivity : AppCompatActivity() {
 //        )
 
         // loginResult Observer를 navigationEvent Observer로 변경
-        loginViewModel.navigationEvent.observe(this) { event ->
-            event.getContentIfNotHandled()?.let { result ->
-                when (result) {
-                    is LoginFlowResult.NavigateToMain -> {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                    }
-                    is LoginFlowResult.NavigateToSurvey -> {
-                        startActivity(Intent(this, HomeSurveyActivity::class.java))
-                        finish()
-                    }
-                }
+        loginViewModel.loginResult.observe(this) { event ->
+            event.getContentIfNotHandled()?.let {
+                // 로그인 성공 시 무조건 MainActivity로 이동
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
             }
         }
 

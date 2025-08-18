@@ -59,33 +59,18 @@ class AuthRepository(private val context: Context) {
 //        }
 //    }
 
-    // 로그인부터 분기 처리까지 한 번에 수행하는 함수
-    suspend fun loginAndCheckSurvey(request: LoginRequest): Result<LoginFlowResult> {
+    suspend fun login(request: LoginRequest): Result<Unit> {
         return try {
-            // 1. 로그인 API 호출
             val loginResponse = memberApiService.login(request)
             if (!loginResponse.isSuccessful || loginResponse.body() == null) {
                 return Result.failure(Exception("아이디 또는 비밀번호가 일치하지 않습니다."))
             }
 
             val token = loginResponse.body()!!.token
-            // 2. 토큰 및 로그인 유지 상태 저장
+            // 토큰 및 로그인 유지 상태 저장
             dataStoreManager.saveToken(token)
             dataStoreManager.saveRememberMe(request.rememberMe)
-
-            // 3. 저장된 토큰으로 프로필 조회 API 호출
-            val profileResponse = memberApiService.getMyProfile("Bearer $token")
-            if (!profileResponse.isSuccessful || profileResponse.body() == null) {
-                return Result.failure(Exception("프로필 정보를 불러오는데 실패했습니다."))
-            }
-
-            // 4. 프로필 정보로 분기 결정
-            val profile = profileResponse.body()!!
-            if (profile.gender.isNullOrBlank() || profile.personalColor.isNullOrBlank()) {
-                Result.success(LoginFlowResult.NavigateToSurvey) // 설문조사 필요
-            } else {
-                Result.success(LoginFlowResult.NavigateToMain) // 메인으로
-            }
+            Result.success(Unit) // 성공만 반환
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -178,5 +163,7 @@ class AuthRepository(private val context: Context) {
             false
         }
     }
+
+
 
 }
