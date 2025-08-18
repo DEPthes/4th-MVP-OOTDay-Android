@@ -16,7 +16,7 @@ class SignUpCongActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.moveToLoginButton.setOnClickListener {
-            val intent = Intent(this, HomeSurveyActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }

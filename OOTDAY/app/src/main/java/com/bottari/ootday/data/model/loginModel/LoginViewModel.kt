@@ -5,14 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bottari.ootday.data.repository.AuthRepository
+import com.bottari.ootday.data.repository.LoginFlowResult
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val authRepository: AuthRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
     // 사용자 입력 LiveData
     val user = MutableLiveData<LoginRequest>()
     val rememberMe = MutableLiveData<Boolean>(false)
+
+    private val _navigationEvent = MutableLiveData<Event<LoginFlowResult>>()
+    val navigationEvent: LiveData<Event<LoginFlowResult>> = _navigationEvent
 
     // UI 상태 LiveData
     private val _loginResult = MutableLiveData<Event<Boolean>>() // 로그인 성공/실패 여부 (Event 래퍼 사용)
@@ -24,20 +28,35 @@ class LoginViewModel(
     private val _errorMessage = MutableLiveData<Event<String>>() // 에러 메시지
     val errorMessage: LiveData<Event<String>> = _errorMessage
 
+    //로그인 모킹함수
+//    fun login(user: LoginRequest) {
+//        _isLoading.value = true // 로그인 시작 시 로딩 상태 true
+//
+//        // 코루틴을 사용하여 비동기 작업 수행
+//        viewModelScope.launch {
+//            val result = authRepository.login(user.username, user.password)
+//            _isLoading.value = false // 로그인 완료 시 로딩 상태 false
+//
+//            result
+//                .onSuccess { success ->
+//                    _loginResult.value = Event(success) // 로그인 성공 이벤트 발생
+//                }.onFailure { exception ->
+//                    _errorMessage.value = Event(exception.message ?: "알 수 없는 오류 발생") // 에러 메시지 이벤트 발생
+//                }
+//        }
+//    }
+
     fun login(user: LoginRequest) {
-        _isLoading.value = true // 로그인 시작 시 로딩 상태 true
-
-        // 코루틴을 사용하여 비동기 작업 수행
+        _isLoading.value = true
         viewModelScope.launch {
-            val result = authRepository.login(user.username, user.password)
-            _isLoading.value = false // 로그인 완료 시 로딩 상태 false
+            val result = authRepository.loginAndCheckSurvey(user)
+            _isLoading.value = false
 
-            result
-                .onSuccess { success ->
-                    _loginResult.value = Event(success) // 로그인 성공 이벤트 발생
-                }.onFailure { exception ->
-                    _errorMessage.value = Event(exception.message ?: "알 수 없는 오류 발생") // 에러 메시지 이벤트 발생
-                }
+            result.onSuccess { flowResult ->
+                _navigationEvent.value = Event(flowResult) // 성공 시 내비게이션 이벤트 발생
+            }.onFailure { exception ->
+                _errorMessage.value = Event(exception.message ?: "알 수 없는 오류 발생")
+            }
         }
     }
 }

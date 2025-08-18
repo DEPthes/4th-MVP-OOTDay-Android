@@ -38,6 +38,7 @@ android {
     buildFeatures {
         dataBinding = true
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -70,4 +71,7 @@ dependencies {
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     // ✨ 이미지 로딩을 위한 Glide 라이브러리
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
+    // Jetpack DataStore (Preferences)
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 }

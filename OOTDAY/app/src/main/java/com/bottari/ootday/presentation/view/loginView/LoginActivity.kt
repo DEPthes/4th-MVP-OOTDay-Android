@@ -21,14 +21,16 @@ import com.bottari.ootday.data.model.loginModel.LoginViewModel
 import com.bottari.ootday.data.model.loginModel.LoginViewModelFactory
 import com.bottari.ootday.databinding.LoginActivityBinding
 import com.bottari.ootday.data.repository.AuthRepository
+import com.bottari.ootday.data.repository.LoginFlowResult
 import com.bottari.ootday.presentation.view.mainView.activities.MainActivity
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpCongActivity
+import com.bottari.ootday.presentation.view.surveyView.HomeSurveyActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: LoginActivityBinding
     private val loginViewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(AuthRepository())
+        LoginViewModelFactory(AuthRepository(this))
     }
     private var defaultEditTextTint: Int = 0
     private lateinit var notoSansKrRegular: Typeface
@@ -51,8 +53,17 @@ class LoginActivity : AppCompatActivity() {
 
         binding.passwordArea.typeface = notoSansKrRegular
 
+//      로그인 모킹로직
+//        binding.loginButton.setOnClickListener {
+//            val user = LoginRequest(binding.loginArea.text.toString(), binding.passwordArea.text.toString())
+//            loginViewModel.login(user)
+//        }
+
         binding.loginButton.setOnClickListener {
-            val user = LoginRequest(binding.loginArea.text.toString(), binding.passwordArea.text.toString())
+            val memberId = binding.loginArea.text.toString()
+            val password = binding.passwordArea.text.toString()
+            val rememberMe = binding.rememberMeCheckbox.isChecked // CheckBox 상태 가져오기
+            val user = LoginRequest(memberId, password, rememberMe)
             loginViewModel.login(user)
         }
 
@@ -60,31 +71,47 @@ class LoginActivity : AppCompatActivity() {
         binding.passwordToggleButton.setOnClickListener {
             togglePasswordVisibility()
         }
-
-            binding.textSignup.setOnClickListener {
-            val intent = Intent(this, SignUpCongActivity::class.java)
-            startActivity(intent)
-        }
-
-        //실제 sign up 로직인데 위 로직으로 잠깐 디버깅
-//        binding.textSignup.setOnClickListener {
-//            val intent = Intent(this, SignUpActivity::class.java)
+//            디버깅용 코드(Survey)
+//            binding.textSignup.setOnClickListener {
+//            val intent = Intent(this, SignUpCongActivity::class.java)
 //            startActivity(intent)
 //        }
 
-        // ViewModel의 LiveData 관찰
-        loginViewModel.loginResult.observe(
-            this,
-            Observer { event ->
-                event.getContentIfNotHandled()?.let { success ->
-                    if (success) {
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        clearLoginErrors()
+        //실제 sign up 로직인데 위 로직으로 잠깐 디버깅
+        binding.textSignup.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+
+        // ViewModel의 LiveData 관찰 / 로그인 모킹로직
+//        loginViewModel.loginResult.observe(
+//            this,
+//            Observer { event ->
+//                event.getContentIfNotHandled()?.let { success ->
+//                    if (success) {
+//                        val intent = Intent(this, MainActivity::class.java)
+//                        startActivity(intent)
+//                        clearLoginErrors()
+//                    }
+//                }
+//            },
+//        )
+
+        // loginResult Observer를 navigationEvent Observer로 변경
+        loginViewModel.navigationEvent.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { result ->
+                when (result) {
+                    is LoginFlowResult.NavigateToMain -> {
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    }
+                    is LoginFlowResult.NavigateToSurvey -> {
+                        startActivity(Intent(this, HomeSurveyActivity::class.java))
+                        finish()
                     }
                 }
-            },
-        )
+            }
+        }
 
         loginViewModel.isLoading.observe(
             this,
