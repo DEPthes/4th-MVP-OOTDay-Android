@@ -18,12 +18,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bottari.ootday.R
 import com.bottari.ootday.data.model.mainModel.FirstClosetViewModel
-import com.bottari.ootday.data.model.mainModel.FirstClosetViewModelFactory
 import com.bottari.ootday.data.repository.ClosetRepository
 import com.bottari.ootday.databinding.FirstClosetFragmentBinding
 import com.bottari.ootday.domain.model.DisplayableClosetItem
@@ -37,15 +37,22 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.lifecycle.ViewModelProvider
 
 class FirstClosetFragment : Fragment() {
     private lateinit var binding: FirstClosetFragmentBinding
     private var tempImageUri: Uri? = null
 
     private val viewModel: FirstClosetViewModel by viewModels {
-        FirstClosetViewModelFactory(requireContext())
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                // Fragment의 Context를 사용하여 Repository를 직접 생성하고,
+                val repository = ClosetRepository(requireContext())
+                // 생성된 Repository를 ViewModel에 주입합니다.
+                return FirstClosetViewModel(repository) as T
+            }
+        }
     }
-
     private lateinit var closetAdapter: ClosetAdapter
 
     private val pickImagesFromGallery =
@@ -252,8 +259,9 @@ class FirstClosetFragment : Fragment() {
 
             if (fileBytes != null) {
                 val requestBody = fileBytes.toRequestBody("image/*".toMediaTypeOrNull())
-                val multipart = MultipartBody.Part.createFormData("image", "image.jpg", requestBody) // 👈 파트 이름을 "image"로 변경
-                viewModel.postClosetItem(multipart)
+                // 👇 API 명세서에 따르면 파일 파트 이름이 "file"이어야 합니다.
+                val multipart = MultipartBody.Part.createFormData("file", "image.jpg", requestBody)
+                viewModel.uploadClothItem(multipart) // 👈 ViewModel의 새 함수 호출
             }
         }
     }

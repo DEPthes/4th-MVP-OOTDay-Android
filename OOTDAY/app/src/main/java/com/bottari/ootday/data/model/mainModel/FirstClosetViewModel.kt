@@ -73,14 +73,15 @@ class FirstClosetViewModel(private val closetRepository: ClosetRepository) : Vie
         }
     }
 
-    fun postClosetItem(imagePart: MultipartBody.Part) {
+    fun uploadClothItem(imagePart: MultipartBody.Part) {
         viewModelScope.launch {
-            closetRepository.uploadCloth(imagePart, currentCategory)
+            closetRepository.uploadAndCreateCloth(imagePart, currentCategory)
                 .onSuccess {
+                    // 최종 성공 시 목록 새로고침
                     loadItemsByCategory(currentCategory)
                 }
                 .onFailure {
-                    // 에러 처리
+                    // 최종 실패 시 에러 처리
                 }
         }
     }
