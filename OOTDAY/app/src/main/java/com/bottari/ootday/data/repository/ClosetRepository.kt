@@ -89,8 +89,8 @@ class ClosetRepository(context: Context) { // Context를 받도록 수정
                 Log.d("ClosetDebug", "서버 등록 성공")
                 Result.success(response.body()!!)
             } else {
-                Log.d("ClosetDebug", "서버 등록 실패 ${response.code()}")
-                Result.failure(Exception("옷 정보 등록 실패 (코드: ${response.code()})"))
+                Log.d("ClosetDebug", "서버 등록 실패 ${response.code()} 문제 내용: ${response.errorBody()?.string()}")
+                Result.failure(Exception("옷 정보 등록 실패 (코드: ${response.code()}), 문제 내용: ${response.errorBody()?.string()}"))
             }
         } catch (e: Exception) { Result.failure(e) }
     }

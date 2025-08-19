@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.bottari.ootday.R
 import com.bottari.ootday.data.model.mainModel.MoodPlaceViewModel
 import com.bottari.ootday.databinding.FirstClosetMoodFragmentBinding
@@ -24,6 +25,7 @@ class FirstClosetMoodFragment : Fragment() {
 
     private val viewModel: MoodPlaceViewModel by viewModels()
     private lateinit var keywordAdapter: KeywordAdapter
+    private val sharedViewModel: MoodPlaceViewModel by navGraphViewModels(R.id.nav_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +44,7 @@ class FirstClosetMoodFragment : Fragment() {
         setupRecyclerView()
         observeViewModel()
         viewModel.loadMoodKeywords()
+        sharedViewModel.loadMoodKeywords()
 
         binding.finishMoodButton.setOnClickListener {
             findNavController().navigate(R.id.action_firstClosetMoodFragment_to_firstClosetPlaceFragment)
@@ -82,6 +85,11 @@ class FirstClosetMoodFragment : Fragment() {
         viewModel.isFinishButtonEnabled.observe(viewLifecycleOwner) { isEnabled ->
             binding.finishMoodButton.isEnabled = isEnabled
         }
+
+        sharedViewModel.keywords.observe(viewLifecycleOwner) { keywords ->
+            keywordAdapter.submitList(keywords)
+        }
+
     }
 
     private fun showAddKeywordDialog() {

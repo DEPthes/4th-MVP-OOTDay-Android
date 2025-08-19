@@ -16,11 +16,6 @@ import com.bottari.ootday.data.model.loginModel.ProfileResponse
 import com.bottari.ootday.domain.model.WithdrawRequest
 import kotlinx.coroutines.flow.first
 
-sealed class LoginFlowResult {
-    data object NavigateToMain : LoginFlowResult()
-    data object NavigateToSurvey : LoginFlowResult()
-}
-
 class AuthRepository(private val context: Context) {
     private val dataStoreManager = DataStoreManager(context)
 
@@ -51,16 +46,18 @@ class AuthRepository(private val context: Context) {
 
     suspend fun login(request: LoginRequest): Result<Unit> {
         return try {
-            val loginResponse = memberApiService.login(request)
-            if (!loginResponse.isSuccessful || loginResponse.body() == null) {
-                return Result.failure(Exception("아이디 또는 비밀번호가 일치하지 않습니다."))
+            val response = memberApiService.login(request)
+            if (response.isSuccessful && response.body() != null) {
+                val token = response.body()!!.token
+                // 1. DataStore에 영구 저장
+                dataStoreManager.saveToken(token)
+                // 2. TokenManager 변수(캐시)에 임시 저장
+                TokenManager.authToken = token
+                dataStoreManager.saveRememberMe(request.rememberMe)
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("아이디 또는 비밀번호가 일치하지 않습니다."))
             }
-
-            val token = loginResponse.body()!!.token
-            // 토큰 및 로그인 유지 상태 저장
-            dataStoreManager.saveToken(token)
-            dataStoreManager.saveRememberMe(request.rememberMe)
-            Result.success(Unit) // 성공만 반환
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -177,13 +174,15 @@ class AuthRepository(private val context: Context) {
 
     suspend fun logout(): Result<Unit> {
         return try {
-            // API 호출 시 더 이상 토큰을 직접 전달하지 않음
             val response = memberApiService.logout()
             if (response.isSuccessful) {
+                // 1. DataStore 데이터 삭제
                 dataStoreManager.clearData()
+                // 2. TokenManager 변수 초기화
+                TokenManager.authToken = null
                 Result.success(Unit)
             } else {
-                Result.failure(Exception("로그아웃 실패 (코드: ${response.code()})"))
+                Result.failure(Exception("로그아웃 실패"))
             }
         } catch (e: Exception) {
             Result.failure(e)

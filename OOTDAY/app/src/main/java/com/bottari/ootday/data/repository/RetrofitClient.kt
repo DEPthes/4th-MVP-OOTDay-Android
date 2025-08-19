@@ -13,14 +13,18 @@ import java.util.concurrent.TimeUnit
 
 
 class RetrofitClient(context: Context) {
-    private val dataStoreManager = DataStoreManager(context)
 
     private val okHttpClient: OkHttpClient by lazy {
-        val loggingInterceptor = HttpLoggingInterceptor().apply { /* ... */ }
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor.Level.BODY
+        } else {
+            HttpLoggingInterceptor.Level.NONE
+        } }
 
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(AuthInterceptor(dataStoreManager)) // 👈 인증 인터셉터 등록
+            .addInterceptor(AuthInterceptor()) // 👈 인증 인터셉터 등록
             .build()
     }
 

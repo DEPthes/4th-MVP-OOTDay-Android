@@ -55,8 +55,8 @@ class KeywordAdapter(
     ) {
         val item = getItem(position)
         when (holder) {
-            is PlusViewHolder -> holder.bind()
-            is KeywordViewHolder -> (item as? KeywordItem.KeywordData)?.let { holder.bind(it) }
+            is PlusViewHolder -> holder.bind(item as KeywordItem.AddButton)
+            is KeywordViewHolder -> holder.bind(item as KeywordItem.KeywordData)
         }
     }
 
@@ -64,32 +64,23 @@ class KeywordAdapter(
         private val binding: ClosetMpPlusItemBinding,
         private val onItemClick: (KeywordItem) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.root.setOnClickListener {
-                onItemClick(KeywordItem.AddButton)
-            }
+        // bind 함수에서 리스너 설정
+        fun bind(item: KeywordItem.AddButton) {
+            binding.root.setOnClickListener { onItemClick(item) }
         }
-
-        fun bind() { /* No data to bind */ }
     }
 
     inner class KeywordViewHolder(
         private val binding: ClosetMpItemBinding,
         private val onItemClick: (KeywordItem) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.root.setOnClickListener {
-                // adapterPosition이 유효할 때만 클릭 처리
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onItemClick(getItem(adapterPosition))
-                }
-            }
-        }
-
+        // bind 함수에서 리스너 설정
         fun bind(item: KeywordItem.KeywordData) {
             binding.moodButtonText.text = item.name
-            // ✨ 이 한 줄이 핵심입니다. isSelected 값에 따라 셀렉터가 자동으로 스타일을 바꿉니다.
             itemView.isSelected = item.isSelected
+
+            // 클릭 리스너를 여기서 설정하여 항상 올바른 아이템을 참조
+            binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 

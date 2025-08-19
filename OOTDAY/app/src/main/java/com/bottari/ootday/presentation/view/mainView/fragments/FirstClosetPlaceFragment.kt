@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.bottari.ootday.R
 import com.bottari.ootday.data.model.mainModel.MoodPlaceViewModel
 import com.bottari.ootday.databinding.FirstClosetPlaceFragmentBinding
@@ -22,7 +23,7 @@ class FirstClosetPlaceFragment : Fragment() {
     private var _binding: FirstClosetPlaceFragmentBinding? = null
     val binding get() = _binding!!
 
-    private val viewModel: MoodPlaceViewModel by viewModels()
+    private val sharedViewModel: MoodPlaceViewModel by navGraphViewModels(R.id.nav_graph) // 👈 nav_graph ID로 변경!
     private lateinit var keywordAdapter: KeywordAdapter
 
     override fun onCreateView(
@@ -41,23 +42,22 @@ class FirstClosetPlaceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
-        viewModel.loadPlaceKeywords()
+        sharedViewModel.loadPlaceKeywords() // ViewModel에 장소 키워드 로드 요청
 
         binding.finishPlaceButton.setOnClickListener {
-            // TODO: 'action_firstClosetPlaceFragment_to_yourFinalFragment'를 navigation graph에 정의된 실제 action ID로 변경하세요.
+            // 모든 정보(옷, 무드, 장소)가 담긴 sharedViewModel을 가지고 결과 화면으로 이동
             findNavController().navigate(R.id.action_firstClosetPlaceFragment_to_firstClosetResultFragment)
         }
     }
 
     private fun setupRecyclerView() {
         // ✨ 선택 로직이 정상적으로 ViewModel에 전달되도록 어댑터 초기화
-        keywordAdapter =
-            KeywordAdapter { selectedItem ->
-                when (selectedItem) {
-                    is KeywordItem.AddButton -> showAddKeywordDialog()
-                    is KeywordItem.KeywordData -> viewModel.onKeywordClicked(selectedItem)
-                }
+        keywordAdapter = KeywordAdapter { selectedItem ->
+            when (selectedItem) {
+                is KeywordItem.AddButton -> showAddKeywordDialog()
+                is KeywordItem.KeywordData -> sharedViewModel.onKeywordClicked(selectedItem)
             }
+        }
 
         val flexboxLayoutManager =
             FlexboxLayoutManager(requireContext()).apply {
@@ -73,24 +73,23 @@ class FirstClosetPlaceFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.keywords.observe(viewLifecycleOwner) { keywords ->
+        sharedViewModel.keywords.observe(viewLifecycleOwner) { keywords ->
             keywordAdapter.submitList(keywords)
         }
 
-        viewModel.selectedCountText.observe(viewLifecycleOwner) { countText ->
+        sharedViewModel.selectedCountText.observe(viewLifecycleOwner) { countText ->
             binding.ootdPlaceMaxCount.text = countText
         }
 
-        viewModel.isFinishButtonEnabled.observe(viewLifecycleOwner) { isEnabled ->
+        sharedViewModel.isFinishButtonEnabled.observe(viewLifecycleOwner) { isEnabled ->
             binding.finishPlaceButton.isEnabled = isEnabled
         }
     }
 
     private fun showAddKeywordDialog() {
-        val dialog =
-            AddPlaceDialogFragment { newKeyword ->
-                viewModel.addNewKeyword(newKeyword)
-            }
+        val dialog = AddPlaceDialogFragment { newKeyword ->
+            sharedViewModel.addNewKeyword(newKeyword)
+        }
         dialog.show(childFragmentManager, "addPlaceDialog")
     }
 

@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.bottari.ootday.R
 import com.bottari.ootday.data.model.mainModel.ClosetResultViewModelFactory
+import com.bottari.ootday.data.model.mainModel.MoodPlaceViewModel
 import com.bottari.ootday.data.repository.ClosetRepository
 import com.bottari.ootday.databinding.FirstClosetResultFragmentBinding
 import com.bottari.ootday.presentation.viewmodel.ClosetResultViewModel
@@ -24,9 +26,11 @@ class FirstClosetResultFragment : Fragment() {
 
     private var downloadCount = true
 
-    private val viewModel: ClosetResultViewModel by viewModels {
+    private val resultViewModel: ClosetResultViewModel by viewModels {
         ClosetResultViewModelFactory(ClosetRepository(requireContext()))
     }
+
+    private val sharedViewModel: MoodPlaceViewModel by navGraphViewModels(R.id.nav_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,24 +46,31 @@ class FirstClosetResultFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadCombination()
-        observeViewModel()
-        setupClickListeners() // ✨ 클릭 리스너 설정 함수 호출
+        observeSharedViewModel() // 공유 ViewModel 관찰 시작
+        observeResultViewModel() // 결과 ViewModel 관찰 시작
+        setupClickListeners()
+
+        // 공유 ViewModel에 최종 코디 결과를 요청
+        sharedViewModel.requestStyling()
     }
 
-    private fun observeViewModel() {
-        viewModel.imageUrls.observe(viewLifecycleOwner) { urls ->
-            val imageViews =
-                listOf(
-                    binding.resultImage1,
-                    binding.resultImage2,
-                    binding.resultImage3,
-                    binding.resultImage4,
-                    binding.resultImage5,
-                    binding.resultImage6,
-                )
+    private fun observeSharedViewModel() {
+        // 공유 ViewModel이 서버로부터 결과 URL을 받아오면
+        sharedViewModel.stylingResultUrls.observe(viewLifecycleOwner) { urls ->
+            // 결과 ViewModel에 URL 목록을 전달하여 화면에 표시하도록 함
+            resultViewModel.setImageUrls(urls) // 👈 setImageUrls 함수는 직접 추가해야 함
+        }
 
-            // 받아온 URL 개수만큼 이미지를 순서대로 넣어줍니다.
+        sharedViewModel.isLoadingResult.observe(viewLifecycleOwner) { isLoading ->
+            // 로딩 UI 처리
+        }
+    }
+
+
+    private fun observeResultViewModel() {
+        resultViewModel.imageUrls.observe(viewLifecycleOwner) { urls ->
+            val imageViews = listOf(binding.resultImage1, binding.resultImage2, binding.resultImage3, binding.resultImage4, binding.resultImage5, binding.resultImage6)
+            imageViews.forEach { it.setImageDrawable(null) } // 이미지 초기화
             urls.forEachIndexed { index, url ->
                 if (index < imageViews.size) {
                     loadImageWithGlide(imageViews[index], url)
@@ -67,38 +78,28 @@ class FirstClosetResultFragment : Fragment() {
             }
         }
 
-        viewModel.downloadStatus.observe(viewLifecycleOwner) { statusMessage ->
+        resultViewModel.downloadStatus.observe(viewLifecycleOwner) { statusMessage ->
             Toast.makeText(requireContext(), statusMessage, Toast.LENGTH_SHORT).show()
+        }
+
+        // 다운로드 버튼 활성화 상태 관찰
+        resultViewModel.isDownloadEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            binding.downloadContainer.isEnabled = isEnabled
+            val textColor = if (isEnabled) R.color.gray_100 else R.color.gray_200
+            binding.downloadText.setTextColor(ContextCompat.getColor(requireContext(), textColor))
+            binding.downloadIcon.isEnabled = isEnabled
         }
     }
 
     // ✨ 클릭 리스너들을 모아두는 함수
     private fun setupClickListeners() {
-        // ✨ 전체 이미지 다운로드 버튼 리스너
         binding.downloadContainer.setOnClickListener {
-            if (downloadCount == true) {
-                // ViewModel에 다운로드 요청
-                viewModel.downloadImages(requireContext())
-
-                // 한 번 누르면 버튼 비활성화
-                binding.downloadIcon.isEnabled = false
-
-                // 텍스트 색상 변경
-                binding.downloadText.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_200))
-                binding.downloadText.alpha = 1.0f
-                downloadCount = false
-            }
+            resultViewModel.downloadImages(requireContext())
         }
 
-        // ✨ 홈으로 돌아가기 버튼 리스너
         binding.backHome.setOnClickListener {
-            // 스택에 쌓인 모든 Fragment를 제거하고 시작 화면(홈)으로 이동
             val startDestinationId = findNavController().graph.startDestinationId
-            val navOptions =
-                NavOptions
-                    .Builder()
-                    .setPopUpTo(startDestinationId, true)
-                    .build()
+            val navOptions = NavOptions.Builder().setPopUpTo(startDestinationId, true).build()
             findNavController().navigate(startDestinationId, null, navOptions)
         }
     }

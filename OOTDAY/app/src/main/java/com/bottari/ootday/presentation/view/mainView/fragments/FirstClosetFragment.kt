@@ -38,6 +38,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.navGraphViewModels
+import com.bottari.ootday.data.model.mainModel.MoodPlaceViewModel
 
 class FirstClosetFragment : Fragment() {
     private lateinit var binding: FirstClosetFragmentBinding
@@ -53,6 +55,9 @@ class FirstClosetFragment : Fragment() {
             }
         }
     }
+
+    private val sharedViewModel: MoodPlaceViewModel by navGraphViewModels(R.id.nav_graph)
+
     private lateinit var closetAdapter: ClosetAdapter
 
     private val pickImagesFromGallery =
@@ -302,6 +307,10 @@ class FirstClosetFragment : Fragment() {
         }
 
         binding.stylingStartButton.setOnClickListener {
+            viewModel.selectedItems.value?.let { selectedItems ->
+                sharedViewModel.setSelectedClothes(selectedItems)
+            }
+
             findNavController().navigate(R.id.action_firstClosetFragment_to_firstClosetMoodFragment)
         }
     }

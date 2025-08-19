@@ -8,12 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bottari.ootday.R
 import com.bottari.ootday.data.repository.AuthRepository
+import com.bottari.ootday.data.repository.TokenManager
+import com.bottari.ootday.domain.model.DataStoreManager
 import com.bottari.ootday.presentation.view.loginView.LoginActivity
 import com.bottari.ootday.presentation.view.mainView.activities.MainActivity
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
     private val authRepository by lazy { AuthRepository(this) }
+    private val dataStoreManager by lazy { DataStoreManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +25,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             lifecycleScope.launch {
+                TokenManager.authToken = dataStoreManager.getToken.first()
                 // 로그인 유지 상태이고 토큰이 유효한지 확인
                 if (authRepository.validateToken()) {
                     startActivity(Intent(this@SplashActivity, MainActivity::class.java))

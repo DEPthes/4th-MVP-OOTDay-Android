@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bottari.ootday.data.repository.AuthRepository
-import com.bottari.ootday.data.repository.LoginFlowResult
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -15,8 +14,6 @@ class LoginViewModel(
     val user = MutableLiveData<LoginRequest>()
     val rememberMe = MutableLiveData<Boolean>(false)
 
-    private val _navigationEvent = MutableLiveData<Event<LoginFlowResult>>()
-    val navigationEvent: LiveData<Event<LoginFlowResult>> = _navigationEvent
 
     // UI 상태 LiveData
     private val _loginResult = MutableLiveData<Event<Unit>>()

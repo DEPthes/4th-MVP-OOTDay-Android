@@ -21,7 +21,6 @@ import com.bottari.ootday.data.model.loginModel.LoginViewModel
 import com.bottari.ootday.data.model.loginModel.LoginViewModelFactory
 import com.bottari.ootday.databinding.LoginActivityBinding
 import com.bottari.ootday.data.repository.AuthRepository
-import com.bottari.ootday.data.repository.LoginFlowResult
 import com.bottari.ootday.presentation.view.mainView.activities.MainActivity
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpActivity
 import com.bottari.ootday.presentation.view.signupView.activities.SignUpCongActivity
@@ -99,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
         // loginResult Observer를 navigationEvent Observer로 변경
         loginViewModel.loginResult.observe(this) { event ->
             event.getContentIfNotHandled()?.let {
-                // 로그인 성공 시 무조건 MainActivity로 이동
+                // 로그인 성공 시 MainActivity로 이동
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
