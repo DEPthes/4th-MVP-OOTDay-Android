@@ -102,19 +102,33 @@ class AuthRepository(private val context: Context) {
         }
     }
 
-    // 인증 번호 확인 함수 (이 함수도 필요하다면 모킹할 수 있습니다.)
     suspend fun checkPhoneNumberAuth(phoneNumber: String, code: String): Result<String> {
         return try {
             val response = smsApiService.verifySmsCode(phoneNumber, code)
+
+            // [핵심] 통신 자체는 성공했는지 (200 OK), 응답 본문이 비어있지 않은지 먼저 확인
             if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
+
+                // 1. 서버가 보낸 실제 메시지를 변수에 저장합니다. (예: "인증 실패")
+                val serverMessage = response.body()!!
+
+                // 2. 메시지 내용에 '성공'을 의미하는 키워드가 있는지 확인합니다.
+                if (serverMessage.contains("인증되었습니다") || serverMessage.contains("성공")) {
+                    // 진짜 성공했을 때만 Result.success를 반환합니다.
+                    Result.success(serverMessage)
+                } else {
+                    // 통신은 성공했지만(200 OK), 내용이 "인증 실패" 같은 실패 메시지일 경우
+                    // Result.failure를 반환하여 ViewModel에 실패를 명확히 알립니다.
+                    Result.failure(Exception("인증 코드가 일치하지 않습니다. 다시 시도해주세요."))
+                }
+
             } else {
-                val errorCode = response.code()
+                // 통신 자체가 실패했을 경우 (4xx, 5xx 에러)
                 val errorBody = response.errorBody()?.string()
-                Log.e("AuthRepository", "API Error - Code: $errorCode, Body: $errorBody")
-                Result.failure(Exception("인증번호가 일치하지 않습니다."))
+                Result.failure(Exception(errorBody ?: "인증번호가 일치하지 않습니다."))
             }
         } catch (e: Exception) {
+            // 네트워크 오류 등 예외 발생 시
             Result.failure(e)
         }
     }

@@ -63,6 +63,23 @@ class ClosetRepository(context: Context) { // Context를 받도록 수정
             }
         } catch (e: Exception) { Result.failure(e) }
     }
+
+    //선택한 옷 지우는 함수
+    suspend fun deleteClothItem(uuid: String): Result<Unit> {
+        return try {
+            val token = dataStoreManager.getToken.first()
+            if (token.isNullOrBlank()) return Result.failure(Exception("토큰 없음"))
+
+            val response = closetApiService.deleteCloth("Bearer $token", uuid)
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("아이템 삭제 실패 (코드: ${response.code()})"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }
 
 

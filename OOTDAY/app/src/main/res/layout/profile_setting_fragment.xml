@@ -14,7 +14,7 @@
 
             android:alpha="0.8"
             android:fontFamily="@font/noto_sans_kr_bold"
-            android:text="강안나"
+            android:text=""
             android:textColor="@color/font_gray"
             android:textSize="@dimen/title_large_size"
 
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="강안나"
+                android:text=""
                 android:fontFamily="@font/noto_sans_kr_medium"
                 android:textColor="@color/font_gray"
                 android:textSize="@dimen/body_small_size"
@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="CreateID2"
+                android:text=""
                 android:fontFamily="@font/noto_sans_kr_medium"
                 android:textColor="@color/font_gray"
                 android:textSize="@dimen/body_small_size"

@@ -60,14 +60,18 @@ class FirstClosetResultFragment : Fragment() {
 
     private fun observeSharedViewModel() {
         sharedViewModel.stylingResultUrls.observe(viewLifecycleOwner) { urls ->
-            if (urls.isNotEmpty()) {
-                // 성공적으로 URL 목록을 받으면 결과 ViewModel에 전달
-                resultViewModel.setImageUrls(urls)
-            } else {
-                // 빈 목록이 오면 (API 실패 등) 사용자에게 알림
-                Toast.makeText(context, "코디 조합에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                // 필요하다면 이전 화면으로 돌아가는 로직 추가
+            // 👇 [핵心 수정] urls가 null이 아닌지 먼저 확인합니다.
+            // 이 null 체크 하나로 크래시를 완벽하게 방지할 수 있습니다.
+            if (urls != null) {
+                if (urls.isNotEmpty()) {
+                    // 성공적으로 URL 목록을 받으면 결과 ViewModel에 전달
+                    resultViewModel.setImageUrls(urls)
+                } else {
+                    // 빈 목록이 오면 (API 실패 등) 사용자에게 알림
+                    Toast.makeText(context, "코디 조합에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                }
             }
+            // urls가 null인 경우 (초기화된 상태)에는 아무것도 하지 않고 다음 데이터 변경을 기다립니다.
         }
     }
 
@@ -104,6 +108,7 @@ class FirstClosetResultFragment : Fragment() {
         }
 
         binding.backHome.setOnClickListener {
+            sharedViewModel.clearStylingData()
             val startDestinationId = findNavController().graph.startDestinationId
             val navOptions = NavOptions.Builder().setPopUpTo(startDestinationId, true).build()
             findNavController().navigate(startDestinationId, null, navOptions)

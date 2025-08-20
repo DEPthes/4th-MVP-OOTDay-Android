@@ -172,6 +172,8 @@ class FirstClosetFragment : Fragment() {
         binding.stylingStartButton.setOnClickListener {
             viewModel.selectedItems.value?.let { selectedItems ->
                 if (selectedItems.isNotEmpty()) {
+                    sharedViewModel.clearStylingData()
+
                     sharedViewModel.setSelectedClothes(selectedItems)
                     findNavController().navigate(R.id.action_firstClosetFragment_to_firstClosetMoodFragment)
                 }
@@ -206,6 +208,7 @@ class FirstClosetFragment : Fragment() {
             binding.rememberMeCheckbox.isChecked = isAllSelected
             binding.selectAllText.setTextColor(textColor)
         }
+
     }
 
     private fun updateCategorySelection(selectedCategory: String) {

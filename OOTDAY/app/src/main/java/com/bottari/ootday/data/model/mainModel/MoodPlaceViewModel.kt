@@ -35,8 +35,8 @@ class MoodPlaceViewModel(application: Application) : AndroidViewModel(applicatio
     val selectedPlace: LiveData<KeywordItem.KeywordData?> get() = _selectedPlace
 
     // --- 최종 결과를 위한 데이터 저장소 ---
-    private val _stylingResultUrls = MutableLiveData<List<String>>()
-    val stylingResultUrls: LiveData<List<String>> get() = _stylingResultUrls
+    private val _stylingResultUrls = MutableLiveData<List<String>?>()
+    val stylingResultUrls: LiveData<List<String>?> get() = _stylingResultUrls
 
     private val _isLoadingResult = MutableLiveData<Boolean>()
     val isLoadingResult: LiveData<Boolean> get() = _isLoadingResult
@@ -192,7 +192,11 @@ class MoodPlaceViewModel(application: Application) : AndroidViewModel(applicatio
                     // 👇 [수정] 서버에서 받은 결과 객체(ClothingItemDto)에서 imageUrl만 추출하여 LiveData에 저장
                     Log.e("StylingApi", "코디 결과 요청 성공")
 
-                    _stylingResultUrls.value = resultItems.flatten().map { it.imageUrl }
+                    _stylingResultUrls.value = resultItems
+                        .flatten() // 1. 2차원 리스트를 1차원 리스트로 만듭니다. (예: [[옷1,옷2],[옷3,옷4]] -> [옷1,옷2,옷3,옷4])
+                        .distinctBy { it.uuid } // 2. 각 옷의 고유 ID(uuid)를 기준으로 중복을 제거합니다.
+                        .map { it.imageUrl } // 3. 중복이 제거된 목록에서 imageUrl만 추출합니다.
+
                 }
                 .onFailure {
                     // 👇 [수정] 실패 시 에러 로그를 남기고, 결과 URL 목록을 비워 에러 상태임을 알림
@@ -201,6 +205,13 @@ class MoodPlaceViewModel(application: Application) : AndroidViewModel(applicatio
                 }
             _isLoadingResult.value = false
         }
+    }
+
+    fun clearStylingData() {
+        _selectedClothes.value = emptyList()
+        _selectedMoods.value = emptyList()
+        _selectedPlace.value = null
+        _stylingResultUrls.value = null // 👈 null로 설정하여 다음 요청이 실행되도록 함
     }
 
 }

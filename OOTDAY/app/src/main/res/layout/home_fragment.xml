@@ -76,7 +76,7 @@
             android:paddingBottom="50dp"
             android:columnCount="2"
             android:rowCount="2"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/item_image1"

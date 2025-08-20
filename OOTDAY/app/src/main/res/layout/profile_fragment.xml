@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="강안나"
+            android:text=""
             android:fontFamily="@font/noto_sans_kr_bold"
             android:textSize="@dimen/title_large_size"
             android:textColor="@color/font_gray"
