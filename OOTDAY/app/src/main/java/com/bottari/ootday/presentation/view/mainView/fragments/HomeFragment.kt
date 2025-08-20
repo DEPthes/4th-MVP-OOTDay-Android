@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -19,10 +20,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bottari.ootday.R
+import com.bottari.ootday.data.model.mainModel.HomeViewModel
+import com.bottari.ootday.data.model.mainModel.HomeViewModelFactory
 import com.bottari.ootday.data.model.mainModel.SecondClosetViewModel
 import com.bottari.ootday.data.model.mainModel.SecondClosetViewModelFactory
+import com.bottari.ootday.data.repository.ClosetRepository
 import com.bottari.ootday.databinding.HomeFragmentBinding
 import com.bottari.ootday.presentation.view.mainView.fragments.dialog.DialogPictureFragment
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -37,9 +42,14 @@ class HomeFragment : Fragment() {
     val binding get() = _binding!!
 
     // ✨ SecondCloset 기능의 상태를 관리할 ViewModel
-    private val viewModel: SecondClosetViewModel by viewModels { SecondClosetViewModelFactory() }
+    private val SecondViewModel: SecondClosetViewModel by viewModels { SecondClosetViewModelFactory() }
 
     private var tempImageUri: Uri? = null
+
+    private val viewModel: HomeViewModel by viewModels {
+        HomeViewModelFactory(ClosetRepository(requireContext()))
+    }
+
 
     private val pickImageFromGallery =
         registerForActivityResult(
@@ -81,6 +91,40 @@ class HomeFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        // 최신 옷 아이템 목록을 관찰
+        viewModel.recentClosetItems.observe(viewLifecycleOwner) { items ->
+            // 화면에 있는 ImageView들을 리스트로 관리
+            val imageViews = listOf(
+                binding.itemImage1,
+                binding.itemImage2,
+                binding.itemImage3,
+                binding.itemImage4
+            )
+
+            // 받아온 아이템 개수만큼 이미지를 순서대로 채워넣음
+            items.forEachIndexed { index, item ->
+                if (index < imageViews.size) {
+                    loadImageWithGlide(imageViews[index], item.imageUrl)
+                }
+            }
+        }
+
+        // 옷장이 비었는지 여부를 관찰
+        viewModel.isClosetEmpty.observe(viewLifecycleOwner) { isEmpty ->
+            if (isEmpty) {
+                // 옷장이 비었으면 -> '옷장 비었음' 이미지를 보여주고, 옷 그리드는 숨김
+                binding.closetEmpty.visibility = View.VISIBLE
+                binding.gridLayout.visibility = View.GONE
+            } else {
+                // 옷장에 아이템이 있으면 -> '옷장 비었음' 이미지는 숨기고, 옷 그리드를 보여줌
+                binding.closetEmpty.visibility = View.GONE
+                binding.gridLayout.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun setupClickListeners() {
@@ -102,7 +146,7 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             val imagePart = uriToMultipartBodyPart(uri)
             if (imagePart != null) {
-                viewModel.setImageData(imagePart)
+                SecondViewModel.setImageData(imagePart)
                 // ✨ 올바른 Directions 클래스 사용
                 val action = HomeFragmentDirections.actionHomeFragmentToSecondClosetPictureFragment(uri.toString())
                 findNavController().navigate(action)
@@ -176,6 +220,17 @@ class HomeFragment : Fragment() {
                 requireContext().externalCacheDir,
             )
         return FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.fileprovider", imageFile)
+    }
+
+    private fun loadImageWithGlide(imageView: ImageView, url: String) {
+        Glide.with(this)
+            .load(url)
+            .into(imageView)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchRecentClosetItems()
     }
 
     override fun onDestroyView() {

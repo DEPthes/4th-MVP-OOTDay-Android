@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bottari.ootday.data.model.signupModel.SignUpViewModel
 import com.bottari.ootday.data.repository.AuthRepository
 import com.bottari.ootday.databinding.SignUpActivityBinding // 올바른 바인딩 클래스
+import com.bottari.ootday.presentation.view.loginView.LoginActivity
 import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep1Fragment
 import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep2Fragment
 import com.bottari.ootday.presentation.view.signupView.fragments.SignUpStep3Fragment
@@ -53,6 +55,24 @@ class SignUpActivity : AppCompatActivity() {
             // 시스템의 onBackPressed()와 동일한 동작을 수행
             onBackPressedDispatcher.onBackPressed()
         }
+
+        // 1. 뒤로가기 동작을 재정의할 콜백(Callback) 객체 생성
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // 2. 백스택에 프래그먼트가 남아있는지 확인
+                if (supportFragmentManager.backStackEntryCount > 0) {
+                    // 백스택이 있으면, 기본 뒤로가기 동작 수행 (이전 프래그먼트로 이동)
+                    supportFragmentManager.popBackStack()
+                } else {
+                    // 백스택이 없으면 (첫 화면이면), LoginActivity로 이동
+                    val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish() // 현재 SignUpActivity 종료
+                }
+            }
+        }
+        // 3. 위에서 만든 콜백을 뒤로가기 디스패처에 추가
+        onBackPressedDispatcher.addCallback(this, callback)
 
         // FragmentManager의 백스택 변경을 감지하여 툴바 UI 업데이트
         supportFragmentManager.addOnBackStackChangedListener {
@@ -123,13 +143,7 @@ class SignUpActivity : AppCompatActivity() {
         val currentStepNum = getCurrentStepNumber(currentFragment)
 
         // 1. 뒤로가기 버튼 가시성 제어
-        if (currentStepNum == 1) {
-            // 첫 번째 Step1일 때는 뒤로가기 버튼 비활성화 (숨김)
-            binding.backButton.visibility = View.INVISIBLE // 또는 View.GONE
-        } else {
-            // 그 외의 경우 뒤로가기 버튼 활성화 (보임)
-            binding.backButton.visibility = View.VISIBLE
-        }
+        binding.backButton.visibility = View.VISIBLE
 
         // 2. 페이지 인디케이터 텍스트 업데이트
         binding.pageIndicator.text = "$currentStepNum/4"

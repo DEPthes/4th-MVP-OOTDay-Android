@@ -52,6 +52,15 @@ class MainActivity : AppCompatActivity() {
                     binding.mainBackButton.visibility = View.VISIBLE
                 }
             }
+
+            when (destination.id) {
+                R.id.profileSettingFragment, R.id.profileClosetFragment -> {
+                    // ProfileFragment의 하위 화면으로 이동 시, Profile 메뉴 아이콘을 선택된 상태로 유지
+                    binding.bottomNavigation.menu.findItem(R.id.profileFragment).isChecked = true
+                }
+                // 다른 탭의 하위 화면들도 필요하다면 여기에 'case'를 추가하면 됩니다.
+                // 예: R.id.someFeedDetailFragment -> binding.bottomNavigation.menu.findItem(R.id.feedFragment).isChecked = true
+            }
         }
 
         // 백 버튼 클릭 시 이전 화면으로 이동

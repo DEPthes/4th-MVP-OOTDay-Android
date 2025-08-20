@@ -19,16 +19,16 @@ interface ClosetApiService {
      */
     @GET("/api/cloth")
     suspend fun getMyCloset(
-        @Header("Authorization") token: String,
-        @Query("category") category: String
+        @Header("Authorization") token: String
     ): Response<List<ClosetItem>> // 옷 아이템 '목록'이므로 List로 받음
 
     /**
      * 옷 이미지 업로드
      */
+    @Multipart // 👈 Multipart 요청
     @POST("/api/cloth")
     suspend fun createCloth(
         @Header("Authorization") token: String,
-        @Body request: CreateClothRequest
+        @Part image: MultipartBody.Part // 👈 'file' 이라는 이름의 이미지 파일 파트 하나만 전송
     ): Response<ClosetItem>
 }

@@ -19,6 +19,7 @@ import com.bottari.ootday.data.repository.ClosetRepository
 import com.bottari.ootday.databinding.FirstClosetResultFragmentBinding
 import com.bottari.ootday.presentation.viewmodel.ClosetResultViewModel
 import com.bumptech.glide.Glide
+import androidx.fragment.app.activityViewModels
 
 class FirstClosetResultFragment : Fragment() {
     private var _binding: FirstClosetResultFragmentBinding? = null
@@ -30,7 +31,7 @@ class FirstClosetResultFragment : Fragment() {
         ClosetResultViewModelFactory(ClosetRepository(requireContext()))
     }
 
-    private val sharedViewModel: MoodPlaceViewModel by navGraphViewModels(R.id.nav_graph)
+    private val sharedViewModel: MoodPlaceViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,19 +51,23 @@ class FirstClosetResultFragment : Fragment() {
         observeResultViewModel() // 결과 ViewModel 관찰 시작
         setupClickListeners()
 
-        // 공유 ViewModel에 최종 코디 결과를 요청
-        sharedViewModel.requestStyling()
+        // 화면이 생성될 때 딱 한 번만 스타일링을 요청
+        // (화면 회전 등 재생성 시 중복 요청 방지)
+        if (sharedViewModel.stylingResultUrls.value == null) {
+            sharedViewModel.requestStyling()
+        }
     }
 
     private fun observeSharedViewModel() {
-        // 공유 ViewModel이 서버로부터 결과 URL을 받아오면
         sharedViewModel.stylingResultUrls.observe(viewLifecycleOwner) { urls ->
-            // 결과 ViewModel에 URL 목록을 전달하여 화면에 표시하도록 함
-            resultViewModel.setImageUrls(urls) // 👈 setImageUrls 함수는 직접 추가해야 함
-        }
-
-        sharedViewModel.isLoadingResult.observe(viewLifecycleOwner) { isLoading ->
-            // 로딩 UI 처리
+            if (urls.isNotEmpty()) {
+                // 성공적으로 URL 목록을 받으면 결과 ViewModel에 전달
+                resultViewModel.setImageUrls(urls)
+            } else {
+                // 빈 목록이 오면 (API 실패 등) 사용자에게 알림
+                Toast.makeText(context, "코디 조합에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                // 필요하다면 이전 화면으로 돌아가는 로직 추가
+            }
         }
     }
 
@@ -76,6 +81,7 @@ class FirstClosetResultFragment : Fragment() {
                     loadImageWithGlide(imageViews[index], url)
                 }
             }
+
         }
 
         resultViewModel.downloadStatus.observe(viewLifecycleOwner) { statusMessage ->

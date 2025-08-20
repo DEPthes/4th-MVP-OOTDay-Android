@@ -31,5 +31,5 @@ interface StylingApiService {
     suspend fun getStylingResult(
         @Header("Authorization") token: String,
         @Body request: StylingRequest
-    ): Response<List<ClothingItemDto>> // 응답은 추천된 옷 아이템 목록
+    ):  Response<List<List<ClothingItemDto>>> // 응답은 추천된 옷 아이템 목록
 }

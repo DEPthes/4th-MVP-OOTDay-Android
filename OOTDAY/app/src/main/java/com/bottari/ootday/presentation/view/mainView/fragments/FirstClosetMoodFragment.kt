@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -23,9 +24,8 @@ class FirstClosetMoodFragment : Fragment() {
     private var _binding: FirstClosetMoodFragmentBinding? = null
     val binding get() = _binding!!
 
-    private val viewModel: MoodPlaceViewModel by viewModels()
     private lateinit var keywordAdapter: KeywordAdapter
-    private val sharedViewModel: MoodPlaceViewModel by navGraphViewModels(R.id.nav_graph)
+    private val sharedViewModel: MoodPlaceViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,10 +43,12 @@ class FirstClosetMoodFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
-        viewModel.loadMoodKeywords()
+
         sharedViewModel.loadMoodKeywords()
 
         binding.finishMoodButton.setOnClickListener {
+            sharedViewModel.selectedMoods.value?.let {
+            }
             findNavController().navigate(R.id.action_firstClosetMoodFragment_to_firstClosetPlaceFragment)
         }
     }
@@ -56,7 +58,7 @@ class FirstClosetMoodFragment : Fragment() {
             KeywordAdapter { selectedItem ->
                 when (selectedItem) {
                     is KeywordItem.AddButton -> showAddKeywordDialog()
-                    is KeywordItem.KeywordData -> viewModel.onKeywordClicked(selectedItem)
+                    is KeywordItem.KeywordData -> sharedViewModel.onKeywordClicked(selectedItem)
                 }
             }
 
@@ -74,29 +76,24 @@ class FirstClosetMoodFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.keywords.observe(viewLifecycleOwner) { keywords ->
-            keywordAdapter.submitList(keywords)
-        }
-
-        viewModel.selectedCountText.observe(viewLifecycleOwner) { countText ->
-            binding.ootdMoodMaxCount.text = countText
-        }
-
-        viewModel.isFinishButtonEnabled.observe(viewLifecycleOwner) { isEnabled ->
-            binding.finishMoodButton.isEnabled = isEnabled
-        }
-
         sharedViewModel.keywords.observe(viewLifecycleOwner) { keywords ->
             keywordAdapter.submitList(keywords)
         }
 
+        sharedViewModel.selectedCountText.observe(viewLifecycleOwner) { countText ->
+            binding.ootdMoodMaxCount.text = countText
+        }
+
+        sharedViewModel.isFinishButtonEnabled.observe(viewLifecycleOwner) { isEnabled ->
+            binding.finishMoodButton.isEnabled = isEnabled
+        }
     }
 
     private fun showAddKeywordDialog() {
         val dialog =
             AddMoodDialogFragment { newKeyword ->
                 // ✨ 이 부분이 정상적으로 ViewModel의 addNewKeyword를 호출합니다.
-                viewModel.addNewKeyword(newKeyword)
+                sharedViewModel.addNewKeyword(newKeyword)
             }
         dialog.show(childFragmentManager, "AddMoodDialog")
     }

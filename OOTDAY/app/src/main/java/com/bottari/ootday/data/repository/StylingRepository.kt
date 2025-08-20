@@ -59,7 +59,7 @@ class StylingRepository(context: Context) {
     }
 
     // 최종 코디 조합 요청 함수
-    suspend fun getStylingResult(request: StylingRequest): Result<List<ClothingItemDto>> {
+    suspend fun getStylingResult(request: StylingRequest): Result<List<List<ClothingItemDto>>> {
         return try {
             val token = dataStoreManager.getToken.first()
             if (token.isNullOrBlank()) return Result.failure(Exception("토큰 없음"))

@@ -72,6 +72,7 @@
         android:textSize="@dimen/body_medium_size"
         android:backgroundTint="@color/sl_edittext_selector"
         android:maxLines="1"
+        android:maxLength="6"
         app:layout_constraintEnd_toEndOf="@id/step2_phone_number_input"
         app:layout_constraintStart_toStartOf="@id/step2_phone_number_input"
         app:layout_constraintTop_toBottomOf="@+id/step2_phone_number_input"

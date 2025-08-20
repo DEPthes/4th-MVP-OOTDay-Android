@@ -2,6 +2,7 @@ package com.bottari.ootday.data.model.mainModel
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -67,6 +68,7 @@ class MoodPlaceViewModel(application: Application) : AndroidViewModel(applicatio
     // FirstClosetFragment에서 '스타일링 시작' 버튼 누를 때 호출
     fun setSelectedClothes(clothes: List<DisplayableClosetItem.ClosetData>) {
         _selectedClothes.value = clothes
+        Log.d("StylingDebug", "✅ [옷] 장바구니에 담김: ${clothes.size}개")
     }
 
     // MoodFragment가 생성될 때 호출
@@ -165,12 +167,21 @@ class MoodPlaceViewModel(application: Application) : AndroidViewModel(applicatio
         val clothes = _selectedClothes.value
         val moods = _selectedMoods.value
         val place = _selectedPlace.value
+        Log.d("ClosetDebug", "requestStyling: 메서드 호출 ${moods}, ${place}, ${clothes}")
         if (clothes.isNullOrEmpty() || moods.isNullOrEmpty() || place == null) return
+        Log.d("ClosetDebug", "requestStyling: 메서드 if문 통과")
 
         _isLoadingResult.value = true
         viewModelScope.launch {
             val imageListDto = clothes.map {
-                ClothingItemDto(it.uuid, it.name, it.category, it.mood, it.description, it.imageUrl)
+                ClothingItemDto(
+                    uuid = it.uuid,
+                    name = it.name,
+                    category = it.category,
+                    mood = it.mood,
+                    description = it.description,
+                    imageUrl = it.imageUrl
+                )
             }
             val moodListDto = moods.map { MoodDto(it.name) }
             val placeDto = PlaceDto(place.name)
@@ -178,9 +189,16 @@ class MoodPlaceViewModel(application: Application) : AndroidViewModel(applicatio
 
             repository.getStylingResult(request)
                 .onSuccess { resultItems ->
-                    _stylingResultUrls.value = resultItems.map { it.imageUrl }
+                    // 👇 [수정] 서버에서 받은 결과 객체(ClothingItemDto)에서 imageUrl만 추출하여 LiveData에 저장
+                    Log.e("StylingApi", "코디 결과 요청 성공")
+
+                    _stylingResultUrls.value = resultItems.flatten().map { it.imageUrl }
                 }
-                .onFailure { /* 에러 처리 */ }
+                .onFailure {
+                    // 👇 [수정] 실패 시 에러 로그를 남기고, 결과 URL 목록을 비워 에러 상태임을 알림
+                    Log.e("StylingApi", "코디 결과 요청 실패: ${it.message}")
+                    _stylingResultUrls.value = emptyList() // 👈 실패 시 빈 리스트 전달
+                }
             _isLoadingResult.value = false
         }
     }

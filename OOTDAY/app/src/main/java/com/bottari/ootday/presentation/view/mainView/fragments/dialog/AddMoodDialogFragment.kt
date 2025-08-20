@@ -5,13 +5,16 @@ package com.bottari.ootday.presentation.view.mainView.fragments.dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.bottari.ootday.databinding.DialogAddMoodBinding
+import java.util.regex.Pattern
 
 class AddMoodDialogFragment(
     private val onConfirm: (String) -> Unit, // 추가 버튼 클릭 시 실행될 함수
@@ -37,23 +40,41 @@ class AddMoodDialogFragment(
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 1. 초기에는 추가 버튼을 비활성화합니다.
+        binding.btnAdd.isEnabled = false
+
+        // 2. EditText에 TextWatcher를 추가하여 실시간으로 입력을 감지합니다.
+        binding.plusEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val inputText = s.toString()
+                // 3. 입력된 텍스트가 비어있지 않고, 오직 한글로만 구성되었는지 확인합니다.
+                binding.btnAdd.isEnabled = inputText.isNotEmpty() && isKorean(inputText)
+            }
+        })
+
         // '추가' 버튼 리스너
         binding.btnAdd.setOnClickListener {
-            val newKeyword =
-                binding.plusEditText.text
-                    .toString()
-                    .trim()
-            if (newKeyword.isNotEmpty()) {
-                onConfirm(newKeyword) // Fragment로 텍스트 전달
-                dismiss() // 다이얼로그 닫기
-            }
+            val newKeyword = binding.plusEditText.text.toString().trim()
+            onConfirm(newKeyword)
+            dismiss()
         }
 
         // '취소' 버튼 리스너
         binding.btnCancel.setOnClickListener {
-            dismiss() // 다이얼로그 닫기
+            dismiss()
         }
     }
+
+    private fun isKorean(text: String): Boolean {
+        // 정규표현식: 초성, 중성, 종성을 포함한 모든 한글 글자
+        val pattern = Pattern.compile("^[가-힣]*$")
+        return pattern.matcher(text).matches()
+    }
+
+
 
     override fun onResume() {
         super.onResume()

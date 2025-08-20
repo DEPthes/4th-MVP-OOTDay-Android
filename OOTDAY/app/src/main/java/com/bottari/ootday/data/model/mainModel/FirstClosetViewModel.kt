@@ -1,6 +1,8 @@
 package com.bottari.ootday.data.model.mainModel
 
 import android.app.Application
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -8,12 +10,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bottari.ootday.data.repository.ClosetRepository
+import com.bottari.ootday.domain.model.ClosetItem
 import com.bottari.ootday.domain.model.DisplayableClosetItem
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class FirstClosetViewModel(private val closetRepository: ClosetRepository) : ViewModel() {
 
+    // 👇 서버에서 받은 '전체' 옷 목록을 저장(캐싱)하는 변수
+    private var allClosetItems: List<ClosetItem> = emptyList()
+
+    // 화면에 보여줄 아이템 목록 (필터링된 결과)
     private val _closetItems = MutableLiveData<List<DisplayableClosetItem>>()
     val closetItems: LiveData<List<DisplayableClosetItem>> get() = _closetItems
 
@@ -35,54 +44,71 @@ class FirstClosetViewModel(private val closetRepository: ClosetRepository) : Vie
     private var currentCategory: String = "상의"
 
     init {
-        loadItemsByCategory("상의")
+        loadAllClosetItems()
     }
 
     fun onTooltipClicked() {
         _isTooltipVisible.value = false
     }
 
-    fun loadItemsByCategory(category: String) {
-        Log.d("ClosetDebug", "ViewModel: loadItemsByCategory($category) 함수 실행됨") //debug
-        currentCategory = category
+    // [핵심] 서버에서 '전체' 옷 목록을 가져와 캐시에 저장하고, 현재 카테고리를 표시하는 함수
+    private fun loadAllClosetItems() {
         viewModelScope.launch {
-            closetRepository.getMyCloset(category)
-                .onSuccess { items ->
-                    // API 응답(ClosetItem)을 UI 표시용(DisplayableClosetItem)으로 변환
-                    val displayableItems = mutableListOf<DisplayableClosetItem>()
-                    displayableItems.add(DisplayableClosetItem.AddButton) // '추가' 버튼 항상 표시
-                    displayableItems.addAll(items.map {
-                        DisplayableClosetItem.ClosetData(
-                            id = it.id,
-                            uuid = it.uuid,
-                            name = it.name,
-                            category = it.category,
-                            mood = it.mood,
-                            description = it.description,
-                            // isSelected는 UI 상태이므로 여기서 false로 초기화
-                            imageUrl = it.imageUrl,
-                            isSelected = false
-                        )
-                    })
-                    _closetItems.value = displayableItems
+            closetRepository.getMyCloset()
+                .onSuccess { allItems ->
+                    allClosetItems = allItems // 전체 목록을 캐시에 저장
+                    showItemsForCategory(currentCategory) // 저장 후 현재 카테고리를 화면에 표시
                 }
                 .onFailure {
-                    // 에러 처리 (예: Toast 메시지 표시)
-                    _closetItems.value = listOf(DisplayableClosetItem.AddButton) // 실패해도 '추가' 버튼은 보이게
+                    // 통신 실패 시에는 '추가' 버튼만 보이도록 처리
+                    _closetItems.value = listOf(DisplayableClosetItem.AddButton)
                 }
         }
     }
 
-    fun uploadClothItem(imagePart: MultipartBody.Part) {
+    // [핵심] 캐시된 목록에서 필터링만 수행 (네트워크 호출 없음)
+    fun showItemsForCategory(category: String) {
+        currentCategory = category
+        val filteredList = allClosetItems.filter { it.category == category }
+
+        val displayableItems = mutableListOf<DisplayableClosetItem>()
+        displayableItems.add(DisplayableClosetItem.AddButton)
+        displayableItems.addAll(filteredList.map {
+            DisplayableClosetItem.ClosetData(it.id, it.uuid, it.name, it.category, it.mood, it.description, it.imageUrl, false)
+        })
+
+        _closetItems.value = displayableItems
+        updateAllSelectedState()
+    }
+
+    // [핵심] 여러 이미지를 순차적으로 업로드하고, 마지막에 한번만 목록을 갱신하는 함수
+    fun uploadClothItems(context: Context, imageUris: List<Uri>) {
         viewModelScope.launch {
-            closetRepository.uploadAndCreateCloth(imagePart, currentCategory)
-                .onSuccess {
-                    // 최종 성공 시 목록 새로고침
-                    loadItemsByCategory(currentCategory)
+            try {
+                // 선택된 모든 이미지에 대해 반복
+                for (uri in imageUris) {
+                    val fileStream = context.contentResolver.openInputStream(uri)
+                    val fileBytes = fileStream?.readBytes()
+                    fileStream?.close()
+
+                    if (fileBytes != null) {
+                        val requestBody = fileBytes.toRequestBody("image/*".toMediaTypeOrNull())
+                        val imagePart = MultipartBody.Part.createFormData("image", "image.jpg", requestBody)
+
+                        // Repository를 호출하여 업로드. 성공/실패 여부만 확인.
+                        closetRepository.createCloth(imagePart)
+                            .onFailure {
+                                Log.e("ClosetDebug", "이미지 업로드 실패: $uri, 사유: ${it.message}")
+                            }
+                    }
                 }
-                .onFailure {
-                    // 최종 실패 시 에러 처리
-                }
+
+                // [가장 중요] 모든 업로드 시도가 끝난 후, '전체' 목록을 딱 한 번만 새로고침.
+                loadAllClosetItems()
+
+            } catch (e: Exception) {
+                Log.e("ClosetDebug", "이미지 처리 중 오류 발생", e)
+            }
         }
     }
 
@@ -149,7 +175,6 @@ class FirstClosetViewModel(private val closetRepository: ClosetRepository) : Vie
     }
 
     fun onCategorySelected(
-        category: String,
         isSelected: Boolean,
     ) {
         if (isSelected) {
