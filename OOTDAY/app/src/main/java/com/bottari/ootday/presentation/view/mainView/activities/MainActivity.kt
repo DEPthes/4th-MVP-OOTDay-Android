@@ -58,8 +58,13 @@ class MainActivity : AppCompatActivity() {
                     // ProfileFragment의 하위 화면으로 이동 시, Profile 메뉴 아이콘을 선택된 상태로 유지
                     binding.bottomNavigation.menu.findItem(R.id.profileFragment).isChecked = true
                 }
-                // 다른 탭의 하위 화면들도 필요하다면 여기에 'case'를 추가하면 됩니다.
-                // 예: R.id.someFeedDetailFragment -> binding.bottomNavigation.menu.findItem(R.id.feedFragment).isChecked = true
+                R.id.firstClosetFragment, R.id.firstClosetMoodFragment, R.id.firstClosetPlaceFragment,
+                     R.id.firstClosetResultFragment, R.id.secondClosetPictureFragment, R.id.secondClosetResultFragment,
+                         R.id.secondClosetLoadingFragment -> {
+                    // ProfileFragment의 하위 화면으로 이동 시, Profile 메뉴 아이콘을 선택된 상태로 유지
+                    binding.bottomNavigation.menu.findItem(R.id.homeFragment).isChecked = true
+                }
+
             }
         }
 

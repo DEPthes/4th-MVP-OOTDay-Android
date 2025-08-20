@@ -41,9 +41,6 @@ class HomeFragment : Fragment() {
     private var _binding: HomeFragmentBinding? = null
     val binding get() = _binding!!
 
-    // ✨ SecondCloset 기능의 상태를 관리할 ViewModel
-    private val SecondViewModel: SecondClosetViewModel by viewModels { SecondClosetViewModelFactory() }
-
     private var tempImageUri: Uri? = null
 
     private val viewModel: HomeViewModel by viewModels {
@@ -143,17 +140,8 @@ class HomeFragment : Fragment() {
 
     // ✨ 이미지 선택이 완료된 후 호출되는 핵심 함수
     private fun onImageSelected(uri: Uri) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val imagePart = uriToMultipartBodyPart(uri)
-            if (imagePart != null) {
-                SecondViewModel.setImageData(imagePart)
-                // ✨ 올바른 Directions 클래스 사용
-                val action = HomeFragmentDirections.actionHomeFragmentToSecondClosetPictureFragment(uri.toString())
-                findNavController().navigate(action)
-            } else {
-                Toast.makeText(requireContext(), "이미지 처리 실패", Toast.LENGTH_SHORT).show()
-            }
-        }
+        val action = HomeFragmentDirections.actionHomeFragmentToSecondClosetPictureFragment(uri.toString())
+        findNavController().navigate(action)
     }
 
     // ✨ URI를 MultipartBody.Part로 변환하는 헬퍼 함수

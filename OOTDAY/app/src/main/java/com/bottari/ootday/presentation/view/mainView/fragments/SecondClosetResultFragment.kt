@@ -49,7 +49,7 @@ class SecondClosetResultFragment : Fragment() {
         // '아이템 상세보기' 컨테이너 클릭 시
         binding.linkContainer.setOnClickListener {
             try {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(recommendedItem.productUrl))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(recommendedItem.purchaseUrl))
                 startActivity(intent)
             } catch (e: Exception) {
                 // URL이 잘못되었거나, 처리할 앱이 없을 경우의 예외 처리

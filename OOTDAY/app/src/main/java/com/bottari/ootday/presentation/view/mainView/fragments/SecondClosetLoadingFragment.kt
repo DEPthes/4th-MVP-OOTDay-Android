@@ -16,7 +16,7 @@ class SecondClosetLoadingFragment : Fragment() {
     val binding get() = _binding!!
 
     private val viewModel: SecondClosetViewModel by activityViewModels {
-        SecondClosetViewModelFactory()
+        SecondClosetViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
